@@ -1,0 +1,42 @@
+---
+- name: Install Docker
+  hosts: compute
+  become: true
+
+  tasks:
+    - name: Update packages
+      ansible.builtin.apt:
+        name: "*"
+        state: latest
+
+    - name: Install dependencies
+      ansible.builtin.apt:
+        name:
+          - ca-certificates
+          - curl
+        state: present
+
+    - name: Install keyrings
+      ansible.builtin.command:
+        cmd: "install -m 0755 -d /etc/apt/keyrings"
+
+    - name: Add Docker repo
+      ansible.builtin.deb822_repository:
+        name: docker
+        types: deb
+        uris: https://download.docker.com/linux/debian
+        suites: '{{ ansible_distribution_release }}'
+        components: stable
+        architectures: amd64
+        signed_by: https://download.docker.com/linux/debian/gpg
+    
+    - name: Update apt and install Docker
+      ansible.builtin.apt:
+        name:
+          - docker-ce
+          - docker-ce-cli
+          - containerd.io
+          - docker-buildx-plugin
+          - docker-compose-plugin
+        state: latest
+        update_cache: true
