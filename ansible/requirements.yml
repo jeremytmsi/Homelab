@@ -1,4 +1,4 @@
 ---
 collections:
   - name: cloud.terraform
-    version: 4.0.0
+  - name: prometheus.prometheus

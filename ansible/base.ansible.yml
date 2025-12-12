@@ -1,0 +1,49 @@
+---
+- name: Base configuration for all servers
+  hosts: all
+  become: true
+
+  roles:
+    - prometheus.prometheus.node_exporter
+
+  pre_tasks:
+    - name: Update DNS servers to 9.9.9.9
+      ansible.builtin.copy:
+        content: "nameserver 9.9.9.9"
+        dest: /etc/resolv.conf
+
+  tasks:
+    - name: Update packages
+      ansible.builtin.apt:
+        name: "*"
+        state: "latest"
+
+    - name: Install htop
+      ansible.builtin.apt:
+        name: "htop"
+        state: present
+
+    - name: Install vim
+      ansible.builtin.apt:
+        name: "vim"
+        state: present
+
+    - name: Disable SSH root access
+      ansible.builtin.replace:
+        path: /etc/ssh/sshd_config
+        regexp: '^#PermitRootLogin'
+        replace: "PermitRootLogin no"
+        backup: yes
+
+    - name: Disable SSH password authentication
+      ansible.builtin.replace:
+        path: /etc/ssh/sshd_config
+        regexp: '^#PasswordAuthentication yes'
+        replace: "PasswordAuthentication no"
+        backup: yes
+
+  handlers:
+    - name: Restart SSH
+      ansible.builtin.service:
+        name: ssh
+        state: restarted
