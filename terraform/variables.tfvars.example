@@ -1,2 +1,3 @@
 proxmox_url = ""
 proxmox_token = ""
+ssh_private_key = ""

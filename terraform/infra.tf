@@ -1,7 +1,7 @@
 resource "proxmox_virtual_environment_vm" "Spa" {
   name = "Spa"
   description = "VM for Docker containers"
-  tags = ["linux","server","prod"]
+  tags = ["linux","server","prod","debian"]
   node_name = "FIA"
 
   agent {
