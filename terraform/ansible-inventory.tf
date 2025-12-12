@@ -12,6 +12,7 @@ resource "ansible_host" "Monaco" {
   name = "Monaco"
   groups = ["servers","storage"]
   variables = {
+    ansible_host = "192.168.1.253"
     ansible_user = "jeremy"
     ansible_ssh_private_key_file = var.ssh_private_key
   }
