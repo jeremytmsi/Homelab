@@ -1,5 +1,5 @@
 ---
-- name: Install Docker
+- name: Configure compute server
   hosts: compute
   become: true
 
@@ -40,3 +40,15 @@
           - docker-compose-plugin
         state: latest
         update_cache: true
+
+    - name: Install NFS utilities
+      ansible.builtin.apt:
+        name: "nfs-common"
+        state: latest
+
+    - name: Mount NFS drive
+      ansible.posix.mount:
+        src: 100.81.125.28:/mnt/Data
+        path: /mnt/Data
+        state: mounted
+        fstype: nfs
