@@ -10,7 +10,7 @@ resource "ansible_host" "Spa" {
 
 resource "ansible_host" "Monaco" {
   name = "Monaco"
-  groups = ["servers","storage"]
+  groups = ["servers","storage","tailscale"]
   variables = {
     ansible_host = "192.168.1.253"
     ansible_user = "jeremy"

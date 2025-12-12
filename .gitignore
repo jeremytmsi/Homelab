@@ -6,3 +6,4 @@ terraform/terraform.tfstate
 terraform/terraform.tfstate.backup
 terraform/variables.tfvars
 ansible/variables/storage_variables.yml
+ansible/variables/tailscale_variables.yml
