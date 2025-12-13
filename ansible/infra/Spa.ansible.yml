@@ -1,6 +1,6 @@
 ---
 - name: Configure compute server
-  hosts: compute
+  hosts: Spa
   become: true
 
   tasks:
@@ -52,3 +52,17 @@
         path: /mnt/Data
         state: mounted
         fstype: nfs
+
+    - name: Launch portainer container
+      community.docker.docker_container:
+        name: portainer
+        image: portainer/portainer-ce
+        state: started
+        published_ports:
+          - '{{ ansible_facts.eth1.ipv4.address }}:9443:9443'
+        volumes:
+          - portainer_data:/data
+          - /var/run/docker.sock:/var/run/docker.sock
+        restart_policy: "unless-stopped"
+        
+        

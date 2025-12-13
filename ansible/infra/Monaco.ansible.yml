@@ -1,7 +1,10 @@
 ---
 - name: Configure storage server
-  hosts: storage
+  hosts: Monaco
   become: true
+
+  roles:
+    - artis3n.tailscale.machine
 
   tasks:
     - name: Mount RAID

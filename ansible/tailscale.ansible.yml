@@ -1,6 +1,0 @@
-- name: Install tailscale
-  hosts: tailscale
-  become: true
-
-  roles:
-    - artis3n.tailscale.machine
