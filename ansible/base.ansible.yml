@@ -6,12 +6,6 @@
   roles:
     - prometheus.prometheus.node_exporter
 
-  pre_tasks:
-    - name: Update DNS servers to 192.168.10.254
-      ansible.builtin.copy:
-        content: "nameserver 192.168.10.254"
-        dest: /etc/resolv.conf
-
   tasks:
     - name: Update packages
       ansible.builtin.apt:

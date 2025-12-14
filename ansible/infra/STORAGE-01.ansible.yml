@@ -1,6 +1,6 @@
 ---
 - name: Configure storage server
-  hosts: Monaco
+  hosts: STORAGE-01
   become: true
 
   roles:

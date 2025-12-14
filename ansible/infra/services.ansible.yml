@@ -1,6 +1,6 @@
 ---
 - name: Configure compute server
-  hosts: Spa
+  hosts: services
   become: true
 
   tasks:
@@ -41,6 +41,11 @@
         state: latest
         update_cache: true
 
+- name: Mount NFS drive and launch Portainer container for SRV-01 server
+  hosts: SRV-01
+  become: true
+
+  tasks:
     - name: Install NFS utilities
       ansible.builtin.apt:
         name: "nfs-common"
@@ -64,5 +69,18 @@
           - portainer_data:/data
           - /var/run/docker.sock:/var/run/docker.sock
         restart_policy: "unless-stopped"
-        
-        
+ 
+- name: Launch Portainer agent for VPS-01 server
+  hosts: VPS-01
+  tasks:
+    - name: Launch Portainer agent container
+      community.docker.docker_container:
+        name: portainer-agent
+        image: portainer-ce/agent
+        state: started
+        published_ports:
+          - 9001:9001
+        volumes:
+          - /var/run/docker.sock:/var/run/docker.sock
+          - /var/lib/docker/volumes:/var/lib/docker/volumes
+        restart_policy: "unless-stopped"
