@@ -1,5 +1,5 @@
-resource "proxmox_virtual_environment_vm" "SRV-01" {
-  name = "SRV-01"
+resource "proxmox_virtual_environment_vm" "SRV-PROD-01" {
+  name = "SRV-PROD-01"
   description = "VM for Docker containers"
   tags = ["linux","server","prod"]
   node_name = "LeMans"
@@ -59,8 +59,8 @@ resource "proxmox_virtual_environment_vm" "SRV-01" {
   }
 }
 
-resource "proxmox_virtual_environment_vm" "MAIL-01" {
-  name = "MAIL-01"
+resource "proxmox_virtual_environment_vm" "MAIL-PROD-01" {
+  name = "MAIL-PROD-01"
   description = "VM for Mail server"
   tags = ["linux","server","prod"]
   node_name = "LeMans"
@@ -120,8 +120,8 @@ resource "proxmox_virtual_environment_vm" "MAIL-01" {
   }
 }
 
-resource "proxmox_virtual_environment_vm" "MONITOR-01" {
-  name = "MONITOR-01"
+resource "proxmox_virtual_environment_vm" "MONITOR-PROD-01" {
+  name = "MONITOR-PROD-01"
   description = "VM for Prometheus monitoring"
   tags = ["linux","server","prod"]
   node_name = "LeMans"
@@ -185,22 +185,22 @@ resource "proxmox_virtual_environment_pool" "PROD" {
   pool_id = "PROD"
 }
 
-resource "proxmox_virtual_environment_pool_membership" "FW-01" {
+resource "proxmox_virtual_environment_pool_membership" "FW-PROD-01" {
   pool_id = proxmox_virtual_environment_pool.PROD.id
   vm_id = 100
 }
 
-resource "proxmox_virtual_environment_pool_membership" "SRV-01" {
+resource "proxmox_virtual_environment_pool_membership" "SRV-PROD-01" {
   pool_id = proxmox_virtual_environment_pool.PROD.id
-  vm_id = proxmox_virtual_environment_vm.SRV-01.id
+  vm_id = proxmox_virtual_environment_vm.SRV-PROD-01.id
 }
 
-resource "proxmox_virtual_environment_pool_membership" "MAIL-01" {
+resource "proxmox_virtual_environment_pool_membership" "MAIL-PROD-01" {
   pool_id = proxmox_virtual_environment_pool.PROD.id
-  vm_id = proxmox_virtual_environment_vm.MAIL-01.id
+  vm_id = proxmox_virtual_environment_vm.MAIL-PROD-01.id
 }
 
-resource "proxmox_virtual_environment_pool_membership" "MONITOR-01" {
+resource "proxmox_virtual_environment_pool_membership" "MONITOR-PROD-01" {
   pool_id = proxmox_virtual_environment_pool.PROD.id
-  vm_id = proxmox_virtual_environment_vm.MONITOR-01.id
+  vm_id = proxmox_virtual_environment_vm.MONITOR-PROD-01.id
 }
