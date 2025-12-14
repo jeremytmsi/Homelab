@@ -1,14 +1,14 @@
-resource "ansible_host" "Spa" {
-  name = proxmox_virtual_environment_vm.Spa.name
+resource "ansible_host" "SRV-01" {
+  name = proxmox_virtual_environment_vm.SRV-01.name
   groups = ["servers"]
   variables = {
     ansible_user = "jeremy"
     ansible_ssh_private_key_file = var.ssh_private_key
-    ansible_host = join("",proxmox_virtual_environment_vm.Spa.ipv4_addresses[2])
+    ansible_host = join("",proxmox_virtual_environment_vm.SRV-01.ipv4_addresses[2])
   }
 }
 
-resource "ansible_host" "Monaco" {
+resource "ansible_host" "STORAGE-01" {
   name = "Monaco"
   groups = ["servers"]
   variables = {

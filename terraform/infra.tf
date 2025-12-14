@@ -1,8 +1,8 @@
-resource "proxmox_virtual_environment_vm" "Spa" {
-  name = "Spa"
+resource "proxmox_virtual_environment_vm" "SRV-01" {
+  name = "SRV-01"
   description = "VM for Docker containers"
-  tags = ["linux","server","prod","debian"]
-  node_name = "FIA"
+  tags = ["linux","server","prod"]
+  node_name = "LeMans"
 
   agent {
     enabled = true
@@ -11,17 +11,22 @@ resource "proxmox_virtual_environment_vm" "Spa" {
   network_device {
     bridge = "vmbr2"
     vlan_id = 10
-    model = "virtio"
+    model = "e1000"
   }
 
   network_device {
     bridge = "vmbr2"
     vlan_id = 99
-    model = "virtio"
+    model = "e1000"
   }
 
   initialization {
     datastore_id = "local"
+
+    dns {
+      domain = "jeremytomasi.fr"
+      servers = ["192.168.10.254"]
+    }
 
     ip_config {
       ipv4 {
@@ -47,10 +52,10 @@ resource "proxmox_virtual_environment_vm" "Spa" {
   }
 
   clone {
-    vm_id = 104
+    vm_id = 101
     datastore_id = "local"
     full = true
-    node_name = "FIA"
+    node_name = "LeMans"
   }
 }
 
@@ -58,17 +63,12 @@ resource "proxmox_virtual_environment_pool" "PROD" {
   pool_id = "PROD"
 }
 
-resource "proxmox_virtual_environment_pool_membership" "EVE-NG" {
-  pool_id = proxmox_virtual_environment_pool.PROD.id
-  vm_id = 103
-}
-
-resource "proxmox_virtual_environment_pool_membership" "FW" {
+resource "proxmox_virtual_environment_pool_membership" "FW-01" {
   pool_id = proxmox_virtual_environment_pool.PROD.id
   vm_id = 100
 }
 
-resource "proxmox_virtual_environment_pool_membership" "Spa" {
+resource "proxmox_virtual_environment_pool_membership" "SRV-01" {
   pool_id = proxmox_virtual_environment_pool.PROD.id
-  vm_id = proxmox_virtual_environment_vm.Spa.id
+  vm_id = proxmox_virtual_environment_vm.SRV-01.id
 }
