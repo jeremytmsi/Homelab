@@ -6,6 +6,20 @@ services:
       - vault_data:/data
     ports:
       - 8081:80
+    networks:
+      - front
+
+  librespeed:
+    image: lscr.io/linuxserver/librespeed
+    container_name: librespeed
+    ports:
+      - 8082:80
+    networks:
+      - front
 
 volumes:
   vault_data:
+
+networks:
+  front:
+    external: true
