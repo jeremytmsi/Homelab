@@ -32,7 +32,7 @@ source "proxmox-iso" "debian-13" {
   boot_command = ["<esc><wait>auto console-keymaps-at/keymap=fr console-setup/ask_detect=false debconf/frontend=noninteractive fb=false url=http://{{ .HTTPIP }}:{{ .HTTPPort }}/debian-preseed.cfg<enter>"]
   boot_wait = "10s"
   http_directory = "packer/http"
-  http_interface = "utun1"
+  http_interface = "utun4"
 
   disks {
     type = "scsi"
@@ -44,7 +44,7 @@ source "proxmox-iso" "debian-13" {
   network_adapters {
     bridge = "vmbr2"
     vlan_tag = 10
-    model = "e1000"
+    model = "virtio"
   }
 
   bios = "seabios"
