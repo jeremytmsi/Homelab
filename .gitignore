@@ -5,5 +5,5 @@ terraform/.terraform.lock.hcl
 terraform/terraform.tfstate
 terraform/terraform.tfstate.backup
 terraform/variables.tfvars
-ansible/variables/storage_variables.yml
-ansible/variables/tailscale_variables.yml
+ansible/infra/prod/variables/storage_variables.yml
+ansible/infra/prod/variables/tailscale_variables.yml

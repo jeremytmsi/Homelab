@@ -37,13 +37,3 @@ resource "ansible_host" "STORAGE-01" {
     ansible_ssh_private_key_file = var.ssh_private_key
   }
 }
-
-resource "ansible_host" "VPS-PROD-01" {
-  name = "VPS-01"
-  groups = ["services","PROD"]
-  variables = {
-    ansible_host = "91.134.240.46",
-    ansible_user = "ansible",
-    ansible_ssh_private_key_file = var.ssh_private_key
-  }
-}

@@ -3,6 +3,12 @@
   hosts: all
   become: true
 
+  pre_tasks:
+    - name: Update DNS servers to 9.9.9.9
+      ansible.builtin.copy:
+        content: "nameserver 9.9.9.9"
+        dest: /etc/resolv.conf
+
   roles:
     - prometheus.prometheus.node_exporter
 
@@ -35,6 +41,12 @@
         regexp: '^#PasswordAuthentication yes'
         replace: "PasswordAuthentication no"
         backup: yes
+
+    - name: Set keyboard to FR
+      ansible.builtin.replace:
+        path: /etc/default/keyboard
+        regexp: '^XKBLAYOUT="us"'
+        replace: 'XKBLAYOUT="fr"'
 
   handlers:
     - name: Restart SSH

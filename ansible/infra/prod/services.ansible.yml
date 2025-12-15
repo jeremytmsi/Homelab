@@ -42,7 +42,7 @@
         update_cache: true
 
 - name: Mount NFS drive and launch Portainer container for SRV-01 server
-  hosts: SRV-01
+  hosts: SRV-PROD-01
   become: true
 
   tasks:
@@ -53,7 +53,7 @@
 
     - name: Mount NFS drive
       ansible.posix.mount:
-        src: 100.81.125.28:/mnt/Data
+        src: 100.92.199.20:/mnt/Data
         path: /mnt/Data
         state: mounted
         fstype: nfs
