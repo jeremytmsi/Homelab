@@ -48,8 +48,16 @@
         regexp: '^XKBLAYOUT="us"'
         replace: 'XKBLAYOUT="fr"'
 
+    - name: Set hostname
+      ansible.builtin.hostname:
+        name: '{{ ansible_facts.hostname }}'
+
   handlers:
     - name: Restart SSH
       ansible.builtin.service:
         name: ssh
         state: restarted
+
+    - name: Reboot host
+      ansible.builtin.reboot:
+        

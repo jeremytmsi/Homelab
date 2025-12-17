@@ -42,7 +42,7 @@
         update_cache: true
 
 - name: Mount NFS drive and launch Portainer container for SRV-01 server
-  hosts: SRV-PROD-01
+  hosts: SRV-QUAL-01
   become: true
 
   tasks:
@@ -71,7 +71,7 @@
         restart_policy: "unless-stopped"
  
 - name: Launch Portainer agent for VPS-01 server
-  hosts: VPS-01
+  hosts: VPS-QUAL-01
   tasks:
     - name: Launch Portainer agent container
       community.docker.docker_container:
