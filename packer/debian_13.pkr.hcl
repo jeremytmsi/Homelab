@@ -14,8 +14,8 @@ source "proxmox-iso" "debian-13" {
   token = var.proxmox_token
   insecure_skip_tls_verify = true
 
-  template_name = "DEBIAN-13.2-TPL"
-  vm_name = "DEBIAN-13.2-TPL"
+  template_name = "DEBIAN-13.2-UEFI-TPL"
+  vm_name = "DEBIAN-13.2-UEFI-TPL"
   template_description = "Debian 13 template"
   tags = "template;linux;server"
   pool = "TEMPLATE"
@@ -29,10 +29,10 @@ source "proxmox-iso" "debian-13" {
     iso_checksum = "none"
   }
 
-  boot_command = ["<esc><wait>auto console-keymaps-at/keymap=fr console-setup/ask_detect=false debconf/frontend=noninteractive fb=false url=http://{{ .HTTPIP }}:{{ .HTTPPort }}/debian-preseed.cfg<enter>"]
-  boot_wait = "10s"
+  boot_command = ["<down>e<down><down><down><end>priority=critical auto=true preseed/url=http://{{ .HTTPIP }}:{{ .HTTPPort }}/debian-preseed.cfg<leftCtrlOn>x<leftCtrlOff>"]
+  boot_wait = "30s"
   http_directory = "packer/http"
-  http_interface = "utun4"
+  http_interface = "utun2"
 
   disks {
     type = "scsi"
@@ -44,10 +44,17 @@ source "proxmox-iso" "debian-13" {
   network_adapters {
     bridge = "vmbr2"
     vlan_tag = 10
-    model = "virtio"
+    model = "e1000"
   }
 
-  bios = "seabios"
+  efi_config {
+    efi_storage_pool = "local"
+    pre_enrolled_keys = false
+    efi_format = "qcow2"
+    efi_type = "4m"
+  }
+
+  bios = "ovmf"
   qemu_agent = true
   scsi_controller = "virtio-scsi-pci"
   cpu_type = "host"
