@@ -4,7 +4,7 @@ resource "proxmox_virtual_environment_vm" "SRV-QUAL-01" {
   tags = ["linux","server","qual"]
   node_name = "LeMans"
   stop_on_destroy = true
-  vm_id = 103
+  vm_id = 104
 
   agent {
     enabled = true
@@ -12,13 +12,13 @@ resource "proxmox_virtual_environment_vm" "SRV-QUAL-01" {
 
   network_device {
     bridge = "vmbr2"
-    vlan_id = 10
+    vlan_id = 20
     model = "virtio"
   }
 
   network_device {
     bridge = "vmbr2"
-    vlan_id = 99
+    vlan_id = 98
     model = "virtio"
   }
 
@@ -61,7 +61,7 @@ resource "proxmox_virtual_environment_vm" "MAIL-QUAL-01" {
   tags = ["linux","server","qual"]
   node_name = "LeMans"
   stop_on_destroy = true
-  vm_id = 104
+  vm_id = 105
 
   agent {
     enabled = true
@@ -69,13 +69,13 @@ resource "proxmox_virtual_environment_vm" "MAIL-QUAL-01" {
 
   network_device {
     bridge = "vmbr2"
-    vlan_id = 10
+    vlan_id = 20
     model = "virtio"
   }
 
   network_device {
     bridge = "vmbr2"
-    vlan_id = 99
+    vlan_id = 98
     model = "virtio"
   }
 
@@ -118,7 +118,7 @@ resource "proxmox_virtual_environment_vm" "MONITOR-QUAL-01" {
   tags = ["linux","server","qual"]
   node_name = "LeMans"
   stop_on_destroy = true
-  vm_id = 105
+  vm_id = 106
 
   agent {
     enabled = true
@@ -126,13 +126,13 @@ resource "proxmox_virtual_environment_vm" "MONITOR-QUAL-01" {
 
   network_device {
     bridge = "vmbr2"
-    vlan_id = 10
+    vlan_id = 20
     model = "virtio"
   }
 
   network_device {
     bridge = "vmbr2"
-    vlan_id = 99
+    vlan_id = 98
     model = "virtio"
   }
 
@@ -175,7 +175,7 @@ resource "proxmox_virtual_environment_vm" "VPS-QUAL-01" {
   tags = ["linux","server","qual"]
   node_name = "LeMans"
   stop_on_destroy = true
-  vm_id = 106
+  vm_id = 107
 
   agent {
     enabled = true
@@ -183,13 +183,13 @@ resource "proxmox_virtual_environment_vm" "VPS-QUAL-01" {
 
   network_device {
     bridge = "vmbr2"
-    vlan_id = 10
+    vlan_id = 20
     model = "virtio"
   }
 
   network_device {
     bridge = "vmbr2"
-    vlan_id = 99
+    vlan_id = 98
     model = "virtio"
   }
 
@@ -225,7 +225,6 @@ resource "proxmox_virtual_environment_vm" "VPS-QUAL-01" {
     node_name = "LeMans"
   }
 }
-
 
 resource "proxmox_virtual_environment_pool" "QUAL" {
   pool_id = "QUAL"

@@ -1,13 +1,17 @@
 ---
+- name: Specific tasks for Proxmox VMs
+  hosts: proxmox
+  become: true
+  
+  tasks:
+    - name: Set DNS server to 192.168.10.254
+      ansible.builtin.copy:
+        content: "nameserver 192.168.10.254"
+        dest: /etc/resolv.conf
+
 - name: Base configuration for all servers
   hosts: all
   become: true
-
-  pre_tasks:
-    - name: Update DNS servers to 9.9.9.9
-      ansible.builtin.copy:
-        content: "nameserver 9.9.9.9"
-        dest: /etc/resolv.conf
 
   roles:
     - prometheus.prometheus.node_exporter
@@ -48,16 +52,9 @@
         regexp: '^XKBLAYOUT="us"'
         replace: 'XKBLAYOUT="fr"'
 
-    - name: Set hostname
-      ansible.builtin.hostname:
-        name: '{{ ansible_facts.hostname }}'
-
-  handlers:
     - name: Restart SSH
       ansible.builtin.service:
         name: ssh
         state: restarted
 
-    - name: Reboot host
-      ansible.builtin.reboot:
-        
+

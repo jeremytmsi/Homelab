@@ -46,18 +46,6 @@
   become: true
 
   tasks:
-    - name: Install NFS utilities
-      ansible.builtin.apt:
-        name: "nfs-common"
-        state: latest
-
-    - name: Mount NFS drive
-      ansible.posix.mount:
-        src: 100.92.199.20:/mnt/Data
-        path: /mnt/Data
-        state: mounted
-        fstype: nfs
-
     - name: Launch portainer container
       community.docker.docker_container:
         name: portainer
@@ -72,11 +60,13 @@
  
 - name: Launch Portainer agent for VPS-01 server
   hosts: VPS-QUAL-01
+  become: true
+
   tasks:
     - name: Launch Portainer agent container
       community.docker.docker_container:
         name: portainer-agent
-        image: portainer-ce/agent
+        image: portainer/agent
         state: started
         published_ports:
           - 9001:9001
