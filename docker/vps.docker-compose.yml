@@ -1,0 +1,17 @@
+services:
+  grafana:
+    image: grafana/grafana
+    container_name: grafana
+    ports:
+      - 3000:3000
+    volumes:
+      - grafana_config:/etc/grafana
+    networks:
+      - front
+
+networks:
+  front:
+    external: true
+
+volumes:
+  grafana_config:

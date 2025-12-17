@@ -41,6 +41,10 @@
         state: latest
         update_cache: true
 
+    - name: Create front network in Docker
+      community.docker.docker_network:
+        name: front
+     
 - name: Mount NFS drive and launch Portainer container for SRV-01 server
   hosts: SRV-QUAL-01
   become: true
@@ -58,10 +62,6 @@
           - /var/run/docker.sock:/var/run/docker.sock
         restart_policy: "unless-stopped"
 
-    - name: Create front network in Docker
-      community.docker.docker_network:
-        name: front
- 
 - name: Launch Portainer agent for VPS-01 server
   hosts: VPS-QUAL-01
   become: true
