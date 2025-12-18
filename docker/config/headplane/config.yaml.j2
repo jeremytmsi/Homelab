@@ -62,7 +62,7 @@ headscale:
 
   # Optional, public URL if its different from the `headscale.url`
   # This affects certain parts of the web UI which shows Headscale's URL
-  # public_url: "https://headscale.example.com"
+  public_url: 'http://vpn.{{ base_host }}'
 
   # Path to the Headscale configuration file
   # This is optional, but HIGHLY recommended for the best experience
@@ -123,7 +123,7 @@ integration:
   # This does not include the agent integration (above), which can be enabled
   # at the same time as any of these and is recommended for the best experience.
   docker:
-    enabled: false
+    enabled: true
 
     # By default we check for the presence of a container label (see the docs)
     # to determine the container to signal when changes are made to DNS settings.
@@ -202,7 +202,7 @@ integration:
   # use_pkce: true
 
   # If you want to disable traditional login via Headscale API keys
-   disable_api_key_login: true
+    disable_api_key_login: true
 
   # By default profile pictures are pulled from the OIDC provider when
   # we go to fetch the userinfo endpoint. Optionally, this can be set to

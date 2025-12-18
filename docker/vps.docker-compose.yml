@@ -17,9 +17,6 @@ services:
     image: headscale/headscale:stable
     container_name: headscale
     restart: always
-    ports:
-      - 8081:8080
-      - 9090:9090
     volumes:
       - headscale_config:/etc/headscale
       - headscale_lib:/var/lib/headscale
@@ -36,13 +33,14 @@ services:
     networks:
       - front
     labels:
+      - traefik.enable=true
+      - traefik.http.routers.headscale.rule=Host(`vpn.${BASE_HOST}`)
+      - traefik.http.routers.headscale.entrypoints=web
       - me.tale.headplane.target=headscale
 
   headplane:
     image: ghcr.io/tale/headplane
     container_name: headplane
-    ports:
-      - 3000:3000
     restart: unless-stopped
     depends_on:
       - headscale
