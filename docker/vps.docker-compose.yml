@@ -69,7 +69,7 @@ services:
       - POSTGRES_PASSWORD=${PG_PASS:?database password required}
       - POSTGRES_USER=${PG_USER:-authentik}
     networks:
-      - backend
+      - front
 
   authentik_server:
     image: ${AUTHENTIK_IMAGE:-ghcr.io/goauthentik/server}:${AUTHENTIK_TAG:-2025.10.3}
@@ -89,7 +89,6 @@ services:
       - authentik_db
     networks:
       - front
-      - backend
     labels:
       - traefik.enable=true
       - traefik.http.routers.authentik.rule=Host(`auth.${BASE_HOST}`)
@@ -117,13 +116,10 @@ services:
     user: root
     networks:
       - front
-      - backend
 
 
 networks:
   front:
-    external: true
-  backend:
     external: true
 
 volumes:
