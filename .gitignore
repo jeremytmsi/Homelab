@@ -8,3 +8,5 @@ terraform/variables.tfvars
 ansible/infra/prod/variables/storage_variables.yml
 ansible/infra/prod/variables/tailscale_variables.yml
 docker/.env
+docker/config/headscale/config.yaml
+docker/config/headplane/config.yaml

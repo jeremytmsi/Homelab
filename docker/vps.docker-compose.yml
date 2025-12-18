@@ -2,6 +2,7 @@ services:
   grafana:
     image: grafana/grafana
     container_name: grafana
+    restart: unless-stopped
     volumes:
       - grafana_config:/etc/grafana
     networks:
@@ -12,9 +13,62 @@ services:
       - traefik.http.routers.grafana.entrypoints=web
       - traefik.http.services.grafana.loadbalancer.server.port=3000
 
+  headscale:
+    image: headscale/headscale:stable
+    container_name: headscale
+    restart: always
+    ports:
+      - 8081:8080
+      - 9090:9090
+    volumes:
+      - headscale_config:/etc/headscale
+      - headscale_lib:/var/lib/headscale
+      - headscale_runtime:/var/run/headscale
+    command: serve
+    healthcheck:
+      test: ["CMD", "headscale", "health"]
+    cap_add:
+      - NET_ADMIN
+      - SYS_MODULE
+    sysctls:
+      - net.ipv4.ip_forward=1
+      - net.ipv4.conf.all.src_valid_mark=1
+    networks:
+      - front
+    labels:
+      - me.tale.headplane.target=headscale
+
+  headplane:
+    image: ghcr.io/tale/headplane
+    container_name: headplane
+    ports:
+      - 3000:3000
+    restart: unless-stopped
+    depends_on:
+      - headscale
+    volumes:
+      - headplane_config:/etc/headplane
+      - headplane_data:/var/lib/headplane
+      - headscale_config:/etc/headscale
+      - /var/run/docker.sock:/var/run/docker.sock:ro
+    networks:
+      - front
+    labels:
+      - traefik.enable=true
+      - traefik.http.routers.headplane.rule=Host(`vpn.${BASE_HOST}`) && PathPrefix(`/admin`)
+      - traefik.http.routers.headplane.entrypoints=web
+      - traefik.http.services.headplane.loadbalancer.server.port=3000
+
 networks:
   front:
     external: true
 
 volumes:
   grafana_config:
+  headscale_config:
+    external: true
+  headscale_lib:
+  headscale_runtime:
+  headplane_config:
+    external: true
+  headplane_data:

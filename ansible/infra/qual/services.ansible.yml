@@ -62,7 +62,7 @@
           - /var/run/docker.sock:/var/run/docker.sock
         restart_policy: "unless-stopped"
 
-- name: Launch Portainer agent for VPS-01 server
+- name: Docker tasks for VPS-01 server
   hosts: VPS-QUAL-01
   become: true
 
@@ -78,3 +78,21 @@
           - /var/run/docker.sock:/var/run/docker.sock
           - /var/lib/docker/volumes:/var/lib/docker/volumes
         restart_policy: "unless-stopped"
+
+    - name: Create headscale_config Docker volume
+      community.docker.docker_volume:
+        name: headscale_config
+
+    - name: Copy headscale config in volume
+      ansible.builtin.template:
+        src: ../../../docker/config/headscale/config.yaml.j2
+        dest: /var/lib/docker/volumes/headscale_config/_data/config.yaml
+
+    - name: Create headplane_config Docker volume
+      community.docker.docker_volume:
+        name: headplane_config
+
+    - name: Copy headplane config in volume
+      ansible.builtin.template:
+        src: ../../../docker/config/headplane/config.yaml.j2
+        dest: /var/lib/docker/volumes/headplane_config/_data/config.yaml
