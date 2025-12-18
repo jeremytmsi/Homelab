@@ -36,6 +36,7 @@ services:
       - traefik.enable=true
       - traefik.http.routers.headscale.rule=Host(`vpn.${BASE_HOST}`)
       - traefik.http.routers.headscale.entrypoints=web
+      - traefik.http.services.headscale.loadbalancer.server.port=8080
       - me.tale.headplane.target=headscale
 
   headplane:
