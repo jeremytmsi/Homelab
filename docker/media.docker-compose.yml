@@ -1,0 +1,17 @@
+services:
+  media:
+    image: jellyfin/jellyfin
+    container_name: jellyfin
+    hostname: media
+    ports:
+      - 8096:8096
+    volumes:
+      - /mnt/Data/Multimedia/Medias:/media
+      - jellyfin_config:/config
+
+networks:
+  front:
+    external: true
+
+volumes:
+  jellyfin_config:
