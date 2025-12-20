@@ -91,6 +91,18 @@ services:
     networks:
       - front
 
+  prowlarr:
+    image: lscr.io/linuxserver/prowlarr
+    container_name: prowlarr
+    volumes:
+      - prowlarr_config:/config
+    ports:
+      - 8089:9696
+    environment:
+      - PUID=1000
+      - PGID=1000
+      - TZ=Europe/Paris
+
 
 networks:
   front:
@@ -103,3 +115,4 @@ volumes:
   radarr_config:
   lidarr_config:
   navidrome_data:
+  prowlarr_config:
