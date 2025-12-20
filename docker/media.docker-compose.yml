@@ -8,7 +8,7 @@ services:
       - 8083:8096
     volumes:
       - jellyfin_config:/config
-      #- /mnt/Data/Multimedia/Medias:/media
+      - /mnt/Data/Multimedia/Medias:/media
 
   torrent:
     image: lscr.io/linuxserver/transmission
@@ -22,7 +22,7 @@ services:
       - 8084:9091
     volumes:
       - transmission_config:/config
-      #- /mnt/Data/Multimedia/Downloads:/downloads
+      - /mnt/Data/Multimedia/Downloads:/downloads
 
   sonarr:
     image: lscr.io/linuxserver/sonarr
@@ -34,12 +34,27 @@ services:
       - TZ=Europe/Paris
     volumes:
       - sonarr_config:/config
-      #- /mnt/Data/Multimedia/Medias/Series:/media/series
-      #- /mnt/Data/Multimedia/Medias/Animes:/media/animes
-      #- /mnt/Data/Multimedia/Downloads/series:/mnt/Downloads/series
-      #- /mnt/Data/Multimedia/Downloads/animes:/mnt/Downloads/animes
+      - /mnt/Data/Multimedia/Medias/Series:/media/series
+      - /mnt/Data/Multimedia/Medias/Animes:/media/animes
+      - /mnt/Data/Multimedia/Downloads/series:/mnt/Downloads/series
+      - /mnt/Data/Multimedia/Downloads/animes:/mnt/Downloads/animes
     ports:
       - 8085:8989
+
+  radarr:
+    image: lscr.io/linuxserver/radarr
+    container_name: radarr
+    restart: unless-stopped
+    environment:
+      - PUID=1000
+      - PGID=1000
+      - TZ=Europe/Paris
+    volumes:
+      - radarr_config:/config
+      - /mnt/Data/Multimedia/Medias/Films:/media/films
+      - /mnt/Data/Multimedia/Downloads/films:/mnt/Downloads/films
+    ports:
+      - 8086:7878
 
 
 networks:
@@ -50,3 +65,4 @@ volumes:
   jellyfin_config:
   transmission_config:
   sonarr_config:
+  radarr_config:
