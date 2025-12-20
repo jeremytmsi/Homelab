@@ -9,6 +9,8 @@ services:
     volumes:
       - jellyfin_config:/config
       - /mnt/Data/Multimedia/Medias:/media
+    networks:
+      - front
 
   torrent:
     image: lscr.io/linuxserver/transmission
@@ -23,6 +25,8 @@ services:
     volumes:
       - transmission_config:/config
       - /mnt/Data/Multimedia/Downloads:/downloads/complete
+    networks:
+      - front
 
   sonarr:
     image: lscr.io/linuxserver/sonarr
@@ -40,6 +44,8 @@ services:
       - /mnt/Data/Multimedia/Downloads/animes:/mnt/Downloads/animes
     ports:
       - 8085:8989
+    networks:
+      - front
 
   radarr:
     image: lscr.io/linuxserver/radarr
@@ -55,6 +61,8 @@ services:
       - /mnt/Data/Multimedia/Downloads/films:/mnt/Downloads/films
     ports:
       - 8086:7878
+    networks:
+      - front
 
   lidarr:
     image: lscr.io/linuxserver/lidarr
@@ -69,6 +77,8 @@ services:
       - /mnt/Data/Multimedia/Downloads/Music:/mnt/Downloads/music
     ports:
       - 8087:8686
+    networks:
+      - front
 
   navidrome:
     image: deluan/navidrome
@@ -78,6 +88,8 @@ services:
     volumes:
       - navidrome_data:/data
       - /mnt/Data/Multimedia/Medias/Music:/music:ro
+    networks:
+      - front
 
 
 networks:
