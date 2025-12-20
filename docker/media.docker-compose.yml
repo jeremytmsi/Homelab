@@ -22,7 +22,7 @@ services:
       - 8084:9091
     volumes:
       - transmission_config:/config
-      - /mnt/Data/Multimedia/Downloads:/downloads
+      - /mnt/Data/Multimedia/Downloads:/downloads/complete
 
   sonarr:
     image: lscr.io/linuxserver/sonarr
@@ -70,6 +70,15 @@ services:
     ports:
       - 8087:8686
 
+  navidrome:
+    image: deluan/navidrome
+    container_name: navidrome
+    ports:
+      - 8088:4533
+    volumes:
+      - navidrome_data:/data
+      - /mnt/Data/Multimedia/Medias/Music:/music:ro
+
 
 networks:
   front:
@@ -81,3 +90,4 @@ volumes:
   sonarr_config:
   radarr_config:
   lidarr_config:
+  navidrome_data:
