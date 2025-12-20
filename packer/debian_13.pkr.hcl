@@ -32,12 +32,12 @@ source "proxmox-iso" "debian-13" {
   boot_command = ["<down>e<down><down><down><end>priority=critical auto=true preseed/url=http://{{ .HTTPIP }}:{{ .HTTPPort }}/debian-preseed.cfg<leftCtrlOn>x<leftCtrlOff>"]
   boot_wait = "30s"
   http_directory = "packer/http"
-  http_interface = "utun2"
+  http_interface = "utun4"
 
   disks {
     type = "scsi"
     storage_pool = "local"
-    disk_size = "30G"
+    disk_size = "60G"
     format = "qcow2"
   }
 
