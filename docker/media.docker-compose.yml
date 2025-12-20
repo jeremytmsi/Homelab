@@ -94,6 +94,7 @@ services:
   prowlarr:
     image: lscr.io/linuxserver/prowlarr
     container_name: prowlarr
+    restart: unless-stopped
     volumes:
       - prowlarr_config:/config
     ports:
@@ -102,6 +103,19 @@ services:
       - PUID=1000
       - PGID=1000
       - TZ=Europe/Paris
+    networks:
+      - front
+
+  flaresolverr:
+    image: ghcr.io/flaresolverr/flaresolverr
+    container_name: flaresolverr
+    ports:
+      - 8090:8191
+    restart: unless-stopped
+    environment:
+      - LOG_LEVEL=info
+    networks:
+      - front
 
 
 networks:
