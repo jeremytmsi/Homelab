@@ -2,12 +2,28 @@ services:
   media:
     image: jellyfin/jellyfin
     container_name: jellyfin
+    restart: unless-stopped
     hostname: media
     ports:
-      - 8096:8096
+      - 8083:8096
     volumes:
-      - /mnt/Data/Multimedia/Medias:/media
       - jellyfin_config:/config
+      - /mnt/Data/Multimedia/Medias:/media
+
+  torrent:
+    image: lscr.io/linuxserver/transmission
+    container_name: transmission
+    restart: unless-stopped
+    environment:
+      - PUID=1000
+      - PGID=1000
+      - TZ=Europe/Paris
+    ports:
+      - 8084:9091
+    volumes:
+      - transmission_config:/config
+      - /mnt/Data/Multimedia/Downloads:/downloads
+
 
 networks:
   front:
@@ -15,3 +31,4 @@ networks:
 
 volumes:
   jellyfin_config:
+  transmission_config:
