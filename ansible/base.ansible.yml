@@ -1,8 +1,18 @@
 ---
-- name: Specific tasks for Proxmox VMs
-  hosts: proxmox
+- name: Specific tasks for Qual Proxmox VMs
+  hosts: proxmox:&qual
   become: true
   
+  tasks:
+    - name: Set DNS server to 192.168.20.254
+      ansible.builtin.copy:
+        content: "nameserver 192.168.20.254"
+        dest: /etc/resolv.conf
+
+- name: Specific tasks for Prod Proxmox VMs
+  hosts: proxmox:&prod
+  become: true
+
   tasks:
     - name: Set DNS server to 192.168.10.254
       ansible.builtin.copy:
@@ -56,5 +66,8 @@
       ansible.builtin.service:
         name: ssh
         state: restarted
+
+    - name: Reboot
+      ansible.builtin.reboot:
 
 
