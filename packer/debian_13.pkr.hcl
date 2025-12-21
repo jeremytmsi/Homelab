@@ -29,8 +29,8 @@ source "proxmox-iso" "debian-13" {
     iso_checksum = "none"
   }
 
-  boot_command = ["<down>e<down><down><down><end>priority=critical auto=true preseed/url=http://{{ .HTTPIP }}:{{ .HTTPPort }}/debian-preseed.cfg<leftCtrlOn>x<leftCtrlOff>"]
-  boot_wait = "30s"
+  boot_command = ["<esc><wait>auto console-keymaps-at/keymap=fr console-setup/ask_detect=false debconf/frontend=noninteractive fb=false url=http://{{ .HTTPIP }}:{{ .HTTPPort }}/debian-preseed.cfg<enter>"]
+  boot_wait = "10s"
   http_directory = "packer/http"
   http_interface = "utun4"
 
@@ -38,7 +38,7 @@ source "proxmox-iso" "debian-13" {
     type = "scsi"
     storage_pool = "local"
     disk_size = "60G"
-    format = "qcow2"
+    format = "raw"
   }
 
   network_adapters {
@@ -47,14 +47,7 @@ source "proxmox-iso" "debian-13" {
     model = "e1000"
   }
 
-  efi_config {
-    efi_storage_pool = "local"
-    pre_enrolled_keys = false
-    efi_format = "qcow2"
-    efi_type = "4m"
-  }
-
-  bios = "ovmf"
+  bios = "seabios"
   qemu_agent = true
   scsi_controller = "virtio-scsi-pci"
   cpu_type = "host"
