@@ -4,22 +4,31 @@ resource "proxmox_virtual_environment_vm" "SRV-QUAL-01" {
   tags = ["linux","server","qual"]
   node_name = "LeMans"
   stop_on_destroy = true
-  vm_id = 102
+  vm_id = 110
 
   agent {
     enabled = true
   }
 
+  cpu {
+    sockets = 1
+    cores = 16
+  }
+
+  memory {
+    dedicated = 16384
+  }
+
   network_device {
     bridge = "vmbr2"
     vlan_id = 20
-    model = "virtio"
+    model = "e1000"
   }
 
   network_device {
     bridge = "vmbr2"
     vlan_id = 98
-    model = "virtio"
+    model = "e1000"
   }
 
   initialization {
@@ -61,7 +70,7 @@ resource "proxmox_virtual_environment_vm" "MAIL-QUAL-01" {
   tags = ["linux","server","qual"]
   node_name = "LeMans"
   stop_on_destroy = true
-  vm_id = 103
+  vm_id = 111
 
   agent {
     enabled = true
@@ -70,13 +79,13 @@ resource "proxmox_virtual_environment_vm" "MAIL-QUAL-01" {
   network_device {
     bridge = "vmbr2"
     vlan_id = 20
-    model = "virtio"
+    model = "e1000"
   }
 
   network_device {
     bridge = "vmbr2"
     vlan_id = 98
-    model = "virtio"
+    model = "e1000"
   }
 
   initialization {
@@ -118,7 +127,7 @@ resource "proxmox_virtual_environment_vm" "MONITOR-QUAL-01" {
   tags = ["linux","server","qual"]
   node_name = "LeMans"
   stop_on_destroy = true
-  vm_id = 104
+  vm_id = 112
 
   agent {
     enabled = true
@@ -127,13 +136,13 @@ resource "proxmox_virtual_environment_vm" "MONITOR-QUAL-01" {
   network_device {
     bridge = "vmbr2"
     vlan_id = 20
-    model = "virtio"
+    model = "e1000"
   }
 
   network_device {
     bridge = "vmbr2"
     vlan_id = 98
-    model = "virtio"
+    model = "e1000"
   }
 
   initialization {

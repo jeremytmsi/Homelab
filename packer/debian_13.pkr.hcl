@@ -14,8 +14,8 @@ source "proxmox-iso" "debian-13" {
   token = var.proxmox_token
   insecure_skip_tls_verify = true
 
-  template_name = "DEBIAN-13.2-UEFI-TPL"
-  vm_name = "DEBIAN-13.2-UEFI-TPL"
+  template_name = "DEBIAN-13.2-TPL"
+  vm_name = "DEBIAN-13.2-TPL"
   template_description = "Debian 13 template"
   tags = "template;linux;server"
   pool = "TEMPLATE"
@@ -32,7 +32,7 @@ source "proxmox-iso" "debian-13" {
   boot_command = ["<esc><wait>auto console-keymaps-at/keymap=fr console-setup/ask_detect=false debconf/frontend=noninteractive fb=false url=http://{{ .HTTPIP }}:{{ .HTTPPort }}/debian-preseed.cfg<enter>"]
   boot_wait = "10s"
   http_directory = "packer/http"
-  http_interface = "utun4"
+  http_interface = "utun3"
 
   disks {
     type = "scsi"
