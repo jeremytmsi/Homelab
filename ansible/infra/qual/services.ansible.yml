@@ -1,6 +1,6 @@
 ---
 - name: Configure compute server
-  hosts: services:&qual
+  hosts: docker
   become: true
 
   tasks:
@@ -44,7 +44,12 @@
     - name: Create front network in Docker
       community.docker.docker_network:
         name: front
-     
+ 
+- name: Launch portainer container
+  hosts: qual:&services
+  become: true
+
+  tasks:
     - name: Launch portainer container
       community.docker.docker_container:
         name: portainer

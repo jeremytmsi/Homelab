@@ -1,6 +1,6 @@
 resource "ansible_host" "SRV-QUAL-01" {
   name = proxmox_virtual_environment_vm.SRV-QUAL-01.name
-  groups = ["services","qual"]
+  groups = ["services","qual","docker"]
   variables = {
     ansible_user = "ansible"
     ansible_ssh_private_key_file = var.ssh_private_key
@@ -30,7 +30,7 @@ resource "ansible_host" "MONITOR-QUAL-01" {
 
 resource "ansible_host" "VPS-QUAL-01" {
   name = proxmox_virtual_environment_vm.VPS-QUAL-01.name
-  groups = ["qual","vps"]
+  groups = ["qual","vps","docker"]
   variables = {
     ansible_user = "ansible"
     ansible_ssh_private_key_file = var.ssh_private_key

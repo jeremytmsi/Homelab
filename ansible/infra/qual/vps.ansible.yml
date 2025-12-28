@@ -1,5 +1,5 @@
 - name: Docker tasks for vps servers
-  hosts: vps
+  hosts: qual:&vps
   become: true
 
   tasks:

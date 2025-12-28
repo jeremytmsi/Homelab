@@ -13,6 +13,7 @@
               - "192.168.20.253:9100"
               - "192.168.20.252:9100"
               - "192.168.20.251:9100"
+              - "192.168.20.250:9100"
         relabel_configs:
           - source_labels: [__address__]
             target_label: instance
