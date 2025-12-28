@@ -3,16 +3,13 @@
   hosts: qual
   become: true
 
-  roles:
-    - prometheus.prometheus.node_exporter
+  tasks:
 
-  pre_tasks:
     - name: Set DNS server to 192.168.20.254
       ansible.builtin.copy:
         content: "nameserver 192.168.20.254"
         dest: /etc/resolv.conf
 
-  tasks:
     - name: Update packages
       ansible.builtin.apt:
         name: "*"
@@ -56,4 +53,9 @@
     - name: Reboot
       ansible.builtin.reboot:
 
+- name: Install Node Exporter
+  hosts: qual:!vps
+  become: true
 
+  roles:
+    - prometheus.prometheus.node_exporter
