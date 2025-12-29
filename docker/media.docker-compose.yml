@@ -21,6 +21,7 @@ services:
       - PGID=0
       - TZ=Europe/Paris
       - WEBUI_PORT=8084
+      - DOCKER_MODS=ghcr.io/vuetorrent/vuetorrent-lsio-mod:latest
     ports:
       - 8084:8084
     volumes:
