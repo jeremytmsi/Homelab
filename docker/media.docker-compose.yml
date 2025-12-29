@@ -38,8 +38,8 @@ services:
       - TZ=Europe/Paris
     volumes:
       - sonarr_config:/config
-      - /mnt/Data/Multimedia/Medias/Series:/media/series
-      - /mnt/Data/Multimedia/Medias/Animes:/media/animes
+      - /mnt/Data/Multimedia/Medias/Series:/media/Series
+      - /mnt/Data/Multimedia/Medias/Animes:/media/Animes
       - /mnt/Data/Multimedia/Downloads/series:/mnt/Downloads/series
       - /mnt/Data/Multimedia/Downloads/animes:/mnt/Downloads/animes
     ports:
@@ -57,7 +57,7 @@ services:
       - TZ=Europe/Paris
     volumes:
       - radarr_config:/config
-      - /mnt/Data/Multimedia/Medias/Films:/media/films
+      - /mnt/Data/Multimedia/Medias/Films:/media/Films
       - /mnt/Data/Multimedia/Downloads/films:/mnt/Downloads/films
     ports:
       - 8086:7878
@@ -74,7 +74,7 @@ services:
     volumes:
       - lidarr_config:/config
       - /mnt/Data/Multimedia/Medias/Music:/media/music
-      - /mnt/Data/Multimedia/Downloads/Music:/mnt/Downloads/music
+      - /mnt/Data/Multimedia/Downloads/music:/mnt/Downloads/music
     ports:
       - 8087:8686
     networks:
