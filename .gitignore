@@ -5,7 +5,8 @@ terraform/.terraform.lock.hcl
 terraform/terraform.tfstate
 terraform/terraform.tfstate.backup
 terraform/variables.tfvars
-ansible/infra/qual/vpn_variables.yml
+ansible/infra/qual/variables/vpn_variables.yml
+ansible/infra/qual/variables/storage_variables.yml
 docker/.env
 docker/config/headscale/config.yaml
 docker/config/headplane/config.yaml

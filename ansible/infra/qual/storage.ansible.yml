@@ -1,0 +1,37 @@
+---
+- name: Configure storage server
+  hosts: qual:&storage
+  become: true
+
+  tasks:
+    - name: Mount RAID
+      ansible.posix.mount:
+        path: /mnt/Data
+        src: /dev/md0
+        fstype: ext4
+        state: mounted
+
+    - name: Install NFS server
+      ansible.builtin.apt:
+        name:
+          - nfs-common
+          - nfs-kernel-server
+        state: present
+
+    - name: Ensure directories to export exists
+      ansible.builtin.file:
+        path: "{{ item }}"
+        state: directory
+      with_items: "{{ nfs_exports | map('split') | map('first') | unique }}"
+
+    - name: Copy exports file
+      ansible.builtin.template:
+        src: templates/exports.j2
+        dest: /etc/exports
+        owner: root
+        group: root
+        mode: 0644
+
+    - name: Reload NFS server
+      ansible.builtin.command:
+        cmd: "exportfs -ra"
