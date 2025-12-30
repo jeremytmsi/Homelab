@@ -1,9 +1,10 @@
 ---
 - name: Configure storage server
-  hosts: qual:&storage
+  hosts: storage
   become: true
 
   tasks:
+
     - name: Mount RAID
       ansible.posix.mount:
         path: /mnt/Data

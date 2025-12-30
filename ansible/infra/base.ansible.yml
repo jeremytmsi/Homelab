@@ -1,15 +1,30 @@
 ---
-- name: Base configuration for all servers
-  hosts: qual
+- name: Set DNS server for qual servers
+  hosts: qual:!vps
   become: true
 
   tasks:
-
     - name: Set DNS server to 192.168.20.254
       ansible.builtin.copy:
         content: "nameserver 192.168.20.254"
         dest: /etc/resolv.conf
 
+- name: Set DNS server for prod servers
+  hosts: prod:!vps
+  become: true
+
+  tasks:
+    - name: Set DNS server to 192.168.10.254
+      ansible.builtin.copy:
+        content: "nameserver 192.168.10.254"
+        dest: /etc/resolv.conf
+
+
+- name: Base configuration for all servers
+  hosts: all
+  become: true
+
+  tasks:
     - name: Update packages
       ansible.builtin.apt:
         name: "*"
@@ -50,12 +65,15 @@
         name: ssh
         state: restarted
 
-    - name: Reboot
-      ansible.builtin.reboot:
-
 - name: Install Node Exporter
-  hosts: qual:!vps
+  hosts: all:!vps
   become: true
 
   roles:
     - prometheus.prometheus.node_exporter
+
+  tasks:
+    - name: Reboot
+      ansible.builtin.reboot:
+
+

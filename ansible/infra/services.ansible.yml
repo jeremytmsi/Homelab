@@ -46,7 +46,7 @@
         name: front
  
 - name: Launch portainer container and mount NFS partition
-  hosts: qual:&services
+  hosts: docker:!vps
   become: true
 
   tasks:
@@ -61,15 +61,3 @@
           - portainer_data:/data
           - /var/run/docker.sock:/var/run/docker.sock
         restart_policy: "unless-stopped"
-
-    - name: Install NFS client
-      ansible.builtin.apt:
-        name: nfs-common
-        state: present
-
-    - name: Mount NFS data partition
-      ansible.posix.mount:
-        path: /mnt/Data
-        src: 192.168.20.250:/mnt/Data
-        fstype: nfs
-        state: mounted
