@@ -38,7 +38,7 @@ source "proxmox-iso" "debian-13" {
     type = "scsi"
     storage_pool = "local"
     disk_size = "60G"
-    format = "qcow2"
+    format = "raw"
   }
 
   network_adapters {
