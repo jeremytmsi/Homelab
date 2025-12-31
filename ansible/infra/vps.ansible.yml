@@ -3,16 +3,16 @@
   become: true
 
   tasks:
-    - name: Launch Portainer agent container
+    - name: Launch portainer container
       community.docker.docker_container:
-        name: portainer-agent
-        image: portainer/agent
+        name: portainer
+        image: portainer/portainer-ce
         state: started
         published_ports:
-          - 9001:9001
+          - '9002:9000'
         volumes:
+          - portainer_data:/data
           - /var/run/docker.sock:/var/run/docker.sock
-          - /var/lib/docker/volumes:/var/lib/docker/volumes
         restart_policy: "unless-stopped"
 
     - name: Create headscale_config Docker volume
