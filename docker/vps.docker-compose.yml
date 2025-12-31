@@ -3,20 +3,19 @@ services:
     image: grafana/grafana
     container_name: grafana
     restart: unless-stopped
+    ports:
+      - 3000:3000
     volumes:
       - grafana_config:/etc/grafana
     networks:
       - front
-    labels:
-      - traefik.enable=true
-      - traefik.http.routers.grafana.rule=Host(`monitoring.${BASE_HOST}`)
-      - traefik.http.routers.grafana.entrypoints=web
-      - traefik.http.services.grafana.loadbalancer.server.port=3000
 
   headscale:
     image: headscale/headscale:stable
     container_name: headscale
     restart: always
+    ports:
+      - 8080:8080
     volumes:
       - headscale_config:/etc/headscale
       - headscale_lib:/var/lib/headscale
@@ -32,17 +31,13 @@ services:
       - net.ipv4.conf.all.src_valid_mark=1
     networks:
       - front
-    labels:
-      - traefik.enable=true
-      - traefik.http.routers.headscale.rule=Host(`vpn.${BASE_HOST}`)
-      - traefik.http.routers.headscale.entrypoints=web
-      - traefik.http.services.headscale.loadbalancer.server.port=8080
-      - me.tale.headplane.target=headscale
 
   headplane:
     image: ghcr.io/tale/headplane:0.6.2-beta.3
     container_name: headplane
     restart: unless-stopped
+    ports:
+      - 3001:3000
     depends_on:
       - headscale
     volumes:
@@ -52,11 +47,6 @@ services:
       - /var/run/docker.sock:/var/run/docker.sock:ro
     networks:
       - front
-    labels:
-      - traefik.enable=true
-      - traefik.http.routers.headplane.rule=Host(`vpn.${BASE_HOST}`) && PathPrefix(`/admin`)
-      - traefik.http.routers.headplane.entrypoints=web
-      - traefik.http.services.headplane.loadbalancer.server.port=3000
 
   authentik_db:
     image: postgres:16-alpine
@@ -76,6 +66,8 @@ services:
     container_name: authentik_server
     command: server
     restart: unless-stopped
+    ports:
+      - 9000:9000
     volumes:
       - authentik_media:/media
       - authentik_templates:/templates
@@ -89,11 +81,6 @@ services:
       - authentik_db
     networks:
       - front
-    labels:
-      - traefik.enable=true
-      - traefik.http.routers.authentik.rule=Host(`auth.${BASE_HOST}`)
-      - traefik.http.routers.authentik.entrypoints=web
-      - traefik.http.services.authentik.loadbalancer.server.port=9000
 
   authentik_worker:
     image: ${AUTHENTIK_IMAGE:-ghcr.io/goauthentik/server}:${AUTHENTIK_TAG:-2025.10.3}
