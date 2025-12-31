@@ -21,3 +21,7 @@ services:
       - traefik.http.routers.traefik.rule=Host(`traefik.${BASE_HOST}`)
       - traefik.http.routers.traefik.entrypoints=web
       - traefik.http.routers.traefik.service=api@internal
+
+networks:
+  front:
+    external: true
