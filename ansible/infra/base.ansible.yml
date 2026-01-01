@@ -71,9 +71,3 @@
 
   roles:
     - prometheus.prometheus.node_exporter
-
-  tasks:
-    - name: Reboot
-      ansible.builtin.reboot:
-
-
