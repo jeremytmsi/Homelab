@@ -11,44 +11,6 @@ services:
     networks:
       - front
 
-  headscale:
-    image: headscale/headscale:stable
-    container_name: headscale
-    restart: always
-    ports:
-      - 8080:8080
-    volumes:
-      - headscale_config:/etc/headscale
-      - headscale_lib:/var/lib/headscale
-      - headscale_runtime:/var/run/headscale
-    command: serve
-    healthcheck:
-      test: ["CMD", "headscale", "health"]
-    cap_add:
-      - NET_ADMIN
-      - SYS_MODULE
-    sysctls:
-      - net.ipv4.ip_forward=1
-      - net.ipv4.conf.all.src_valid_mark=1
-    networks:
-      - front
-
-  headplane:
-    image: ghcr.io/tale/headplane:0.6.2-beta.3
-    container_name: headplane
-    restart: unless-stopped
-    ports:
-      - 3001:3000
-    depends_on:
-      - headscale
-    volumes:
-      - headplane_config:/etc/headplane
-      - headplane_data:/var/lib/headplane
-      - headscale_config:/etc/headscale
-      - /var/run/docker.sock:/var/run/docker.sock:ro
-    networks:
-      - front
-
   authentik_db:
     image: postgres:16-alpine
     container_name: authentik_db
