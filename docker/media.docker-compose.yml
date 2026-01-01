@@ -69,6 +69,7 @@ services:
   lidarr:
     image: lscr.io/linuxserver/lidarr
     container_name: lidarr
+    restart: unless-stopped
     environment:
       - PUID=0
       - PGID=0
@@ -79,17 +80,6 @@ services:
       - /mnt/Data/Multimedia/Downloads/music:/mnt/Downloads/music
     ports:
       - 8087:8686
-    networks:
-      - front
-
-  navidrome:
-    image: deluan/navidrome
-    container_name: navidrome
-    ports:
-      - 8088:4533
-    volumes:
-      - navidrome_data:/data
-      - /mnt/Data/Multimedia/Medias/Music:/music:ro
     networks:
       - front
 
