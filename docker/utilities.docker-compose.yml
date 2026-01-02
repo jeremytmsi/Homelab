@@ -10,13 +10,16 @@ services:
     networks:
       - front
     environment:
+      - DOMAIN=https://vault.${BASE_HOST}
+      - ADMIN_TOKEN=${VAULT_ADMIN_TOKEN}
       - SSO_ENABLED=true
-      - SSO_ONLY=true
-      - SSO_AUTHORITY=https://auth.${BASE_HOST}/application/o/vaultwarden/
+      - SSO_AUTHORITY=https://auth.${BASE_HOST}/application/o/vaultwarden
       - SSO_SCOPES="openid profile email offline_access"
       - SSO_PKCE=true
       - SSO_CLIENT_ID=${AUTHENTIK_VAULT_CLIENT_ID}
       - SSO_CLIENT_SECRET=${AUTHENTIK_VAULT_CLIENT_SECRET}
+      - SSO_SIGNUPS_MATCH_EMAIL=true
+      - SSO_ALLOW_UNKNOWN_EMAIL_VERIFICATION=true
 
   librespeed:
     image: lscr.io/linuxserver/librespeed
