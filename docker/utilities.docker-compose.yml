@@ -9,6 +9,14 @@ services:
       - 8081:80
     networks:
       - front
+    environment:
+      - SSO_ENABLED=true
+      - SSO_ONLY=true
+      - SSO_AUTHORITY=https://auth.${BASE_HOST}/application/o/vaultwarden/
+      - SSO_SCOPES="openid profile email offline_access"
+      - SSO_PKCE=true
+      - SSO_CLIENT_ID=${AUTHENTIK_VAULT_CLIENT_ID}
+      - SSO_CLIENT_SECRET=${AUTHENTIK_VAULT_CLIENT_SECRET}
 
   librespeed:
     image: lscr.io/linuxserver/librespeed
