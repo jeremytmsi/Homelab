@@ -21,6 +21,7 @@ source "proxmox-iso" "debian-13" {
   pool = "TEMPLATE"
   os = "l26"
   machine = "q35"
+  vm_id = 190
 
   boot_iso {
     type = "scsi"
@@ -32,7 +33,7 @@ source "proxmox-iso" "debian-13" {
   boot_command = ["<esc><wait>auto console-keymaps-at/keymap=fr console-setup/ask_detect=false debconf/frontend=noninteractive fb=false url=http://{{ .HTTPIP }}:{{ .HTTPPort }}/debian-preseed.cfg<enter>"]
   boot_wait = "10s"
   http_directory = "packer/http"
-  http_interface = "utun1"
+  http_interface = "utun2"
 
   disks {
     type = "scsi"
