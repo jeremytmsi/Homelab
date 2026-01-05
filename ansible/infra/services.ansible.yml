@@ -45,7 +45,7 @@
       community.docker.docker_network:
         name: front
  
-- name: Launch portainer container and mount NFS partition
+- name: Launch portainer agent container
   hosts: docker:!vps
   become: true
 
@@ -64,4 +64,19 @@
         restart_policy: "unless-stopped"
 
 
-    
+- name: Docker tasks for vps servers
+  hosts: docker:&vps
+  become: true
+
+  tasks:
+    - name: Launch portainer container
+      community.docker.docker_container:
+        name: portainer
+        image: portainer/portainer-ce
+        state: started
+        published_ports:
+          - '9001:9000'
+        volumes:
+          - portainer_data:/data
+          - /var/run/docker.sock:/var/run/docker.sock
+        restart_policy: "unless-stopped"   

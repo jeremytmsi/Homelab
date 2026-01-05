@@ -21,8 +21,11 @@
 
 
 - name: Base configuration for all servers
-  hosts: all
+  hosts: all:!vps
   become: true
+
+  roles:
+    - prometheus.prometheus.node_exporter
 
   tasks:
     - name: Update packages
@@ -54,20 +57,16 @@
         replace: "PasswordAuthentication no"
         backup: yes
 
+    - name: Restart SSH
+      ansible.builtin.service:
+        name: ssh
+        state: restarted
+
     - name: Set keyboard to FR
       ansible.builtin.replace:
         path: /etc/default/keyboard
         regexp: '^XKBLAYOUT="us"'
         replace: 'XKBLAYOUT="fr"'
 
-    - name: Restart SSH
-      ansible.builtin.service:
-        name: ssh
-        state: restarted
-
-- name: Install Node Exporter
-  hosts: all:!vps
-  become: true
-
-  roles:
-    - prometheus.prometheus.node_exporter
+    - name: Reboot
+      ansible.builtin.reboot:

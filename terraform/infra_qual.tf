@@ -4,7 +4,7 @@ resource "proxmox_virtual_environment_vm" "SRV-QUAL-01" {
   tags = ["linux","server","qual"]
   node_name = "LeMans"
   stop_on_destroy = true
-  vm_id = 110
+  vm_id = 111
 
   agent {
     enabled = true
@@ -49,15 +49,16 @@ resource "proxmox_virtual_environment_vm" "SRV-QUAL-01" {
     }
 
     user_account {
-      username = "ansible"
+      username = "jeremy"
       keys = [
         "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIE8qscFPE4POlT4WX0Ju1JmDDc0GhL5yp56z/+Tc7u/8 ansible_config",
+        "sk-ssh-ed25519@openssh.com AAAAGnNrLXNzaC1lZDI1NTE5QG9wZW5zc2guY29tAAAAIC32RZaHUzt2hlELKu7qAb0PPKnnJFHyvDHMWnhjO9l3AAAABHNzaDo= me@jeremytomasi.fr"
       ]
     }
   }
 
   clone {
-    vm_id = 101
+    vm_id = 190
     datastore_id = "local"
     full = true
     node_name = "LeMans"
@@ -70,7 +71,7 @@ resource "proxmox_virtual_environment_vm" "MONITOR-QUAL-01" {
   tags = ["linux","server","qual"]
   node_name = "LeMans"
   stop_on_destroy = true
-  vm_id = 111
+  vm_id = 112
 
   agent {
     enabled = true
@@ -106,15 +107,16 @@ resource "proxmox_virtual_environment_vm" "MONITOR-QUAL-01" {
     }
 
     user_account {
-      username = "ansible"
+      username = "jeremy"
       keys = [
         "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIE8qscFPE4POlT4WX0Ju1JmDDc0GhL5yp56z/+Tc7u/8 ansible_config",
+        "sk-ssh-ed25519@openssh.com AAAAGnNrLXNzaC1lZDI1NTE5QG9wZW5zc2guY29tAAAAIC32RZaHUzt2hlELKu7qAb0PPKnnJFHyvDHMWnhjO9l3AAAABHNzaDo= me@jeremytomasi.fr"
       ]
     }
   }
 
   clone {
-    vm_id = 101
+    vm_id = 190
     datastore_id = "local"
     full = true
     node_name = "LeMans"
@@ -127,7 +129,7 @@ resource "proxmox_virtual_environment_vm" "STORAGE-QUAL-01" {
   tags = ["linux","server","qual"]
   node_name = "LeMans"
   stop_on_destroy = true
-  vm_id = 112
+  vm_id = 113
 
   agent {
     enabled = true
@@ -184,15 +186,16 @@ resource "proxmox_virtual_environment_vm" "STORAGE-QUAL-01" {
     }
 
     user_account {
-      username = "ansible"
+      username = "jeremy"
       keys = [
         "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIE8qscFPE4POlT4WX0Ju1JmDDc0GhL5yp56z/+Tc7u/8 ansible_config",
+        "sk-ssh-ed25519@openssh.com AAAAGnNrLXNzaC1lZDI1NTE5QG9wZW5zc2guY29tAAAAIC32RZaHUzt2hlELKu7qAb0PPKnnJFHyvDHMWnhjO9l3AAAABHNzaDo= me@jeremytomasi.fr"
       ]
     }
   }
 
   clone {
-    vm_id = 101
+    vm_id = 190
     datastore_id = "local"
     full = true
     node_name = "LeMans"
@@ -208,7 +211,7 @@ resource "proxmox_virtual_environment_pool_membership" "SRV-QUAL-01" {
   vm_id = proxmox_virtual_environment_vm.SRV-QUAL-01.id
 }
 
-resource "proxmox_virtual_environment_pool_membership" "SRV-MONITOR-01" {
+resource "proxmox_virtual_environment_pool_membership" "MONITOR-QUAL-01" {
   pool_id = proxmox_virtual_environment_pool.QUAL.id
   vm_id = proxmox_virtual_environment_vm.MONITOR-QUAL-01.id
 }
