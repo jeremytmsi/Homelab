@@ -1,0 +1,35 @@
+services:
+  grafana:
+    image: grafana/grafana
+    container_name: grafana
+    restart: unless-stopped
+    ports:
+      - 3000:3000
+    volumes:
+      - grafana_config:/etc/grafana
+      - grafana_dashboards:/var/lib/grafana/dashboards
+    networks:
+      - front
+    environment:
+      GF_AUTH_GENERIC_OAUTH_ENABLED: "true"
+      GF_AUTH_GENERIC_OAUTH_NAME: "authentik"
+      GF_AUTH_GENERIC_OAUTH_CLIENT_ID: "${AUTHENTIK_GF_CLIENT_ID}"
+      GF_AUTH_GENERIC_OAUTH_CLIENT_SECRET: "${AUTHENTIK_GF_CLIENT_SECRET}"
+      GF_AUTH_GENERIC_OAUTH_SCOPES: "openid profile email"
+      GF_AUTH_GENERIC_OAUTH_AUTH_URL: "https://auth.${BASE_HOST}/application/o/authorize/"
+      GF_AUTH_GENERIC_OAUTH_TOKEN_URL: "https://auth.${BASE_HOST}/application/o/token/"
+      GF_AUTH_GENERIC_OAUTH_API_URL: "https://auth.${BASE_HOST}/application/o/userinfo/"
+      GF_AUTH_SIGNOUT_REDIRECT_URL: "https://auth.${BASE_HOST}/application/o/grafana/end-session/"
+      # Optionally enable auto-login (bypasses Grafana login screen)
+      GF_AUTH_OAUTH_AUTO_LOGIN: "true"
+      # Optionally map user groups to Grafana roles
+      # Required if Grafana is running behind a reverse proxy
+      GF_SERVER_ROOT_URL: "https://monitoring.${BASE_HOST}"
+
+networks:
+  front:
+    external: true
+
+volumes:
+  grafana_config:
+  grafana_dashboards:
