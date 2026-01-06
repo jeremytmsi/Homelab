@@ -20,8 +20,6 @@ services:
       GF_AUTH_GENERIC_OAUTH_TOKEN_URL: "https://auth.${BASE_HOST}/application/o/token/"
       GF_AUTH_GENERIC_OAUTH_API_URL: "https://auth.${BASE_HOST}/application/o/userinfo/"
       GF_AUTH_SIGNOUT_REDIRECT_URL: "https://auth.${BASE_HOST}/application/o/grafana/end-session/"
-      # Optionally enable auto-login (bypasses Grafana login screen)
-      GF_AUTH_OAUTH_AUTO_LOGIN: "true"
       # Optionally map user groups to Grafana roles
       # Required if Grafana is running behind a reverse proxy
       GF_SERVER_ROOT_URL: "https://monitoring.${BASE_HOST}"
