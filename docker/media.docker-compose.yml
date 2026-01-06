@@ -13,20 +13,20 @@ services:
       - front
 
   torrent:
-    image: lscr.io/linuxserver/qbittorrent
-    container_name: qbittorrent
+    image: lscr.io/linuxserver/transmission
+    container_name: transmission
     restart: unless-stopped
     environment:
       - PUID=0
       - PGID=0
       - TZ=Europe/Paris
-      - WEBUI_PORT=8084
-      - DOCKER_MODS=ghcr.io/vuetorrent/vuetorrent-lsio-mod:latest
     ports:
-      - 8084:8084
+      - 9091:9091
+      - 51413:51413
+      - 51413:51413/udp
     volumes:
-      - qbittorrent_config:/config
-      - /mnt/Data/Multimedia/Downloads:/downloads
+      - transmission_config:/config
+      - /mnt/Data/Multimedia/Downloads:/downloads/complete
     networks:
       - front
 
@@ -129,7 +129,7 @@ networks:
 
 volumes:
   jellyfin_config:
-  qbittorrent_config:
+  transmission_config:
   sonarr_config:
   radarr_config:
   lidarr_config:
