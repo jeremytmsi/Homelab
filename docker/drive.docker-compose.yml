@@ -52,6 +52,7 @@ services:
       - nextcloud_db
     volumes:
       - nextcloud_config:/var/www/html/config
+      - nextcloud_apps:/var/www/html/custom_apps
       - /mnt/Data/Drive:/var/www/html/data
     restart: unless-stopped
     environment:
@@ -72,6 +73,7 @@ services:
   nextcloud_db:
     image: mariadb
     container_name: nextcloud_db
+    restart: always
     volumes:
       - nextcloud_db_data:/var/lib/mysql
     environment:
@@ -86,6 +88,7 @@ volumes:
   immich_db_data:
   nextcloud_config:
   nextcloud_db_data:
+  nextcloud_apps:
 
 networks:
   front:
