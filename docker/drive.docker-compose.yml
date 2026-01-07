@@ -4,7 +4,7 @@ services:
     image: ghcr.io/immich-app/immich-server:${IMMICH_VERSION:-release}
     volumes:
       - /etc/localtime:/etc/localtime:ro
-      - /mnt/Data/Photos:/data
+      - /mnt/Drive/Photos:/data
     ports:
       - 2283:2283
     depends_on:
