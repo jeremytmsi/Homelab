@@ -8,7 +8,7 @@ services:
       - 8083:8096
     volumes:
       - jellyfin_config:/config
-      - /mnt/Data/Multimedia/Medias:/media
+      - /mnt/Data/Medias:/media
     networks:
       - front
 
@@ -26,7 +26,7 @@ services:
       - 51413:51413/udp
     volumes:
       - transmission_config:/config
-      - /mnt/Data/Multimedia/Downloads:/downloads/complete
+      - /mnt/Data/Downloads:/downloads/complete
     networks:
       - front
 
@@ -40,10 +40,10 @@ services:
       - TZ=Europe/Paris
     volumes:
       - sonarr_config:/config
-      - /mnt/Data/Multimedia/Medias/Series:/media/Series
-      - /mnt/Data/Multimedia/Medias/Animes:/media/Animes
-      - /mnt/Data/Multimedia/Downloads/series:/mnt/Downloads/series
-      - /mnt/Data/Multimedia/Downloads/animes:/mnt/Downloads/animes
+      - /mnt/Data/Medias/Series:/media/Series
+      - /mnt/Data/Medias/Animes:/media/Animes
+      - /mnt/Data/Downloads/series:/mnt/Downloads/series
+      - /mnt/Data/Downloads/animes:/mnt/Downloads/animes
     ports:
       - 8085:8989
     networks:
@@ -59,8 +59,8 @@ services:
       - TZ=Europe/Paris
     volumes:
       - radarr_config:/config
-      - /mnt/Data/Multimedia/Medias/Films:/media/Films
-      - /mnt/Data/Multimedia/Downloads/films:/mnt/Downloads/films
+      - /mnt/Data/Medias/Films:/media/Films
+      - /mnt/Data/Downloads/films:/mnt/Downloads/films
     ports:
       - 8086:7878
     networks:
@@ -76,8 +76,8 @@ services:
       - TZ=Europe/Paris
     volumes:
       - lidarr_config:/config
-      - /mnt/Data/Multimedia/Medias/Music:/media/Music
-      - /mnt/Data/Multimedia/Downloads/music:/mnt/Downloads/music
+      - /mnt/Data/Medias/Music:/media/Music
+      - /mnt/Data/Downloads/music:/mnt/Downloads/music
     ports:
       - 8087:8686
     networks:

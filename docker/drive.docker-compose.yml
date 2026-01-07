@@ -43,52 +43,8 @@ services:
     networks:
       - front
 
-  nextcloud:
-    image: nextcloud
-    container_name: nextcloud
-    ports:
-      - 8092:80
-    depends_on:
-      - nextcloud_db
-    volumes:
-      - nextcloud_config:/var/www/html/config
-      - nextcloud_apps:/var/www/html/custom_apps
-      - /mnt/Data/Drive:/var/www/html/data
-    restart: unless-stopped
-    environment:
-      - PUID=0
-      - PGID=0
-      - NEXTCLOUD_ADMIN_USER=admin
-      - NEXTCLOUD_ADMIN_PASSWORD=${NEXTCLOUD_ADMIN_PASSWORD}
-      - NEXTCLOUD_TRUSTED_DOMAINS=drive.${BASE_HOST}
-      - OVERWRITECLIURL=https://drive.${BASE_HOST}
-      - OVERWRITEPROTOCOL=https
-      - MYSQL_HOST=nextcloud_db
-      - MYSQL_USER=nextcloud
-      - MYSQL_PASSWORD=nextcloud
-      - MYSQL_DATABASE=nextcloud
-    networks:
-      - front
-
-  nextcloud_db:
-    image: mariadb
-    container_name: nextcloud_db
-    restart: always
-    volumes:
-      - nextcloud_db_data:/var/lib/mysql
-    environment:
-      - MARIADB_USER=nextcloud
-      - MARIADB_PASSWORD=nextcloud
-      - MARIADB_DATABASE=nextcloud
-      - MARIADB_RANDOM_ROOT_PASSWORD=true
-    networks:
-      - front
-
 volumes:
   immich_db_data:
-  nextcloud_config:
-  nextcloud_db_data:
-  nextcloud_apps:
 
 networks:
   front:
