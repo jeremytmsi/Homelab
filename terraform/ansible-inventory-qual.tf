@@ -29,11 +29,11 @@ resource "ansible_host" "STORAGE-QUAL-01" {
 }
 
 resource "ansible_host" "VPS-QUAL-01" {
-  name = "vps-01.qual.jeremytomasi.fr"
+  name = proxmox_virtual_environment_vm.VPS-QUAL-01.name
   groups = ["qual","docker","vps"]
   variables = {
-    ansible_user = "debian"
+    ansible_user = "jeremy"
     ansible_ssh_private_key_file = var.ssh_private_key
-    ansible_host = "51.254.129.11"
+    ansible_host = join("",proxmox_virtual_environment_vm.VPS-QUAL-01.ipv4_addresses[2])
   }
 }

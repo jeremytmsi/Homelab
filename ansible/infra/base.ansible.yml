@@ -1,6 +1,6 @@
 ---
 - name: Set DNS server for qual servers
-  hosts: qual:!vps
+  hosts: qual
   become: true
 
   tasks:
@@ -10,7 +10,7 @@
         dest: /etc/resolv.conf
 
 - name: Set DNS server for prod servers
-  hosts: prod:!vps
+  hosts: prod
   become: true
 
   tasks:
@@ -21,11 +21,8 @@
 
 
 - name: Base configuration for all servers
-  hosts: all:!vps
+  hosts: all
   become: true
-
-  roles:
-    - prometheus.prometheus.node_exporter
 
   tasks:
     - name: Update packages
@@ -70,3 +67,9 @@
 
     - name: Reboot
       ansible.builtin.reboot:
+
+- name: Install Node Exporter
+  hosts: all:!vps
+
+  roles:
+    - prometheus.prometheus.node_exporter
