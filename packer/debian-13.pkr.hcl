@@ -16,7 +16,7 @@ source "proxmox-iso" "debian13" {
 
   template_name = "DEBIAN-13.2-TPL"
   vm_name = "DEBIAN-13.2-TPL"
-  template_description = "Debian 13.2 VM, généré le ${timestamp()}"
+  template_description = "Debian 13.2 VM"
   tags = "template;linux"
   vm_id = 190
   pool = "TEMPLATE"
@@ -32,7 +32,7 @@ source "proxmox-iso" "debian13" {
   boot_command = ["<esc><wait>auto console-keymaps-at/keymap=fr console-setup/ask_detect=false debconf/frontend=noninteractive fb=false url=http://{{ .HTTPIP }}:{{ .HTTPPort }}/debian-preseed.cfg<enter>"]
   boot_wait = "10s"
   http_directory = "packer/http"
-  http_interface = "utun0"
+  http_interface = "utun6"
 
   disks {
     type = "scsi"
@@ -50,7 +50,7 @@ source "proxmox-iso" "debian13" {
   bios = "seabios"
   qemu_agent = true
   scsi_controller = "virtio-scsi-pci"
-  cpu_type = "x86-64-v2-AES"
+  cpu_type = "host"
   sockets = 1
   cores = 4
   memory = 4096
