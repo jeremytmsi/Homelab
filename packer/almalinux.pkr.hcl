@@ -7,16 +7,16 @@ packer {
   }
 }
 
-source "proxmox-iso" "debian13" {
+source "proxmox-iso" "almalinux" {
   proxmox_url = "http://10.0.0.1:8006/api2/json"
   node = "Suzuka"
   username = "packer@pve!packer"
   token = var.proxmox_token
   insecure_skip_tls_verify = true
 
-  template_name = "DEBIAN-13.2-TPL"
-  vm_name = "DEBIAN-13.2-TPL"
-  template_description = "Debian 13.2 VM"
+  template_name = "ALMALINUX-10-TPL"
+  vm_name = "ALMALINUX-10-TPL"
+  template_description = "Almalinux 10 template"
   tags = "template;linux"
   vm_id = 190
   pool = "TEMPLATE"
@@ -25,14 +25,27 @@ source "proxmox-iso" "debian13" {
 
   boot_iso {
     type = "scsi"
-    iso_file = "local:iso/debian-13.2.0-amd64-netinst.iso"
+    iso_file = "local:iso/AlmaLinux-10.1-x86_64-minimal.iso"
     unmount = true
-    iso_checksum = "891d7936a2e21df1d752e5d4c877bb7ca2759c902b0bfbf5527098464623bedaa17260e8bd4acf1331580ae56a6a87a08cc2f497102daa991d5e4e4018fee82b"
+    iso_checksum = "none"
   }
-  boot_command = ["<esc><wait>auto console-keymaps-at/keymap=fr console-setup/ask_detect=false debconf/frontend=noninteractive fb=false url=http://{{ .HTTPIP }}:{{ .HTTPPort }}/debian-preseed.cfg<enter>"]
+  boot_command = [
+    "<up>",
+    "e",
+    "<wait>",
+    "<down><down>",
+    "<leftCtrlOn>e<leftCtrlOff>",
+    "<spacebar>",
+    "biosdevname=0",
+    "<spacebar>",
+    "net.ifnames=0",
+    "<spacebar>",
+    "inst.ks=http://{{ .HTTPIP}}:{{ .HTTPPort}}/almalinux-kickstart.cfg",
+    "<leftCtrlOn>x<leftCtrlOff>"
+  ]
   boot_wait = "10s"
   http_directory = "packer/http"
-  http_interface = "utun6"
+  http_interface = "utun4"
 
   disks {
     type = "scsi"
@@ -67,7 +80,7 @@ source "proxmox-iso" "debian13" {
 }
 
 build {
-  sources = ["proxmox-iso.debian13"]
+  sources = ["proxmox-iso.almalinux"]
 }
 
 variable "proxmox_token" {
