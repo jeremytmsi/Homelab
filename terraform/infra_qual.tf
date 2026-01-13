@@ -10,20 +10,34 @@ resource "proxmox_virtual_environment_vm" "DOCKER-QUAL-01" {
     enabled = true
   }
 
+  cpu {
+    cores = 16
+    type = "host"
+  }
+
+  memory {
+    dedicated = 16384
+  }
+
   network_device {
-    model = "e1000"
+    model = "virtio"
     bridge = "vmbr2"
     vlan_id = 20
   }
 
   network_device {
-    model = "e1000"
+    model = "virtio"
     bridge = "vmbr2"
     vlan_id = 98
   }
 
   initialization {
     datastore_id = "local"
+
+    dns {
+      domain = "qual.jeremytomasi.fr"
+      servers = ["192.168.20.254"]
+    }
 
     ip_config {
       ipv4 {
@@ -64,19 +78,24 @@ resource "proxmox_virtual_environment_vm" "NEXTCLOUD-QUAL-01" {
   }
 
   network_device {
-    model = "e1000"
+    model = "virtio"
     bridge = "vmbr2"
     vlan_id = 20
   }
 
   network_device {
-    model = "e1000"
+    model = "virtio"
     bridge = "vmbr2"
     vlan_id = 98
   }
 
   initialization {
     datastore_id = "local"
+
+    dns {
+      domain = "qual.jeremytomasi.fr"
+      servers = ["192.168.20.254"]
+    }
 
     ip_config {
       ipv4 {
@@ -119,19 +138,25 @@ resource "proxmox_virtual_environment_vm" "NEXTCLOUDDB-QUAL-01" {
   }
 
   network_device {
-    model = "e1000"
+    model = "virtio"
     bridge = "vmbr2"
     vlan_id = 20
   }
 
   network_device {
-    model = "e1000"
+    model = "virtio"
     bridge = "vmbr2"
     vlan_id = 98
   }
 
   initialization {
     datastore_id = "local"
+
+    dns {
+      domain = "qual.jeremytomasi.fr"
+      servers = ["192.168.20.254"]
+    }
+
 
     ip_config {
       ipv4 {
@@ -172,19 +197,25 @@ resource "proxmox_virtual_environment_vm" "MONITORING-QUAL-01" {
   }
 
   network_device {
-    model = "e1000"
+    model = "virtio"
     bridge = "vmbr2"
     vlan_id = 20
   }
 
   network_device {
-    model = "e1000"
+    model = "virtio"
     bridge = "vmbr2"
     vlan_id = 98
   }
 
   initialization {
     datastore_id = "local"
+
+    dns {
+      domain = "qual.jeremytomasi.fr"
+      servers = ["192.168.20.254"]
+    }
+
 
     ip_config {
       ipv4 {
@@ -227,38 +258,44 @@ resource "proxmox_virtual_environment_vm" "STORAGE-QUAL-01" {
   disk {
     datastore_id = "local"
     interface = "scsi1"
-    size = 500
+    size = 1000
     file_format = "raw"
   }
 
   disk {
     datastore_id = "local"
     interface = "scsi2"
-    size = 500
+    size = 1000
     file_format = "raw"
   }
 
   disk {
     datastore_id = "local"
     interface = "scsi3"
-    size = 500
+    size = 1000
     file_format = "raw"
   }
 
   network_device {
-    model = "e1000"
+    model = "virtio"
     bridge = "vmbr2"
     vlan_id = 20
   }
 
   network_device {
-    model = "e1000"
+    model = "virtio"
     bridge = "vmbr2"
     vlan_id = 98
   }
 
   initialization {
     datastore_id = "local"
+
+    dns {
+      domain = "qual.jeremytomasi.fr"
+      servers = ["192.168.20.254"]
+    }
+
 
     ip_config {
       ipv4 {
