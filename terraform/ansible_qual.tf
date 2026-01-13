@@ -44,7 +44,7 @@ resource "ansible_host" "MONITORING-QUAL-01" {
 
 resource "ansible_host" "STORAGE-QUAL-01" {
   name = proxmox_virtual_environment_vm.STORAGE-QUAL-01.name
-  groups = ["qual"]
+  groups = ["qual","storage"]
   variables = {
     ansible_user = var.vm_ssh_user
     ansible_host = join("",proxmox_virtual_environment_vm.STORAGE-QUAL-01.ipv4_addresses[2])

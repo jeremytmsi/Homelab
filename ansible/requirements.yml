@@ -2,3 +2,5 @@
 collections:
   - name: cloud.terraform
   - name: prometheus.prometheus
+roles:
+  - name: rolehippie.mdadm

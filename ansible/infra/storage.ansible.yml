@@ -1,0 +1,29 @@
+---
+- name: Configure storage
+  hosts: storage
+  become: true
+
+  pre_tasks:
+    - name: Create /etc/mdadm directory
+      ansible.builtin.file:
+        path: /etc/mdadm
+        state: directory
+
+  roles:
+    - role: rolehippie.mdadm
+      vars:
+        mdadm_arrays:
+          - number: 0
+            level: 5
+            filesystem: ext4
+            mountpoint: /mnt/Data
+            devices:
+              - /dev/sda
+              - /dev/sdb
+              - /dev/sdc
+
+  tasks:
+    - name: Install NFS server packages
+      ansible.builtin.dnf:
+        name: nfs-utils
+        state: present
