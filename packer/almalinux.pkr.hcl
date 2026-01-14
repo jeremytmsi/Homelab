@@ -57,7 +57,7 @@ source "proxmox-iso" "almalinux" {
   network_adapters {
     bridge = "vmbr2"
     model = "virtio"
-    vlan_tag = "10"
+    vlan_tag = "30"
   }
 
   bios = "seabios"
