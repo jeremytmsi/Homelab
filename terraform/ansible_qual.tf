@@ -1,6 +1,6 @@
 resource "ansible_host" "DOCKER-QUAL-01" {
   name = proxmox_virtual_environment_vm.DOCKER-QUAL-01.name
-  groups = ["qual"]
+  groups = ["qual","docker"]
   variables = {
     ansible_user = var.vm_ssh_user
     ansible_host = join("",proxmox_virtual_environment_vm.DOCKER-QUAL-01.ipv4_addresses[2])

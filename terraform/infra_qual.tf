@@ -36,20 +36,20 @@ resource "proxmox_virtual_environment_vm" "DOCKER-QUAL-01" {
 
     dns {
       domain = "qual.jeremytomasi.fr"
-      servers = ["192.168.20.1"]
+      servers = ["192.168.20.254"]
     }
 
     ip_config {
       ipv4 {
-        address = "192.168.20.2/24"
-        gateway = "192.168.20.1"
+        address = "192.168.20.253/24"
+        gateway = "192.168.20.254"
       }
     }
 
     ip_config {
       ipv4 {
-        address = "192.168.98.2/24"
-        gateway = "192.168.98.1"
+        address = "192.168.98.253/24"
+        gateway = "192.168.98.254"
       }
     }
 
@@ -94,20 +94,20 @@ resource "proxmox_virtual_environment_vm" "NEXTCLOUD-QUAL-01" {
 
     dns {
       domain = "qual.jeremytomasi.fr"
-      servers = ["192.168.20.1"]
+      servers = ["192.168.20.254"]
     }
 
     ip_config {
       ipv4 {
-        address = "192.168.20.3/24"
-        gateway = "192.168.20.1"
+        address = "192.168.20.252/24"
+        gateway = "192.168.20.254"
       }
     }
 
     ip_config {
       ipv4 {
-        address = "192.168.98.3/24"
-        gateway = "192.168.98.1"
+        address = "192.168.98.252/24"
+        gateway = "192.168.98.254"
       }
     }
 
@@ -154,21 +154,21 @@ resource "proxmox_virtual_environment_vm" "NEXTCLOUDDB-QUAL-01" {
 
     dns {
       domain = "qual.jeremytomasi.fr"
-      servers = ["192.168.20.1"]
+      servers = ["192.168.20.254"]
     }
 
 
     ip_config {
       ipv4 {
-        address = "192.168.20.5/24"
-        gateway = "192.168.20.1"
+        address = "192.168.20.251/24"
+        gateway = "192.168.20.254"
       }
     }
 
     ip_config {
       ipv4 {
-        address = "192.168.98.5/24"
-        gateway = "192.168.98.1"
+        address = "192.168.98.251/24"
+        gateway = "192.168.98.254"
       }
     }
 
@@ -213,21 +213,21 @@ resource "proxmox_virtual_environment_vm" "MONITORING-QUAL-01" {
 
     dns {
       domain = "qual.jeremytomasi.fr"
-      servers = ["192.168.20.1"]
+      servers = ["192.168.20.254"]
     }
 
 
     ip_config {
       ipv4 {
-        address = "192.168.20.6/24"
-        gateway = "192.168.20.1"
+        address = "192.168.20.250/24"
+        gateway = "192.168.20.254"
       }
     }
 
     ip_config {
       ipv4 {
-        address = "192.168.98.6/24"
-        gateway = "192.168.98.1"
+        address = "192.168.98.250/24"
+        gateway = "192.168.98.254"
       }
     }
 
@@ -293,21 +293,21 @@ resource "proxmox_virtual_environment_vm" "STORAGE-QUAL-01" {
 
     dns {
       domain = "qual.jeremytomasi.fr"
-      servers = ["192.168.20.1"]
+      servers = ["192.168.20.254"]
     }
 
 
     ip_config {
       ipv4 {
-        address = "192.168.20.7/24"
-        gateway = "192.168.20.1"
+        address = "192.168.20.249/24"
+        gateway = "192.168.20.254"
       }
     }
 
     ip_config {
       ipv4 {
-        address = "192.168.98.7/24"
-        gateway = "192.168.98.1"
+        address = "192.168.98.249/24"
+        gateway = "192.168.98.254"
       }
     }
 
