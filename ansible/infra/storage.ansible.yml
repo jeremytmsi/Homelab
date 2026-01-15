@@ -29,3 +29,24 @@
     - name: Reload NFS server
       ansible.builtin.command:
         cmd: "exportfs -ra"
+
+    - name: Open nfs port in firewalld
+      ansible.posix.firewalld:
+        service: nfs
+        state: enabled
+        permanent: true
+        immediate: true
+
+    - name: Open rpcbind port in firewalld
+      ansible.posix.firewalld:
+        service: rpc-bind
+        state: enabled
+        permanent: true
+        immediate: true
+
+    - name: Open mountd port in firewalld
+      ansible.posix.firewalld:
+        service: mountd
+        state: enabled
+        permanent: true
+        immediate: true
