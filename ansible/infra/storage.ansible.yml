@@ -1,29 +1,31 @@
 ---
-- name: Configure storage
+- name: Configure storage server
   hosts: storage
   become: true
 
-  pre_tasks:
-    - name: Create /etc/mdadm directory
-      ansible.builtin.file:
-        path: /etc/mdadm
-        state: directory
-
-  roles:
-    - role: rolehippie.mdadm
-      vars:
-        mdadm_arrays:
-          - number: 0
-            level: 5
-            filesystem: ext4
-            mountpoint: /mnt/Data
-            devices:
-              - /dev/sda
-              - /dev/sdb
-              - /dev/sdc
-
   tasks:
-    - name: Install NFS server packages
-      ansible.builtin.dnf:
-        name: nfs-utils
-        state: present
+
+    - name: Mount RAID
+      ansible.posix.mount:
+        path: /mnt/Data
+        src: /dev/md0
+        fstype: ext4
+        state: mounted
+
+    - name: Ensure directories to export exists
+      ansible.builtin.file:
+        path: "{{ item }}"
+        state: directory
+      with_items: "{{ nfs_exports | map('split') | map('first') | unique }}"
+
+    - name: Copy exports file
+      ansible.builtin.template:
+        src: templates/exports.j2
+        dest: /etc/exports
+        owner: root
+        group: root
+        mode: 0644
+
+    - name: Reload NFS server
+      ansible.builtin.command:
+        cmd: "exportfs -ra"
