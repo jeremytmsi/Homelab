@@ -1,0 +1,48 @@
+---
+- name: Install Docker
+  hosts: docker
+  become: true
+
+  tasks:
+    - name: Add Docker repository
+      ansible.builtin.yum_repository:
+        name: docker-ce
+        description: Docker Stable repository
+        baseurl: https://download.docker.com/linux/centos/$releasever/$basearch/stable
+        gpgcheck: yes
+        gpgkey: https://download.docker.com/linux/centos/gpg
+        enabled: yes
+        state: present
+
+    - name: Update DNF
+      ansible.builtin.dnf:
+        update_cache: true
+        state: latest
+
+    - name: Install Docker
+      ansible.builtin.dnf:
+        name:
+          - docker-ce
+          - docker-ce-cli
+          - containerd.io
+          - docker-buildx-plugin
+          - docker-compose-plugin
+
+    - name: Start Docker
+      ansible.builtin.systemd_service:
+        name: docker
+        state: started
+
+    - name: Launch portainer agent container
+      community.docker.docker_container:
+        name: portainer-agent
+        image: portainer/agent:2.33.6
+        ports:
+          - 9001:9001
+        restart: yes
+        restart_policy: always
+        volumes:
+          - /var/run/docker.sock:/var/run/docker.sock
+          - /var/lib/docker/volumes:/var/lib/docker/volumes
+          - /:/host
+        state: started
