@@ -4,3 +4,14 @@ services:
     container_name: librespeed
     ports:
       - 8081:80
+
+  vault:
+    image: vaultwarden/server
+    container_name: vault
+    volumes:
+      - vault_data:/data
+    ports:
+      - 8082:80
+
+volumes:
+  vault_data:
