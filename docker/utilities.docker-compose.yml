@@ -4,6 +4,8 @@ services:
     container_name: librespeed
     ports:
       - 8081:80
+    networks:
+      - front
 
   vault:
     image: vaultwarden/server
@@ -12,6 +14,65 @@ services:
       - vault_data:/data
     ports:
       - 8082:80
+    networks:
+      - front
+
+  authentik_db:
+    image: postgres:16-alpine
+    restart: unless-stopped
+    volumes:
+      - authentik_db_data:/var/lib/postgresql/data
+    environment:
+      - POSTGRES_DB=authentik
+      - POSTGRES_PASSWORD=${PG_PASS:?database password required}
+      - POSTGRES_USER=authentik
+    networks:
+      - front
+
+  authentik_server:
+    image: ${AUTHENTIK_IMAGE:-ghcr.io/goauthentik/server}:${AUTHENTIK_TAG:-2025.12.1}
+    ports:
+      - 9000:9000
+      - 9443:9443
+    restart: unless-stopped
+    volumes:
+      - authentik_data:/data
+      - authentik_templates:/templates
+    environment:
+      - AUTHENTIK_POSTGRESQL__HOST=authentik_db
+      - AUTHENTIK_POSTGRESQL__NAME=authentik
+      - AUTHENTIK_POSTGRESQL__PASSWORD=${PG_PASS}
+      - AUTHENTIK_POSTGRESQL__USER=authentik
+      - AUTHENTIK_SECRET_KEY=${AUTHENTIK_SECRET_KEY:?secret key required}
+    command: server
+    networks:
+      - front
+
+  authentik_worker:
+    image: ${AUTHENTIK_IMAGE:-ghcr.io/goauthentik/server}:${AUTHENTIK_TAG:-2025.12.1}
+    restart: unless-stopped
+    environment:
+      - AUTHENTIK_POSTGRESQL__HOST=authentik_db
+      - AUTHENTIK_POSTGRESQL__NAME=authentik
+      - AUTHENTIK_POSTGRESQL__PASSWORD=${PG_PASS}
+      - AUTHENTIK_POSTGRESQL__USER=authentik
+      - AUTHENTIK_SECRET_KEY=${AUTHENTIK_SECRET_KEY:?secret key required}
+    user: root
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+      - authentik_data:/data
+      - authentik_certs:/certs
+      - authentik_templates:/templates
+    command: worker
+    networks:
+      - front
 
 volumes:
   vault_data:
+  authentik_db_data:
+  authentik_data:
+  authentik_templates:
+  authentik_certs:
+
+networks:
+  front:
