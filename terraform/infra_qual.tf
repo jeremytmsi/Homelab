@@ -160,14 +160,14 @@ resource "proxmox_virtual_environment_vm" "NEXTCLOUDDB-QUAL-01" {
 
     ip_config {
       ipv4 {
-        address = "192.168.20.251/24"
+        address = "192.168.20.250/24"
         gateway = "192.168.20.254"
       }
     }
 
     ip_config {
       ipv4 {
-        address = "192.168.98.251/24"
+        address = "192.168.98.250/24"
         gateway = "192.168.98.254"
       }
     }
@@ -219,14 +219,14 @@ resource "proxmox_virtual_environment_vm" "MONITORING-QUAL-01" {
 
     ip_config {
       ipv4 {
-        address = "192.168.20.250/24"
+        address = "192.168.20.249/24"
         gateway = "192.168.20.254"
       }
     }
 
     ip_config {
       ipv4 {
-        address = "192.168.98.250/24"
+        address = "192.168.98.249/24"
         gateway = "192.168.98.254"
       }
     }
@@ -299,14 +299,14 @@ resource "proxmox_virtual_environment_vm" "STORAGE-QUAL-01" {
 
     ip_config {
       ipv4 {
-        address = "192.168.20.249/24"
+        address = "192.168.20.248/24"
         gateway = "192.168.20.254"
       }
     }
 
     ip_config {
       ipv4 {
-        address = "192.168.98.249/24"
+        address = "192.168.98.248/24"
         gateway = "192.168.98.254"
       }
     }
