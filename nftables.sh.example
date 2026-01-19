@@ -1,0 +1,129 @@
+#!/bin/bash
+
+# Home's IP address
+HomeIP=""
+
+# Port of the SSH server
+SSHPort=""
+
+### RESET ###
+# Deletes FW_Rules table
+nft delete table inet FW_Rules
+
+### CREATE ###
+# Creates FW_Rules table 
+nft add table inet FW_Rules
+
+# Creates chain for incoming packets
+nft add chain inet FW_Rules input {type filter hook input priority 0\;}
+
+# Creates chain for outcoming packets
+nft add chain inet FW_Rules output {type filter hook output priority 0\;}
+
+# Creates chain for forwarding packets
+nft add chain inet FW_Rules forward {type filter hook forward priority 0\;}
+
+# Creates chain for postrouting packets
+nft add chain inet FW_Rules postrouting {type nat hook postrouting priority 0\;}
+
+### INPUT ###
+
+# Accepts incoming packets from localhost
+nft add rule inet FW_Rules input iif lo accept
+
+# Accepts incoming packets for established connections
+nft add rule inet FW_Rules input ct state established,related accept
+
+# Accepts incoming packets from home's IP address to Proxmox WebUI
+nft add rule inet FW_Rules input ip saddr $HomeIP tcp dport 8006 accept
+
+# Accepts incoming packets from home's IP address to SSH
+nft add rule inet FW_Rules input ip saddr $HomeIP tcp dport $SSHPort accept
+
+# Accepts pings from home's IP address
+nft add rule inet FW_Rules input ip saddr $HomeIP icmp type echo-request accept
+
+# Accepts pings from Tailscale network
+nft add rule inet FW_Rules input iif tailscale0 icmp type echo-request accept
+
+# Accepts ICMP echo-reply packets
+nft add rule inet FW_Rules input icmp type echo-reply accept
+
+### OUTPUT ###
+
+# Accepts outcoming packets from localhost
+nft add rule inet FW_Rules output oif lo accept
+
+# Accepts outcoming packets from Proxmox WebUI
+nft add rule inet FW_Rules output tcp sport 8006 accept
+
+# Accepts outcoming packets from SSH server
+nft add rule inet FW_Rules output tcp sport $SSHPort accept
+
+# Accepts outcoming packets to HTTP servers
+nft add rule inet FW_Rules output tcp dport 80 accept
+
+# Accepts outcoming packets to HTTPS servers
+nft add rule inet FW_Rules output tcp dport 443 accept
+
+# Accepts outcoming packets to DNS servers
+nft add rule inet FW_Rules output udp dport 53 accept
+
+# Accepts outcoming pings packets from this server
+nft add rule inet FW_Rules output icmp type echo-request accept
+
+# Accepts to reply to pings from home's IP address
+nft add rule inet FW_Rules output ip daddr $HomeIP icmp type echo-reply accept
+
+# Accepts to reply to pings from Tailscale network
+nft add rule inet FW_Rules output oif tailscale0 icmp type echo-reply accept
+
+### FORWARD ###
+
+# Accepts to forward packets from vmbr0 to vmbr1.10 (SERVERS_PROD)
+nft add rule inet FW_Rules forward iif vmbr0 oif vmbr1.10 accept
+
+# Accepts to forward packets from vmbr1.10 (SERVERS_PROD) to vmbr0
+nft add rule inet FW_Rules forward iif vmbr1.10 oif vmbr0 accept
+
+# Accepts to forward packets from vmbr0 to vmbr1.20 (SERVERS_QUAL)
+nft add rule inet FW_Rules forward iif vmbr0 oif vmbr1.20 accept
+
+# Accepts to forward packets from vmbr1.20 (SERVERS_QUAL) to vmbr0
+nft add rule inet FW_Rules forward iif vmbr1.20 oif vmbr0 accept
+
+# Accepts to forward packets from vmbr0 to vmbr1.30 (TEMPLATES)
+nft add rule inet FW_Rules forward iif vmbr0 oif vmbr1.30 accept
+
+# Accepts to forward packets from vmbr1.30 (TEMPLATES) to vmbr0
+nft add rule inet FW_Rules forward iif vmbr1.30 oif vmbr0 accept
+
+# Accepts to forward packets from Tailscale network to vmbr1.30 (TEMPLATES)
+nft add rule inet FW_Rules forward iif tailscale0 oif vmbr1.30 accept
+
+# Accepts to forward packets from vmbr1.30 (TEMPLATES) to Tailscale network
+nft add rule inet FW_Rules forward iif vmbr1.30 oif tailscale0 accept
+
+# Accepts to forward packets from Tailscale network to vmbr0
+nft add rule inet FW_Rules forward iif tailscale0 oif vmbr0 accept
+
+# Accepts to forward packets from vmbr0 to Tailscale network
+nft add rule inet FW_Rules forward iif vmbr0 oif tailscale0 accept
+
+### MASQUERADE ###
+# NAT Masquerade
+nft add rule inet FW_Rules postrouting oif vmbr0 masquerade
+
+### DROP ###
+
+# Blocks all other incoming packets
+nft add rule inet FW_Rules input drop
+
+# Blocks all other outcoming packets
+nft add rule inet FW_Rules output drop
+
+# Blocks all other forwarding packets
+nft add rule inet FW_Rules forward drop
+
+# Blocks all other postrouting packets
+nft add rule inet FW_Rules postrouting drop

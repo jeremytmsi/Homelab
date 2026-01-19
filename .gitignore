@@ -3,6 +3,6 @@ terraform/variables.tfvars
 terraform/terraform.tfstate*
 terraform/.terraform.lock.hcl
 terraform/.terraform
-iptables.sh
+nftables.sh
 ansible/infra/qual/variables/nfs_exports.yml
 .env
