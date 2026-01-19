@@ -8,7 +8,7 @@ packer {
 }
 
 source "proxmox-iso" "almalinux" {
-  proxmox_url = "http://10.0.0.1:8006/api2/json"
+  proxmox_url = "http://135.125.180.48:8006/api2/json"
   node = "Suzuka"
   username = "packer@pve!packer"
   token = var.proxmox_token
@@ -38,14 +38,16 @@ source "proxmox-iso" "almalinux" {
     "<spacebar>",
     "biosdevname=0",
     "<spacebar>",
+    "ip=192.168.30.1::192.168.30.254:255.255.255.0:alma-template:eth0:none:9.9.9.9",
+    "<spacebar>",
     "net.ifnames=0",
     "<spacebar>",
-    "inst.ks=http://{{ .HTTPIP}}:{{ .HTTPPort}}/almalinux-kickstart.cfg",
+    "inst.ks=http://{{ .HTTPIP }}:{{ .HTTPPort }}/almalinux-kickstart.cfg",
     "<leftCtrlOn>x<leftCtrlOff>"
   ]
   boot_wait = "10s"
   http_directory = "packer/http"
-  http_interface = "utun4"
+  http_interface = "utun1"
 
   disks {
     type = "scsi"
@@ -55,7 +57,7 @@ source "proxmox-iso" "almalinux" {
   }
 
   network_adapters {
-    bridge = "vmbr2"
+    bridge = "vmbr1"
     model = "virtio"
     vlan_tag = "30"
   }
