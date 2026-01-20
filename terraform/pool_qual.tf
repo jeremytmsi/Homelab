@@ -21,8 +21,3 @@ resource "proxmox_virtual_environment_pool_membership" "MONITORING-QUAL-01" {
   pool_id = proxmox_virtual_environment_pool.QUAL.id
   vm_id = proxmox_virtual_environment_vm.MONITORING-QUAL-01.vm_id
 }
-
-resource "proxmox_virtual_environment_pool_membership" "STORAGE-QUAL-01" {
-  pool_id = proxmox_virtual_environment_pool.QUAL.id
-  vm_id = proxmox_virtual_environment_vm.STORAGE-QUAL-01.vm_id
-}

@@ -49,3 +49,24 @@
           - portainer_data:/data
           - /var/run/docker.sock:/var/run/docker.sock
         state: started
+
+- name: Mount NFS qual shares
+  hosts: qual:&docker
+  become: true
+
+  tasks:
+    - name: Mount qual multimedia share
+      ansible.posix.mount:
+        path: /mnt/Multimedia
+        src: 100.65.255.108:/mnt/Data/Qual/Multimedia
+        fstype: nfs
+        state: mounted
+
+    - name: Mount qual drive share
+      ansible.posix.mount:
+        path: /mnt/Drive
+        src: 100.65.255.108:/mnt/Data/Qual/Drive
+        fstype: nfs
+        state: mounted
+
+
