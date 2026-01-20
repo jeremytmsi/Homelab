@@ -19,6 +19,7 @@ services:
 
   authentik_db:
     image: postgres:16-alpine
+    container_name: authentik_db
     restart: unless-stopped
     volumes:
       - authentik_db_data:/var/lib/postgresql/data
@@ -31,9 +32,9 @@ services:
 
   authentik_server:
     image: ${AUTHENTIK_IMAGE:-ghcr.io/goauthentik/server}:${AUTHENTIK_TAG:-2025.12.1}
+    container_name: authentik_server
     ports:
-      - 9000:9000
-      - 9443:9443
+      - 9001:9000
     restart: unless-stopped
     volumes:
       - authentik_data:/data
@@ -50,6 +51,7 @@ services:
 
   authentik_worker:
     image: ${AUTHENTIK_IMAGE:-ghcr.io/goauthentik/server}:${AUTHENTIK_TAG:-2025.12.1}
+    container_name: authentik_worker
     restart: unless-stopped
     environment:
       - AUTHENTIK_POSTGRESQL__HOST=authentik_db
@@ -76,3 +78,4 @@ volumes:
 
 networks:
   front:
+    external: true

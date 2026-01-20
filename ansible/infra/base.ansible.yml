@@ -17,21 +17,6 @@
         name: vim
         state: present
 
-- name: Install mdadm
-  hosts: storage
-  become: true
-
-  tasks:
-    - name: Install mdadm
-      ansible.builtin.dnf:
-        name: mdadm
-        state: present
-
-- name: Install NFS packages
-  hosts: docker:storage
-  become: true
-
-  tasks:
     - name: Install NFS packages
       ansible.builtin.dnf:
         name: nfs-utils
@@ -51,3 +36,13 @@
       ansible.builtin.service:
         name: nfs-mountd
         state: started
+
+- name: Install mdadm
+  hosts: storage
+  become: true
+
+  tasks:
+    - name: Install mdadm
+      ansible.builtin.dnf:
+        name: mdadm
+        state: present
