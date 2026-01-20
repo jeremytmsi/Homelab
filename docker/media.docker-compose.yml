@@ -14,8 +14,26 @@ services:
     networks:
       - front
 
+  deluge:
+    image: lscr.io/linuxserver/deluge
+    container_name: deluge
+    ports:
+      - 8112:8112
+      - 6881:6881
+      - 6881:6881/udp
+    volumes:
+      - deluge_config:/config
+      - /mnt/Multimedia/Downloads:/downloads
+      - /mnt/Multimedia/Downloads/Series:/downloads/Series
+      - /mnt/Multimedia/Downloads/Animes:/downloads/Animes
+      - /mnt/Multimedia/Downloads/Films:/downloads/Films
+      - /mnt/Multimedia/Downloads/Music:/downloads/Music
+    networks:
+      - front
+
 volumes:
   jellyfin_config:
+  deluge_config:
 
 networks:
   front:
