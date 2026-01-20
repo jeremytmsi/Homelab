@@ -1,0 +1,51 @@
+services:
+  immich:
+    container_name: immich
+    image: ghcr.io/immich-app/immich-server:${IMMICH_VERSION:-release}
+    volumes:
+      - /etc/localtime:/etc/localtime:ro
+      - /mnt/Drive/Photos:/data
+    ports:
+      - 2283:2283
+    depends_on:
+      - redis
+      - immich_db
+    restart: unless-stopped
+    environment:
+      - DB_HOSTNAME=immich_db
+      - DB_USERNAME=${IMMICH_DB_USER}
+      - DB_PASSWORD=${IMMICH_DB_PASS}
+      - DB_DATABASE_NAME=immich
+      - TZ=Europe/Paris
+    networks:
+      - front
+
+  redis:
+    container_name: immich_redis
+    image: valkey/valkey:9
+    healthcheck:
+      test: redis-cli ping || exit 1
+    restart: always
+    networks:
+      - front
+
+  immich_db:
+    container_name: immich_db
+    image: ghcr.io/immich-app/postgres:14-vectorchord0.4.3-pgvectors0.2.0
+    environment:
+      - POSTGRES_PASSWORD=${IMMICH_DB_PASS}
+      - POSTGRES_USER=${IMMICH_DB_USER}
+      - POSTGRES_DB=immich
+      - DB_STORAGE_TYPE=HDD
+    volumes:
+      - immich_db_data:/var/lib/postgresql/data
+    restart: always
+    networks:
+      - front
+
+volumes:
+  immich_db_data:
+
+networks:
+  front:
+    external: true
