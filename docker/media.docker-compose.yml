@@ -96,6 +96,19 @@ services:
     networks:
       - front
 
+  jellyseerr:
+    image: fallenbagel/jellyseerr:preview-OIDC
+    container_name: jellyseerr
+    restart: unless-stopped
+    ports:
+      - 5055:5055
+    environment:
+      - TZ=Europe/Paris
+    volumes:
+      - jellyseerr_config:/app/config
+    networks:
+      - front
+
 
 
 volumes:
@@ -105,6 +118,7 @@ volumes:
   radarr_config:
   lidarr_config:
   prowlarr_config:
+  jellyseerr_config:
 
 networks:
   front:
