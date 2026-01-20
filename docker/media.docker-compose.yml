@@ -47,10 +47,30 @@ services:
     networks:
       - front
 
+  radarr:
+    image: lscr.io/linuxserver/radarr
+    container_name: radarr
+    restart: unless-stopped
+    ports:
+      - 7878:7878
+    environment:
+      - PUID=0
+      - PGID=0
+      - TZ=Europe/Paris
+    volumes:
+      - radarr_config:/config
+      - /mnt/Multimedia/Downloads/Films:/downloads/Films
+      - /mnt/Multimedia/Medias/Films:/films
+    networks:
+      - front
+
+
+
 volumes:
   jellyfin_config:
   deluge_config:
   sonarr_config:
+  radarr_config:
 
 networks:
   front:
