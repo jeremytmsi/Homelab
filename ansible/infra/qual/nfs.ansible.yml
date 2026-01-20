@@ -6,8 +6,8 @@
   tasks:
     - name: Mount NFS share
       ansible.posix.mount:
-        path: /mnt/Data
-        src: 192.168.20.248:/mnt/Data
+        path: /mnt/Multimedia
+        src: 192.168.20.248:/mnt/Data/Multimedia
         fstype: nfs4
         state: mounted
 
