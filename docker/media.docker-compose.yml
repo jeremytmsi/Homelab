@@ -1,0 +1,22 @@
+services:
+  media:
+    image: jellyfin/jellyfin
+    container_name: jellyfin
+    restart: unless-stopped
+    volumes:
+      - jellyfin_config:/config
+      - /mnt/Multimedia/Medias/Series:/media/Series
+      - /mnt/Multimedia/Medias/Films:/media/Films
+      - /mnt/Multimedia/Medias/Animes:/media/Animes
+      - /mnt/Multimedia/Medias/Music:/media/Music
+    ports:
+      - 8096:8096
+    networks:
+      - front
+
+volumes:
+  jellyfin_config:
+
+networks:
+  front:
+    external: true

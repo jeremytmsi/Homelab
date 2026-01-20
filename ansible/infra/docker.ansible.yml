@@ -33,12 +33,6 @@
         name: docker
         state: started
 
-    - name: Open port 9000 in firewalld for Portainer
-      ansible.builtin.firewalld:
-        port: 9000/tcp
-        permanent: true
-        state: enabled
-
     - name: Create portainer data volume
       community.docker.docker_volume:
         name: portainer-data

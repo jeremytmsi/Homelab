@@ -2,6 +2,7 @@ services:
   librespeed:
     image: lscr.io/linuxserver/librespeed
     container_name: librespeed
+    restart: unless-stopped
     ports:
       - 8081:80
     networks:
@@ -10,6 +11,7 @@ services:
   vault:
     image: vaultwarden/server
     container_name: vault
+    restart: unless-stopped
     volumes:
       - vault_data:/data
     ports:
