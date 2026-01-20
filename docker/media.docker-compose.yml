@@ -64,13 +64,31 @@ services:
     networks:
       - front
 
+  lidarr:
+    image: lscr.io/linuxserver/lidarr
+    container_name: lidarr
+    restart: unless-stopped
+    ports:
+      - 8686:8686
+    environment:
+      - PUID=0
+      - PGID=0
+      - TZ=Europe/Paris
+    volumes:
+      - lidarr_config:/config
+      - /mnt/Multimedia/Downloads/Music:/downloads/Music
+      - /mnt/Multimedia/Medias/Music:/music
+    networks:
+      - front
 
+  
 
 volumes:
   jellyfin_config:
   deluge_config:
   sonarr_config:
   radarr_config:
+  lidarr_config:
 
 networks:
   front:
