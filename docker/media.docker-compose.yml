@@ -17,6 +17,7 @@ services:
   deluge:
     image: lscr.io/linuxserver/deluge
     container_name: deluge
+    restart: unless-stopped
     ports:
       - 8112:8112
       - 6881:6881
@@ -24,16 +25,32 @@ services:
     volumes:
       - deluge_config:/config
       - /mnt/Multimedia/Downloads:/downloads
+    networks:
+      - front
+
+  sonarr:
+    image: lscr.io/linuxserver/sonarr
+    container_name: sonarr
+    restart: unless-stopped
+    ports:
+      - 8989:8989
+    environment:
+      - PUID=0
+      - PGID=0
+      - TZ=Europe/Paris
+    volumes:
+      - sonarr_config:/config
       - /mnt/Multimedia/Downloads/Series:/downloads/Series
       - /mnt/Multimedia/Downloads/Animes:/downloads/Animes
-      - /mnt/Multimedia/Downloads/Films:/downloads/Films
-      - /mnt/Multimedia/Downloads/Music:/downloads/Music
+      - /mnt/Multimedia/Medias/Series:/series
+      - /mnt/Multimedia/Medias/Animes:/animes
     networks:
       - front
 
 volumes:
   jellyfin_config:
   deluge_config:
+  sonarr_config:
 
 networks:
   front:
