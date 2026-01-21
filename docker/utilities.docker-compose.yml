@@ -1,6 +1,6 @@
 services:
   librespeed:
-    image: lscr.io/linuxserver/librespeed
+    image: lscr.io/linuxserver/librespeed:5.5.1
     container_name: librespeed
     restart: unless-stopped
     ports:
@@ -9,7 +9,7 @@ services:
       - front
 
   vault:
-    image: vaultwarden/server
+    image: vaultwarden/server:1.35.2
     container_name: vault
     restart: unless-stopped
     volumes:

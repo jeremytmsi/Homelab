@@ -44,7 +44,7 @@ services:
       - front
 
   nextcloud:
-    image: nextcloud
+    image: nextcloud:production
     container_name: nextcloud
     restart: unless-stopped
     depends_on:
@@ -70,7 +70,7 @@ services:
       - front
 
   nextcloud_db:
-    image: mariadb
+    image: mariadb:lts-ubi
     container_name: nextcloud_db
     restart: unless-stopped
     volumes:

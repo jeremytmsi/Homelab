@@ -1,6 +1,6 @@
 services:
   media:
-    image: jellyfin/jellyfin
+    image: jellyfin/jellyfin:10.11.6
     container_name: jellyfin
     restart: unless-stopped
     volumes:
@@ -15,7 +15,7 @@ services:
       - front
 
   deluge:
-    image: lscr.io/linuxserver/deluge
+    image: lscr.io/linuxserver/deluge:2.2.0
     container_name: deluge
     restart: unless-stopped
     ports:
@@ -29,7 +29,7 @@ services:
       - front
 
   sonarr:
-    image: lscr.io/linuxserver/sonarr
+    image: lscr.io/linuxserver/sonarr:4.0.16
     container_name: sonarr
     restart: unless-stopped
     ports:
@@ -48,7 +48,7 @@ services:
       - front
 
   radarr:
-    image: lscr.io/linuxserver/radarr
+    image: lscr.io/linuxserver/radarr:6.0.4
     container_name: radarr
     restart: unless-stopped
     ports:
@@ -65,7 +65,7 @@ services:
       - front
 
   lidarr:
-    image: lscr.io/linuxserver/lidarr
+    image: lscr.io/linuxserver/lidarr:3.1.2
     container_name: lidarr
     restart: unless-stopped
     ports:
@@ -82,7 +82,7 @@ services:
       - front
 
   prowlarr:
-    image: lscr.io/linuxserver/prowlarr
+    image: lscr.io/linuxserver/prowlarr:2.3.0
     container_name: prowlarr
     restart: unless-stopped
     ports:
