@@ -65,7 +65,7 @@ services:
       - front
 
   lidarr:
-    image: lscr.io/linuxserver/lidarr:3.1.2
+    image: lscr.io/linuxserver/lidarr:3.1.2-nightly
     container_name: lidarr
     restart: unless-stopped
     ports:
