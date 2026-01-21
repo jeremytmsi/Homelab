@@ -20,13 +20,13 @@ resource "proxmox_virtual_environment_vm" "DOCKER-QUAL-01" {
   }
 
   network_device {
-    model = "e1000"
+    model = "virtio"
     bridge = "vmbr2"
     vlan_id = 20
   }
 
   network_device {
-    model = "e1000"
+    model = "virtio"
     bridge = "vmbr2"
     vlan_id = 98
   }
@@ -83,13 +83,13 @@ resource "proxmox_virtual_environment_vm" "MAIL-QUAL-01" {
   }
 
   network_device {
-    model = "e1000"
+    model = "virtio"
     bridge = "vmbr2"
     vlan_id = 20
   }
 
   network_device {
-    model = "e1000"
+    model = "virtio"
     bridge = "vmbr2"
     vlan_id = 98
   }
@@ -141,13 +141,13 @@ resource "proxmox_virtual_environment_vm" "MONITORING-QUAL-01" {
   }
 
   network_device {
-    model = "e1000"
+    model = "virtio"
     bridge = "vmbr2"
     vlan_id = 20
   }
 
   network_device {
-    model = "e1000"
+    model = "virtio"
     bridge = "vmbr2"
     vlan_id = 98
   }
