@@ -20,13 +20,13 @@ resource "proxmox_virtual_environment_vm" "DOCKER-QUAL-01" {
   }
 
   network_device {
-    model = "virtio"
+    model = "e1000"
     bridge = "vmbr2"
     vlan_id = 20
   }
 
   network_device {
-    model = "virtio"
+    model = "e1000"
     bridge = "vmbr2"
     vlan_id = 98
   }
@@ -65,84 +65,26 @@ resource "proxmox_virtual_environment_vm" "DOCKER-QUAL-01" {
   }
 }
 
-resource "proxmox_virtual_environment_vm" "NEXTCLOUD-QUAL-01" {
-  name = "nextcloud.qual.jeremytomasi.fr"
-  description = "VM for hosting Nextcloud"
-  tags = ["linux","server","qual"]
-  node_name = var.node_name
-  stop_on_destroy = true
-  vm_id = 113
-
-  agent {
-    enabled = true
-  }
-
-  network_device {
-    model = "virtio"
-    bridge = "vmbr2"
-    vlan_id = 20
-  }
-
-  network_device {
-    model = "virtio"
-    bridge = "vmbr2"
-    vlan_id = 98
-  }
-
-  initialization {
-    datastore_id = "local"
-
-    dns {
-      domain = "qual.jeremytomasi.fr"
-      servers = ["192.168.20.254"]
-    }
-
-    ip_config {
-      ipv4 {
-        address = "192.168.20.252/24"
-        gateway = "192.168.20.254"
-      }
-    }
-
-    ip_config {
-      ipv4 {
-        address = "192.168.98.252/24"
-        gateway = "192.168.98.254"
-      }
-    }
-
-    user_account {
-      username = var.vm_ssh_user
-      keys = var.vm_ssh_keys
-    }
-  }
-
-  clone {
-    vm_id = 190
-    full = true
-  }
-}
-
 resource "proxmox_virtual_environment_vm" "MONITORING-QUAL-01" {
   name = "monitoring.qual.jeremytomasi.fr"
   description = "VM for monitoring"
   tags = ["linux","server","qual"]
   node_name = var.node_name
   stop_on_destroy = true
-  vm_id = 115
+  vm_id = 114
 
   agent {
     enabled = true
   }
 
   network_device {
-    model = "virtio"
+    model = "e1000"
     bridge = "vmbr2"
     vlan_id = 20
   }
 
   network_device {
-    model = "virtio"
+    model = "e1000"
     bridge = "vmbr2"
     vlan_id = 98
   }
@@ -158,14 +100,14 @@ resource "proxmox_virtual_environment_vm" "MONITORING-QUAL-01" {
 
     ip_config {
       ipv4 {
-        address = "192.168.20.250/24"
+        address = "192.168.20.251/24"
         gateway = "192.168.20.254"
       }
     }
 
     ip_config {
       ipv4 {
-        address = "192.168.98.250/24"
+        address = "192.168.98.251/24"
         gateway = "192.168.98.254"
       }
     }
