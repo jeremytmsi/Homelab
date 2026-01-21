@@ -13,7 +13,7 @@ services:
     restart: unless-stopped
     environment:
       - DB_HOSTNAME=immich_db
-      - DB_USERNAME=${IMMICH_DB_USER}
+      - DB_USERNAME=immich
       - DB_PASSWORD=${IMMICH_DB_PASS}
       - DB_DATABASE_NAME=immich
       - TZ=Europe/Paris
@@ -34,7 +34,7 @@ services:
     image: ghcr.io/immich-app/postgres:14-vectorchord0.4.3-pgvectors0.2.0
     environment:
       - POSTGRES_PASSWORD=${IMMICH_DB_PASS}
-      - POSTGRES_USER=${IMMICH_DB_USER}
+      - POSTGRES_USER=immich
       - POSTGRES_DB=immich
       - DB_STORAGE_TYPE=HDD
     volumes:
