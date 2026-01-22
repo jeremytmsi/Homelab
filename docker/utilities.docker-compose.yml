@@ -22,7 +22,7 @@ services:
       - DOMAIN=https://vault.${BASE_HOST}
       - SSO_ENABLED=true
       - SSO_AUTHORITY=https://auth.${BASE_HOST}/application/o/vaultwarden/
-      - SSO_SCOPES="openid profile email offline_access"
+      - SSO_SCOPES=profile email offline_access
       - SSO_CLIENT_ID=${AUTHENTIK_VAULT_CLIENT_ID}
       - SSO_CLIENT_SECRET=${AUTHENTIK_VAULT_CLIENT_SECRET}
       - SSO_PKCE=true
