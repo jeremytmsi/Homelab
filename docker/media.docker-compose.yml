@@ -5,10 +5,10 @@ services:
     restart: unless-stopped
     volumes:
       - jellyfin_config:/config
-      - /mnt/Multimedia/Medias/Series:/media/Series
-      - /mnt/Multimedia/Medias/Films:/media/Films
-      - /mnt/Multimedia/Medias/Animes:/media/Animes
-      - /mnt/Multimedia/Medias/Music:/media/Music
+      - /mnt/Multimedia/Series:/media/Series
+      - /mnt/Multimedia/Films:/media/Films
+      - /mnt/Multimedia/Animes:/media/Animes
+      - /mnt/Multimedia/Music:/media/Music
     ports:
       - 8096:8096
     networks:
@@ -48,8 +48,8 @@ services:
       - sonarr_config:/config
       - /mnt/Downloads/Series:/downloads/Series
       - /mnt/Downloads/Animes:/downloads/Animes
-      - /mnt/Multimedia/Medias/Series:/series
-      - /mnt/Multimedia/Medias/Animes:/animes
+      - /mnt/Multimedia/Series:/series
+      - /mnt/Multimedia/Animes:/animes
     networks:
       - front
 
@@ -66,7 +66,7 @@ services:
     volumes:
       - radarr_config:/config
       - /mnt/Downloads/Films:/downloads/Films
-      - /mnt/Multimedia/Medias/Films:/films
+      - /mnt/Multimedia/Films:/films
     networks:
       - front
 
@@ -83,7 +83,7 @@ services:
     volumes:
       - lidarr_config:/config
       - /mnt/Downloads/Music:/downloads/Music
-      - /mnt/Multimedia/Medias/Music:/music
+      - /mnt/Multimedia/Music:/music
     networks:
       - front
 
