@@ -66,6 +66,7 @@ services:
       - NEXTCLOUD_TRUSTED_DOMAINS=drive.${BASE_HOST}
       - OVERWRITEPROTOCOL=https
       - OVERWRITECLIURL=https://drive.${BASE_HOST}
+      - NC_ALLOW_LOCAL_REMOTE_SERVERS=true
     networks:
       - front
 
