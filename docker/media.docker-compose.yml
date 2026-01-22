@@ -14,17 +14,22 @@ services:
     networks:
       - front
 
-  deluge:
-    image: lscr.io/linuxserver/deluge:2.2.0
-    container_name: deluge
-    restart: unless-stopped
+
+  transmission:
+    image: lscr.io/linuxserver/transmission:4.0.6
+    container_name: transmission
+    environment:
+      - PUID=0
+      - PGID=0
+      - TZ=Europe/Paris
     ports:
-      - 8112:8112
-      - 6881:6881
-      - 6881:6881/udp
+      - 9091:9091
+      - 51413:51413
+      - 51413:51413/udp
+    restart: unless-stopped
     volumes:
-      - deluge_config:/config
-      - /mnt/Multimedia/Downloads:/downloads
+      - transmission_config:/config
+      - /mnt/Multimedia/Downloads:/downloads/complete
     networks:
       - front
 
@@ -113,7 +118,7 @@ services:
 
 volumes:
   jellyfin_config:
-  deluge_config:
+  transmission_config:
   sonarr_config:
   radarr_config:
   lidarr_config:
