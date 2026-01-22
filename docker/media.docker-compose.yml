@@ -25,7 +25,7 @@ services:
       - TORRENTING_PORT=6881
     volumes:
       - qbittorrent_config:/config
-      - /mnt/Multimedia/Downloads:/downloads
+      - /mnt/Downloads:/downloads
     ports:
       - 9091:9091
       - 6881:6881
@@ -46,8 +46,8 @@ services:
       - TZ=Europe/Paris
     volumes:
       - sonarr_config:/config
-      - /mnt/Multimedia/Downloads/Series:/downloads/Series
-      - /mnt/Multimedia/Downloads/Animes:/downloads/Animes
+      - /mnt/Downloads/Series:/downloads/Series
+      - /mnt/Downloads/Animes:/downloads/Animes
       - /mnt/Multimedia/Medias/Series:/series
       - /mnt/Multimedia/Medias/Animes:/animes
     networks:
@@ -65,7 +65,7 @@ services:
       - TZ=Europe/Paris
     volumes:
       - radarr_config:/config
-      - /mnt/Multimedia/Downloads/Films:/downloads/Films
+      - /mnt/Downloads/Films:/downloads/Films
       - /mnt/Multimedia/Medias/Films:/films
     networks:
       - front
@@ -82,7 +82,7 @@ services:
       - TZ=Europe/Paris
     volumes:
       - lidarr_config:/config
-      - /mnt/Multimedia/Downloads/Music:/downloads/Music
+      - /mnt/Downloads/Music:/downloads/Music
       - /mnt/Multimedia/Medias/Music:/music
     networks:
       - front
