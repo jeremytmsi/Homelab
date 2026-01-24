@@ -1,0 +1,26 @@
+---
+- name: Configure storage server firewall
+  hosts: storage
+  become: true
+
+  tasks:
+    - name: Open nfs port in firewalld
+      ansible.builtin.firewalld:
+        service: nfs
+        state: enabled
+        permanent: true
+        immediate: true
+
+    - name: Open rpcbind port in firewalld
+      ansible.builtin.firewalld:
+        service: rpc-bind
+        state: enabled
+        permanent: true
+        immediate: true
+
+    - name: Open mountd port in firewalld
+      ansible.builtin.firewalld:
+        service: mountd
+        state: enabled
+        permanent: true
+        immediate: true

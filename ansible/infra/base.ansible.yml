@@ -36,13 +36,3 @@
       ansible.builtin.service:
         name: nfs-mountd
         state: started
-
-- name: Install mdadm
-  hosts: storage
-  become: true
-
-  tasks:
-    - name: Install mdadm
-      ansible.builtin.dnf:
-        name: mdadm
-        state: present
