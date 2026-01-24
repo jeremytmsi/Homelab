@@ -1,10 +1,10 @@
-resource "proxmox_virtual_environment_vm" "DOCKER-QUAL-01" {
+resource "proxmox_virtual_environment_vm" "docker-qual-01" {
   name = "docker.qual.jeremytomasi.fr"
   description = "VM for hosting Docker services"
   tags = ["linux","server","qual"]
   node_name = var.node_name
   stop_on_destroy = true
-  vm_id = 110
+  vm_id = 111
 
   agent {
     enabled = true
@@ -34,7 +34,7 @@ resource "proxmox_virtual_environment_vm" "DOCKER-QUAL-01" {
   disk {
     datastore_id = "local"
     interface = "scsi1"
-    size = 2000
+    size = 1000
     file_format = "raw"
   }
 
@@ -72,13 +72,13 @@ resource "proxmox_virtual_environment_vm" "DOCKER-QUAL-01" {
   }
 }
 
-resource "proxmox_virtual_environment_vm" "MONITORING-QUAL-01" {
+resource "proxmox_virtual_environment_vm" "monitoring-qual-01" {
   name = "monitoring.qual.jeremytomasi.fr"
   description = "VM for monitoring"
   tags = ["linux","server","qual"]
   node_name = var.node_name
   stop_on_destroy = true
-  vm_id = 112
+  vm_id = 113
 
   agent {
     enabled = true
@@ -131,13 +131,13 @@ resource "proxmox_virtual_environment_vm" "MONITORING-QUAL-01" {
   }
 }
 
-resource "proxmox_virtual_environment_vm" "STORAGE-QUAL-01" {
+resource "proxmox_virtual_environment_vm" "storage-qual-01" {
   name = "storage.qual.jeremytomasi.fr"
   description = "VM for storage"
   tags = ["linux","server","qual"]
   node_name = var.node_name
   stop_on_destroy = true
-  vm_id = 113
+  vm_id = 114
 
   agent {
     enabled = true
