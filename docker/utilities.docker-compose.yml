@@ -22,6 +22,17 @@ services:
       - DOMAIN=https://vault.${BASE_HOST}
       - ADMIN_TOKEN=${VAULT_ADMIN_TOKEN}
 
+  actual:
+    image: actualbudget/actual-server:latest
+    container_name: actual
+    ports:
+      - 5006:5006
+    volumes:
+      - actual_data:/data
+    restart: unless-stopped
+    networks:
+      - front
+
   authentik_db:
     image: postgres:16-alpine
     container_name: authentik_db
@@ -80,6 +91,7 @@ volumes:
   authentik_data:
   authentik_templates:
   authentik_certs:
+  actual_data:
 
 networks:
   front:
