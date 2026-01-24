@@ -38,7 +38,7 @@
       community.docker.docker_volume:
         name: portainer-data
 
-    - name: Launch portainer agent container
+    - name: Launch portainer container
       community.docker.docker_container:
         name: portainer
         image: portainer/portainer-ce:lts
@@ -50,44 +50,3 @@
           - portainer_data:/data
           - /var/run/docker.sock:/var/run/docker.sock
         state: started
-
-- name: Mount NFS qual shares for qual servers
-  hosts: qual:&docker
-  become: true
-
-  tasks:
-
-    - name: Mount qual multimedia share
-      ansible.posix.mount:
-        path: /mnt/Multimedia
-        src: 192.168.20.250:/mnt/Data/Multimedia
-        fstype: nfs
-        state: mounted
-
-    - name: Mount qual drive share
-      ansible.posix.mount:
-        path: /mnt/Drive
-        src: 192.168.20.250:/mnt/Data/Drive
-        fstype: nfs
-        state: mounted
-
-- name: Mount NFS qual shares for prod servers
-  hosts: prod:&docker
-  become: true
-
-  tasks:
-    - name: Mount prod multimedia share
-      ansible.posix.mount:
-        path: /mnt/Multimedia
-        src: 192.168.10.250:/mnt/Data/Multimedia
-        fstype: nfs
-        state: mounted
-
-    - name: Mount prod drive share
-      ansible.posix.mount:
-        path: /mnt/Drive
-        src: 192.168.10.253:/mnt/Data/Drive
-        fstype: nfs
-        state: mounted
-
-
