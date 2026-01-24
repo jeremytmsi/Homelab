@@ -47,8 +47,8 @@ services:
       - sonarr_config:/config
       - /mnt/Downloads/Series:/downloads/Series
       - /mnt/Downloads/Animes:/downloads/Animes
-      - /mnt/Multimedia/Series:/series
-      - /mnt/Multimedia/Animes:/animes
+      - /mnt/Multimedia/Series:/mnt/Series
+      - /mnt/Multimedia/Animes:/mnt/Animes
     networks:
       - front
 
@@ -65,7 +65,7 @@ services:
     volumes:
       - radarr_config:/config
       - /mnt/Downloads/Films:/downloads/Films
-      - /mnt/Multimedia/Films:/films
+      - /mnt/Multimedia/Films:/mnt/Films
     networks:
       - front
 
