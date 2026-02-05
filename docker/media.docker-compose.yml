@@ -8,6 +8,7 @@ services:
       - /mnt/Multimedia/Series:/media/Series
       - /mnt/Multimedia/Films:/media/Films
       - /mnt/Multimedia/Animes:/media/Animes
+      - /mnt/Multimedia/Music:/media/Music
     ports:
       - 8096:8096
     networks:
@@ -69,6 +70,23 @@ services:
     networks:
       - front
 
+  lidarr:
+    image: lscr.io/linuxserver/lidarr:3.1.0
+    container_name: lidarr
+    restart: unless-stopped
+    ports:
+      - 8686:8686
+    environment:
+      - PUID=0
+      - PGID=0
+      - TZ=Europe/Paris
+    volumes:
+      - lidarr_config:/config
+      - /mnt/Downloads/Music:/downloads/Music
+      - /mnt/Multimedia/Music:/mnt/Music
+    networks:
+      - front
+
   prowlarr:
     image: lscr.io/linuxserver/prowlarr:2.3.0
     container_name: prowlarr
@@ -106,6 +124,7 @@ volumes:
   radarr_config:
   prowlarr_config:
   jellyseerr_config:
+  lidarr_config:
 
 networks:
   front:
