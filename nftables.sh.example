@@ -1,10 +1,10 @@
 #!/bin/bash
 
 # Home's IP address
-HomeIP="91.170.220.200"
+HomeIP=""
 
 # Port of the SSH server
-SSHPort="22659"
+SSHPort=""
 
 ### RESET ###
 # Deletes FW_Rules table
