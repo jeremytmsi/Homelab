@@ -226,6 +226,16 @@ resource "proxmox_virtual_environment_vm" "wazuh-qual-01" {
   stop_on_destroy = true
   vm_id = 115
 
+  cpu {
+    sockets = 1
+    cores = 8
+    type = "host"
+  }
+
+  memory {
+    dedicated = 16384
+  }
+
   agent {
     enabled = true
   }

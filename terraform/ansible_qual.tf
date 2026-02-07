@@ -33,7 +33,7 @@ resource "ansible_host" "storage-qual-01" {
 
 resource "ansible_host" "wazuh-qual-01" {
   name = proxmox_virtual_environment_vm.wazuh-qual-01.name
-  groups = ["qual","monitoring"]
+  groups = ["qual","wazuh"]
   variables = {
     ansible_user = var.vm_ssh_user
     ansible_host = join("",proxmox_virtual_environment_vm.wazuh-qual-01.ipv4_addresses[2])
