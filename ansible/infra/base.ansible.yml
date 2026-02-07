@@ -7,20 +7,13 @@
     - prometheus.prometheus.node_exporter
 
   tasks:
-    - name: Install htop
+    - name: Install base packages
       ansible.builtin.dnf:
-        name: htop
-        state: present
-
-    - name: Install vim
-      ansible.builtin.dnf:
-        name: vim
-        state: present
-
-    - name: Install NFS packages
-      ansible.builtin.dnf:
-        name: nfs-utils
-        state: present
+        name:
+          - htop
+          - vim
+          - nfs-utils
+          - rsync
 
     - name: Start nfs-utils service
       ansible.builtin.service:
