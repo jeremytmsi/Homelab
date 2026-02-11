@@ -26,3 +26,8 @@ resource "proxmox_virtual_environment_pool_membership" "wazuh-prod-01" {
   pool_id = proxmox_virtual_environment_pool.PROD.id
   vm_id = proxmox_virtual_environment_vm.wazuh-prod-01.vm_id
 }
+
+resource "proxmox_virtual_environment_pool_membership" "guacamole-prod-01" {
+  pool_id = proxmox_virtual_environment_pool.PROD.id
+  vm_id = proxmox_virtual_environment_vm.guacamole-prod-01.vm_id
+}

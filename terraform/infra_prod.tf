@@ -286,3 +286,62 @@ resource "proxmox_virtual_environment_vm" "wazuh-prod-01" {
     full = true
   }
 }
+
+resource "proxmox_virtual_environment_vm" "guacamole-prod-01" {
+  name = "guacamole.prod.jeremytomasi.fr"
+  description = "VM for Guacamole"
+  tags = ["linux","server","prod"]
+  node_name = var.node_name
+  stop_on_destroy = true
+  vm_id = 106
+
+  agent {
+    enabled = true
+  }
+
+  network_device {
+    model = "virtio"
+    bridge = "vmbr2"
+    vlan_id = 10
+  }
+
+  network_device {
+    model = "virtio"
+    bridge = "vmbr2"
+    vlan_id = 99
+  }
+
+  initialization {
+    datastore_id = "local"
+
+    dns {
+      domain = "prod.jeremytomasi.fr"
+      servers = ["192.168.10.254"]
+    }
+
+
+    ip_config {
+      ipv4 {
+        address = "192.168.10.248/24"
+        gateway = "192.168.10.254"
+      }
+    }
+
+    ip_config {
+      ipv4 {
+        address = "192.168.99.248/24"
+        gateway = "192.168.99.254"
+      }
+    }
+
+    user_account {
+      username = var.vm_ssh_user
+      keys = var.vm_ssh_keys
+    }
+  }
+
+  clone {
+    vm_id = 190
+    full = true
+  }
+}

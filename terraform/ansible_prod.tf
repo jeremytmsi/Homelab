@@ -41,3 +41,14 @@ resource "ansible_host" "wazuh-prod-01" {
     ansible_ssh_common_args = "-o StrictHostKeyChecking=no"
   }
 }
+
+resource "ansible_host" "guacamole-prod-01" {
+  name = proxmox_virtual_environment_vm.guacamole-prod-01.name
+  groups = ["prod","guacamole"]
+  variables = {
+    ansible_user = var.vm_ssh_user
+    ansible_host = join("",proxmox_virtual_environment_vm.guacamole-prod-01.ipv4_addresses[2])
+    ansible_ssh_private_key_file = var.ssh_private_key_file
+    ansible_ssh_common_args = "-o StrictHostKeyChecking=no"
+  }
+}
