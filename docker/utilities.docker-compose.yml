@@ -85,6 +85,15 @@ services:
     networks:
       - front
 
+  bentopdf:
+    image: bentopdfteam/bentopdf-simple:latest
+    container_name: bentopdf
+    restart: unless-stopped
+    ports:
+      - 8083:8080
+    environment:
+      - DISABLE_IPV6=true
+
 volumes:
   vault_data:
   authentik_db_data:
