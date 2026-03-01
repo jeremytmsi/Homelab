@@ -1,5 +1,5 @@
 provider "proxmox" {
-  endpoint = "https://135.125.180.48:8006"
+  endpoint = var.proxmox_url
   api_token = var.proxmox_token
   insecure = true
 }

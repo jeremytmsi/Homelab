@@ -36,6 +36,7 @@ resource "proxmox_virtual_environment_vm" "docker-prod-01" {
     interface = "scsi1"
     size = 1000
     file_format = "raw"
+    discard = "on"
   }
 
   initialization {
@@ -160,6 +161,7 @@ resource "proxmox_virtual_environment_vm" "storage-prod-01" {
     size = 500
     datastore_id = "local"
     file_format = "raw"
+    discard = "on"
   }
 
   disk {
@@ -167,6 +169,7 @@ resource "proxmox_virtual_environment_vm" "storage-prod-01" {
     size = 500
     datastore_id = "local"
     file_format = "raw"
+    discard = "on"
   }
 
   disk {
@@ -174,6 +177,7 @@ resource "proxmox_virtual_environment_vm" "storage-prod-01" {
     size = 500
     datastore_id = "local"
     file_format = "raw"
+    discard = "on"
   }
 
   disk {
@@ -181,6 +185,7 @@ resource "proxmox_virtual_environment_vm" "storage-prod-01" {
     size = 500
     datastore_id = "local"
     file_format = "raw"
+    discard = "on"
   }
 
   initialization {
