@@ -34,31 +34,26 @@
         enabled: true
         state: started
 
-- name: Launch arcane qual
-  hosts: qual:&docker
-  become: true
-
-  tasks:
-    - name: Create arcane data volume
+    - name: Create portainer data volume
       community.docker.docker_volume:
-        name: arcane_data
+        name: portainer_data
 
-    - name: Launch arcane container
+    - name: Create front network
+      community.docker.docker_network:
+        name: front
+
+    - name: Launch portainer container
       community.docker.docker_container:
-        name: arcane
-        image: ghcr.io/getarcaneapp/arcane:v1.14.1
+        name: portainer
+        image: portainer/portainer-ce:sts
         ports:
-          - 9000:3552
+          - 9000:9000
+          - 9443:9443
         restart: yes
         restart_policy: always
         volumes:
-          - arcane_data:/app/data
+          - portainer_data:/data
           - /var/run/docker.sock:/var/run/docker.sock
         networks:
           - name: front
-        env:
-          PUID: "0"
-          PGID: "0"
-          ENCRYPTION_KEY: "{{ arcane_encryption_key | string }}"
-          JWT_SECRET: "{{ arcane_jwt_key | string }}"
         state: started
