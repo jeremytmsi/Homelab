@@ -52,3 +52,14 @@ resource "ansible_host" "guacamole-prod-01" {
     ansible_ssh_common_args = "-o StrictHostKeyChecking=no"
   }
 }
+
+resource "ansible_host" "vps-prod-01" {
+  name = "vps.jeremytomasi.Fr"
+  groups = ["prod","docker", "vps"]
+  variables = {
+    ansible_user = "ansible"
+    ansible_host = "51.254.129.11"
+    ansible_ssh_private_key_file = var.ssh_private_key_file
+    ansible_ssh_common_args = "-o StrictHostKeyChecking=no"
+  }
+}

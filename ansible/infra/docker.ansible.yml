@@ -39,7 +39,7 @@
       community.docker.docker_network:
         name: front
 
-- name: Launch arcane
+- name: Launch main arcane container
   hosts: docker:!vps
   become: true
 
@@ -67,3 +67,27 @@
           ENCRYPTION_KEY: "{{ arcane_encryption_key | string }}"
           JWT_SECRET: "{{ arcane_jwt_key | string }}"
         state: started
+
+- name: Launch Arcane agent on the VPS
+  hosts: docker:&vps
+  become: true
+
+  tasks:
+    - name: Create Arcane agent data volume
+      community.docker.docker_volume:
+        name: arcane_agent_data
+
+    - name: Create Arcane agent container
+      community.docker.docker_container:
+        name: arcane-agent
+        image: ghcr.io/getarcaneapp/arcane-headless:v1.16.2
+        ports:
+          - 3553:3553
+        volumes:
+          - /var/run/docker.sock:/var/run/docker.sock
+          - arcane_agent_data:/app/data
+        restart_policy: unless-stopped
+        env:
+          AGENT_MODE: "true"
+          AGENT_TOKEN: "{{ arcane_agent_token }}"
+          MANAGER_API_URL: "https://containers.jeremytomasi.fr"
