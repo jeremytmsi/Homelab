@@ -14,29 +14,6 @@ services:
     networks:
       - front
 
-  tdarr:
-    image: ghcr.io/haveagitgat/tdarr
-    container_name: tdarr
-    restart: unless-stopped
-    ports:
-      - 8265:8265
-      - 8266:8266
-    environment:
-      - TZ=Europe/Paris
-      - PUID=0
-      - PGID=0
-      - serverIP=0.0.0.0
-      - serverPort=8266
-      - webUIPort=8265
-      - internalNode=true
-      - inContainer=true
-    volumes:
-      - /mnt/Multimedia:/media
-      - tdarr_config:/app/configs
-      - tdarr_server:/app/server
-    networks:
-      - front
-
   torrent:
     image: lscr.io/linuxserver/qbittorrent:5.1.4
     container_name: qbittorrent
