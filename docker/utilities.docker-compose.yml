@@ -1,13 +1,4 @@
 services:
-  librespeed:
-    image: lscr.io/linuxserver/librespeed:5.5.1
-    container_name: librespeed
-    restart: unless-stopped
-    ports:
-      - 8081:80
-    networks:
-      - front
-
   vault:
     image: vaultwarden/server:1.35.4
     container_name: vault
