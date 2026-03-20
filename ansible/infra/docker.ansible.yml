@@ -51,7 +51,7 @@
     - name: Launch arcane container
       community.docker.docker_container:
         name: arcane
-        image: ghcr.io/getarcaneapp/arcane:v1.16.1
+        image: ghcr.io/getarcaneapp/arcane:v1.16.2
         ports:
           - 9000:3552
         restart: yes
@@ -89,5 +89,6 @@
         restart_policy: unless-stopped
         env:
           AGENT_MODE: "true"
+          EDGE_TRANSPORT: "poll"
           AGENT_TOKEN: "{{ arcane_agent_token }}"
-          MANAGER_API_URL: "https://containers.jeremytomasi.fr"
+          MANAGER_API_URL: "http://192.168.10.253:9000"
