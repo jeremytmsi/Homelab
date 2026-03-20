@@ -38,7 +38,7 @@ source "proxmox-iso" "almalinux" {
     "<spacebar>",
     "biosdevname=0",
     "<spacebar>",
-    "ip=192.168.30.1::192.168.30.254:255.255.255.0:alma-template:eth0:none:9.9.9.9",
+    "ip=dhcp",
     "<spacebar>",
     "net.ifnames=0",
     "<spacebar>",
@@ -47,17 +47,17 @@ source "proxmox-iso" "almalinux" {
   ]
   boot_wait = "10s"
   http_directory = "packer/http"
-  http_interface = "utun1"
+  http_interface = "utun4"
 
   disks {
     type = "scsi"
     storage_pool = "local"
-    disk_size = "60G"
+    disk_size = "120G"
     format = "raw"
   }
 
   network_adapters {
-    bridge = "vmbr1"
+    bridge = "vmbr2"
     model = "virtio"
     vlan_tag = "30"
   }
