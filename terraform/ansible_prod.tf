@@ -9,6 +9,17 @@ resource "ansible_host" "docker-prod-01" {
   }
 }
 
+resource "ansible_host" "mail-prod-01" {
+  name = proxmox_virtual_environment_vm.mail-prod-01.name
+  groups = ["prod","docker"]
+  variables = {
+    ansible_user = "ansible"
+    ansible_host = join("",proxmox_virtual_environment_vm.mail-prod-01.ipv4_addresses[2])
+    ansible_ssh_private_key_file = var.ssh_private_key_file
+    ansible_ssh_common_args = "-o StrictHostKeyChecking=no"
+  }
+}
+
 resource "ansible_host" "storage-prod-01" {
   name = proxmox_virtual_environment_vm.storage-prod-01.name
   groups = ["prod","storage"]

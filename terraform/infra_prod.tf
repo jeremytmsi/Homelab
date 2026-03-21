@@ -74,6 +74,72 @@ resource "proxmox_virtual_environment_vm" "docker-prod-01" {
 }
 
 
+resource "proxmox_virtual_environment_vm" "mail-prod-01" {
+  name = "mail.jeremytomasi.fr"
+  description = "VM for mails"
+  tags = ["linux","server","prod"]
+  node_name = var.node_name
+  stop_on_destroy = true
+  vm_id = 102
+
+  agent {
+    enabled = true
+  }
+
+  network_device {
+    model = "virtio"
+    bridge = "vmbr2"
+    vlan_id = 10
+  }
+
+  network_device {
+    model = "virtio"
+    bridge = "vmbr2"
+    vlan_id = 99
+  }
+
+  disk {
+    interface = "scsi1"
+    size = 500
+    file_format = "raw"
+    datastore_id = "local"
+  }
+
+  initialization {
+    datastore_id = "local"
+
+    dns {
+      domain = "prod.jeremytomasi.fr"
+      servers = ["192.168.10.254"]
+    }
+
+
+    ip_config {
+      ipv4 {
+        address = "192.168.10.252/24"
+        gateway = "192.168.10.254"
+      }
+    }
+
+    ip_config {
+      ipv4 {
+        address = "192.168.99.252/24"
+        gateway = "192.168.99.254"
+      }
+    }
+
+    user_account {
+      username = "jeremy"
+      keys = var.vm_ssh_keys
+    }
+  }
+
+  clone {
+    vm_id = 190
+    full = true
+  }
+}
+
 resource "proxmox_virtual_environment_vm" "jumpserver-prod-01" {
   name = "jps.jeremytomasi.fr"
   description = "VM for Jumpserver"
