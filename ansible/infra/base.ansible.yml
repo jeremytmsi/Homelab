@@ -32,3 +32,9 @@
       ansible.builtin.service:
         name: nfs-mountd
         state: started
+
+    - name: Authorize port 9100 in firewall
+      ansible.builtin.firewalld:
+        port: 9100/tcp
+        permanent: true
+        state: enabled

@@ -10,8 +10,17 @@ services:
       - front
     restart: unless-stopped
 
+  prometheus:
+    image: prom/prometheus
+    container_name: prometheus
+    volumes:
+      - prometheus_config:/etc/prometheus
+    network_mode: host
+
+
 volumes:
   uptime-kuma_data:
+  prometheus_config:
 
 networks:
   front:
