@@ -49,6 +49,7 @@ services:
       - sonarr_config:/config
       - /mnt/Downloads/Series:/downloads/Series
       - /mnt/Downloads/Animes:/downloads/Animes
+      - /mnt/Downloads/Sports:/downloads/Sports
       - /mnt/Multimedia/Series:/mnt/Series
       - /mnt/Multimedia/Animes:/mnt/Animes
       - /mnt/Multimedia/Sports:/mnt/Sports
