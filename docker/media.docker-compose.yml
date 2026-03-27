@@ -9,6 +9,7 @@ services:
       - /mnt/Multimedia/Films:/media/Films
       - /mnt/Multimedia/Animes:/media/Animes
       - /mnt/Multimedia/Music:/media/Music
+      - /mnt/Multimedia/Sports:/media/Sports
     ports:
       - 8096:8096
     networks:
@@ -50,6 +51,7 @@ services:
       - /mnt/Downloads/Animes:/downloads/Animes
       - /mnt/Multimedia/Series:/mnt/Series
       - /mnt/Multimedia/Animes:/mnt/Animes
+      - /mnt/Multimedia/Sports:/mnt/Sports
     networks:
       - front
 
