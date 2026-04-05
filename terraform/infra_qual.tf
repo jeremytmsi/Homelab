@@ -37,6 +37,7 @@ resource "proxmox_virtual_environment_vm" "docker-qual-01" {
     size = 1000
     file_format = "raw"
     discard = "on"
+    ssd = true
   }
 
   initialization {
@@ -103,6 +104,7 @@ resource "proxmox_virtual_environment_vm" "mail-qual-01" {
     size = 500
     file_format = "raw"
     datastore_id = "local"
+    ssd = true
   }
 
   initialization {
@@ -170,6 +172,7 @@ resource "proxmox_virtual_environment_vm" "storage-qual-01" {
     datastore_id = "local"
     file_format = "raw"
     discard = "on"
+    ssd = true
   }
 
   disk {
@@ -178,6 +181,7 @@ resource "proxmox_virtual_environment_vm" "storage-qual-01" {
     datastore_id = "local"
     file_format = "raw"
     discard = "on"
+    ssd = true
   }
 
   disk {
@@ -186,6 +190,7 @@ resource "proxmox_virtual_environment_vm" "storage-qual-01" {
     datastore_id = "local"
     file_format = "raw"
     discard = "on"
+    ssd = true
   }
 
   disk {
@@ -194,6 +199,7 @@ resource "proxmox_virtual_environment_vm" "storage-qual-01" {
     datastore_id = "local"
     file_format = "raw"
     discard = "on"
+    ssd = true
   }
 
   initialization {
