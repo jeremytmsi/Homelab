@@ -18,7 +18,7 @@ source "proxmox-iso" "almalinux" {
   vm_name = "ALMALINUX-10-TPL"
   template_description = "Almalinux 10 template"
   tags = "template;linux"
-  vm_id = 190
+  vm_id = 301
   pool = "TEMPLATE"
   os = "l26"
   machine = "q35"
