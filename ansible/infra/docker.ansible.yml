@@ -1,0 +1,65 @@
+---
+- name: Install Docker
+  hosts: docker
+  become: true
+
+  tasks:
+    - name: Add Docker repository
+      ansible.builtin.yum_repository:
+        name: docker-ce
+        description: Docker Stable repository
+        baseurl: https://download.docker.com/linux/centos/$releasever/$basearch/stable
+        gpgcheck: yes
+        gpgkey: https://download.docker.com/linux/centos/gpg
+        enabled: yes
+        state: present
+
+    - name: Update DNF
+      ansible.builtin.dnf:
+        update_cache: true
+        state: latest
+
+    - name: Install Docker
+      ansible.builtin.dnf:
+        name:
+          - docker-ce
+          - docker-ce-cli
+          - containerd.io
+          - docker-buildx-plugin
+          - docker-compose-plugin
+
+    - name: Start Docker
+      ansible.builtin.service:
+        name: docker
+        enabled: true
+        state: started
+
+
+    - name: Create front network
+      community.docker.docker_network:
+        name: front
+
+- name: Launch main arcane container
+  hosts: docker:!vps
+  become: true
+
+  tasks:
+    - name: Create portainer data volume
+      community.docker.docker_volume:
+        name: portainer_data
+
+    - name: Launch portainer container
+      community.docker.docker_container:
+        name: portainer
+        image: portainer/portainer-ce:lts
+        ports:
+          - 8000:8000
+          - 9000:9000
+        restart: yes
+        restart_policy: always
+        volumes:
+          - portainer_data:/data
+          - /var/run/docker.sock:/var/run/docker.sock
+        networks:
+          - name: front
+        state: started
