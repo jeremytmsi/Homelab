@@ -4,6 +4,27 @@
   become: true
 
   tasks:
+
+    - name: Create multimedia folder
+      ansible.builtin.file:
+        path: /mnt/Data/Multimedia
+        state: directory
+
+    - name: Create multimedia folder
+      ansible.builtin.file:
+        path: /mnt/Data/Drive
+        state: directory
+
+    - name: Copy exports file
+      ansible.builtin.template:
+        src: templates/nfs_exports.j2
+        dest: /etc/exports
+        mode: '0644'
+
+    - name: Expose exports file
+      ansible.builtin.command:
+        cmd: "exportfs -ra"
+    
     - name: Open nfs port in firewalld
       ansible.builtin.firewalld:
         service: nfs

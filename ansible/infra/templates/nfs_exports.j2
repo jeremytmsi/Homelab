@@ -1,0 +1,2 @@
+/mnt/Data/Multimedia    {{ ansible_facts['default_ipv4']['network'] | ipaddr('network') }}/24(rw,sync,all_squash,anonuid=0,anongid=0)
+/mnt/Data/Drive         {{ ansible_facts['default_ipv4']['network'] | ipaddr('network') }}/24(rw,sync,all_squash,anonuid=0,anongid=0)
