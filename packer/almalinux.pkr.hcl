@@ -54,6 +54,7 @@ source "proxmox-iso" "almalinux" {
     storage_pool = "local"
     disk_size = "120G"
     format = "raw"
+    ssd = true
   }
 
   network_adapters {
