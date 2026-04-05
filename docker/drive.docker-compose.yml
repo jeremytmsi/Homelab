@@ -1,0 +1,95 @@
+services:
+  immich:
+    container_name: immich
+    image: ghcr.io/immich-app/immich-server:${IMMICH_VERSION:-release}
+    volumes:
+      - /etc/localtime:/etc/localtime:ro
+      - /mnt/Drive/Photos:/data
+    ports:
+      - 2283:2283
+    depends_on:
+      - redis
+      - immich_db
+    restart: unless-stopped
+    environment:
+      - DB_HOSTNAME=immich_db
+      - DB_USERNAME=immich
+      - DB_PASSWORD=${IMMICH_DB_PASS:?IMMICH_DB_PASS required}
+      - DB_DATABASE_NAME=immich
+      - TZ=Europe/Paris
+    networks:
+      - front
+
+  redis:
+    container_name: immich_redis
+    image: valkey/valkey:9
+    healthcheck:
+      test: redis-cli ping || exit 1
+    restart: always
+    networks:
+      - front
+
+  immich_db:
+    container_name: immich_db
+    image: ghcr.io/immich-app/postgres:14-vectorchord0.4.3-pgvectors0.2.0
+    environment:
+      - POSTGRES_PASSWORD=${IMMICH_DB_PASS}
+      - POSTGRES_USER=immich
+      - POSTGRES_DB=immich
+      - DB_STORAGE_TYPE=HDD
+    volumes:
+      - immich_db_data:/var/lib/postgresql/data
+    restart: always
+    networks:
+      - front
+
+  nextcloud:
+    image: nextcloud:production
+    container_name: nextcloud
+    restart: unless-stopped
+    depends_on:
+      - nextcloud_db
+    ports:
+      - 8080:80
+    volumes:
+      - nextcloud:/var/www/html
+      - nextcloud_apps:/var/www/html/custom_apps
+      - nextcloud_config:/var/www/html/config
+      - /mnt/Drive/Nextcloud:/var/www/html/data
+    environment:
+      - MYSQL_DATABASE=nextcloud
+      - MYSQL_USER=nextcloud
+      - MYSQL_PASSWORD=${NEXTCLOUD_DB_PASS:?NEXTCLOUD_DB_PASS required}
+      - MYSQL_HOST=nextcloud_db
+      - NEXTCLOUD_ADMIN_USER=admin
+      - NEXTCLOUD_TRUSTED_DOMAINS=drive.${BASE_HOST}
+      - OVERWRITEPROTOCOL=https
+      - OVERWRITECLIURL=https://drive.${BASE_HOST}
+    networks:
+      - front
+
+  nextcloud_db:
+    image: mariadb:lts-ubi
+    container_name: nextcloud_db
+    restart: unless-stopped
+    volumes:
+      - nextcloud_db_data:/var/lib/mysql
+    environment:
+      - MARIADB_RANDOM_ROOT_PASSWORD=1
+      - MARIADB_USER=nextcloud
+      - MARIADB_PASSWORD=${NEXTCLOUD_DB_PASS}
+      - MARIADB_DATABASE=nextcloud
+    networks:
+      - front
+
+
+volumes:
+  immich_db_data:
+  nextcloud_config:
+  nextcloud:
+  nextcloud_apps:
+  nextcloud_db_data:
+
+networks:
+  front:
+    external: true
