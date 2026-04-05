@@ -1,0 +1,83 @@
+services:
+  actual:
+    image: actualbudget/actual-server:latest
+    container_name: actual
+    ports:
+      - 5006:5006
+    volumes:
+      - actual_data:/data
+    restart: unless-stopped
+    networks:
+      - front
+
+  authentik_db:
+    image: postgres:16-alpine
+    container_name: authentik_db
+    restart: unless-stopped
+    volumes:
+      - authentik_db_data:/var/lib/postgresql/data
+    environment:
+      - POSTGRES_DB=authentik
+      - POSTGRES_PASSWORD=${PG_PASS:?database password required}
+      - POSTGRES_USER=authentik
+    networks:
+      - front
+
+  authentik_server:
+    image: ${AUTHENTIK_IMAGE:-ghcr.io/goauthentik/server}:${AUTHENTIK_TAG:-2025.12.1}
+    container_name: authentik_server
+    ports:
+      - 9001:9000
+    restart: unless-stopped
+    volumes:
+      - authentik_data:/data
+      - authentik_templates:/templates
+    environment:
+      - AUTHENTIK_POSTGRESQL__HOST=authentik_db
+      - AUTHENTIK_POSTGRESQL__NAME=authentik
+      - AUTHENTIK_POSTGRESQL__PASSWORD=${PG_PASS}
+      - AUTHENTIK_POSTGRESQL__USER=authentik
+      - AUTHENTIK_SECRET_KEY=${AUTHENTIK_SECRET_KEY:?secret key required}
+    command: server
+    networks:
+      - front
+
+  authentik_worker:
+    image: ${AUTHENTIK_IMAGE:-ghcr.io/goauthentik/server}:${AUTHENTIK_TAG:-2025.12.1}
+    container_name: authentik_worker
+    restart: unless-stopped
+    environment:
+      - AUTHENTIK_POSTGRESQL__HOST=authentik_db
+      - AUTHENTIK_POSTGRESQL__NAME=authentik
+      - AUTHENTIK_POSTGRESQL__PASSWORD=${PG_PASS}
+      - AUTHENTIK_POSTGRESQL__USER=authentik
+      - AUTHENTIK_SECRET_KEY=${AUTHENTIK_SECRET_KEY:?secret key required}
+    user: root
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+      - authentik_data:/data
+      - authentik_certs:/certs
+      - authentik_templates:/templates
+    command: worker
+    networks:
+      - front
+
+  bentopdf:
+    image: bentopdfteam/bentopdf-simple:latest
+    container_name: bentopdf
+    restart: unless-stopped
+    ports:
+      - 8083:8080
+    environment:
+      - DISABLE_IPV6=true
+
+volumes:
+  authentik_db_data:
+  authentik_data:
+  authentik_templates:
+  authentik_certs:
+  actual_data:
+
+networks:
+  front:
+    external: true
