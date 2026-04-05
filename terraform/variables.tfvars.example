@@ -1,0 +1,5 @@
+proxmox_url = ""
+proxmox_token = ""
+node_name = ""
+vm_ssh_keys = []
+vm_ssh_user = ""
