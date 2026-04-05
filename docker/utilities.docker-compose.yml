@@ -71,12 +71,29 @@ services:
     environment:
       - DISABLE_IPV6=true
 
+  vault:
+    image: vaultwarden/server:1.35.4
+    container_name: vault
+    restart: unless-stopped
+    volumes:
+      - vault_data:/data
+    ports:
+      - 8082:80
+    networks:
+      - front
+    environment:
+      - DOMAIN=https://vault.${BASE_HOST}
+      - ADMIN_TOKEN=${VAULT_ADMIN_TOKEN}
+
+
+
 volumes:
   authentik_db_data:
   authentik_data:
   authentik_templates:
   authentik_certs:
   actual_data:
+  vault_data:
 
 networks:
   front:
