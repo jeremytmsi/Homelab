@@ -14,7 +14,3 @@ variable "node_name" {
 variable "vm_ssh_user" {
   type = string
 }
-
-variable "vm_ssh_keys" {
-  type = list(string)
-}

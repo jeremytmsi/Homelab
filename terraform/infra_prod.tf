@@ -1,10 +1,10 @@
-resource "proxmox_virtual_environment_vm" "docker-qual-01" {
-  name = "docker.qual.jeremytomasi.fr"
+resource "proxmox_virtual_environment_vm" "docker-prod-01" {
+  name = "docker.prod.jeremytomasi.fr"
   description = "VM for hosting Docker services"
-  tags = ["linux","qual"]
+  tags = ["linux","prod"]
   node_name = var.node_name
   stop_on_destroy = true
-  vm_id = 201
+  vm_id = 101
 
   agent {
     enabled = true
@@ -22,13 +22,13 @@ resource "proxmox_virtual_environment_vm" "docker-qual-01" {
   network_device {
     model = "virtio"
     bridge = "vmbr2"
-    vlan_id = 20
+    vlan_id = 10
   }
 
   network_device {
     model = "virtio"
     bridge = "vmbr2"
-    vlan_id = 98
+    vlan_id = 99
   }
 
   disk {
@@ -44,27 +44,27 @@ resource "proxmox_virtual_environment_vm" "docker-qual-01" {
     datastore_id = "local"
 
     dns {
-      domain = "qual.jeremytomasi.fr"
-      servers = ["192.168.20.254"]
+      domain = "prod.jeremytomasi.fr"
+      servers = ["192.168.10.254"]
     }
 
     ip_config {
       ipv4 {
-        address = "192.168.20.1/24"
-        gateway = "192.168.20.254"
+        address = "192.168.10.1/24"
+        gateway = "192.168.10.254"
       }
     }
 
     ip_config {
       ipv4 {
-        address = "192.168.98.1/24"
-        gateway = "192.168.98.254"
+        address = "192.168.99.1/24"
+        gateway = "192.168.99.254"
       }
     }
 
     user_account {
       username = var.vm_ssh_user
-      keys = ["ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAILJ+ljCYdh+ZVslOdfiCu8mwhItJU8FicGVr/N3njn7u ansible_config_qual"]
+      keys = ["ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIKxo2h1vfU1YHjZaS9DQ+Liob0I5zCI3E2bj0NHs0uWL ansible_config_prod"]
     }
   }
 
@@ -75,13 +75,13 @@ resource "proxmox_virtual_environment_vm" "docker-qual-01" {
 }
 
 
-resource "proxmox_virtual_environment_vm" "mail-qual-01" {
-  name = "mail.qual.jeremytomasi.fr"
+resource "proxmox_virtual_environment_vm" "mail-prod-01" {
+  name = "mail.prod.jeremytomasi.fr"
   description = "VM for mails"
-  tags = ["linux","qual"]
+  tags = ["linux","prod"]
   node_name = var.node_name
   stop_on_destroy = true
-  vm_id = 202
+  vm_id = 102
 
   agent {
     enabled = true
@@ -90,13 +90,13 @@ resource "proxmox_virtual_environment_vm" "mail-qual-01" {
   network_device {
     model = "virtio"
     bridge = "vmbr2"
-    vlan_id = 20
+    vlan_id = 10
   }
 
   network_device {
     model = "virtio"
     bridge = "vmbr2"
-    vlan_id = 98
+    vlan_id = 99
   }
 
   disk {
@@ -111,28 +111,28 @@ resource "proxmox_virtual_environment_vm" "mail-qual-01" {
     datastore_id = "local"
 
     dns {
-      domain = "qual.jeremytomasi.fr"
-      servers = ["192.168.20.254"]
+      domain = "prod.jeremytomasi.fr"
+      servers = ["192.168.10.254"]
     }
 
 
     ip_config {
       ipv4 {
-        address = "192.168.20.2/24"
-        gateway = "192.168.20.254"
+        address = "192.168.10.2/24"
+        gateway = "192.168.10.254"
       }
     }
 
     ip_config {
       ipv4 {
-        address = "192.168.98.2/24"
-        gateway = "192.168.98.254"
+        address = "192.168.99.2/24"
+        gateway = "192.168.99.254"
       }
     }
 
     user_account {
       username = var.vm_ssh_user
-      keys = ["ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAILJ+ljCYdh+ZVslOdfiCu8mwhItJU8FicGVr/N3njn7u ansible_config_qual"]
+      keys = ["ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIKxo2h1vfU1YHjZaS9DQ+Liob0I5zCI3E2bj0NHs0uWL ansible_config_prod"]
     }
   }
 
@@ -142,13 +142,13 @@ resource "proxmox_virtual_environment_vm" "mail-qual-01" {
   }
 }
 
-resource "proxmox_virtual_environment_vm" "storage-qual-01" {
-  name = "storage.qual.jeremytomasi.fr"
+resource "proxmox_virtual_environment_vm" "storage-prod-01" {
+  name = "storage.prod.jeremytomasi.fr"
   description = "VM for storage"
-  tags = ["linux","qual"]
+  tags = ["linux","prod"]
   node_name = var.node_name
   stop_on_destroy = true
-  vm_id = 203
+  vm_id = 103
 
   agent {
     enabled = true
@@ -157,13 +157,13 @@ resource "proxmox_virtual_environment_vm" "storage-qual-01" {
   network_device {
     model = "virtio"
     bridge = "vmbr2"
-    vlan_id = 20
+    vlan_id = 10
   }
 
   network_device {
     model = "virtio"
     bridge = "vmbr2"
-    vlan_id = 98
+    vlan_id = 99
   }
 
   disk {
@@ -206,28 +206,28 @@ resource "proxmox_virtual_environment_vm" "storage-qual-01" {
     datastore_id = "local"
 
     dns {
-      domain = "qual.jeremytomasi.fr"
-      servers = ["192.168.20.254"]
+      domain = "prod.jeremytomasi.fr"
+      servers = ["192.168.10.254"]
     }
 
 
     ip_config {
       ipv4 {
-        address = "192.168.20.3/24"
-        gateway = "192.168.20.254"
+        address = "192.168.10.3/24"
+        gateway = "192.168.10.254"
       }
     }
 
     ip_config {
       ipv4 {
-        address = "192.168.98.3/24"
-        gateway = "192.168.98.254"
+        address = "192.168.99.3/24"
+        gateway = "192.168.99.254"
       }
     }
 
     user_account {
       username = var.vm_ssh_user
-      keys = ["ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAILJ+ljCYdh+ZVslOdfiCu8mwhItJU8FicGVr/N3njn7u ansible_config_qual"]
+      keys = ["ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIKxo2h1vfU1YHjZaS9DQ+Liob0I5zCI3E2bj0NHs0uWL ansible_config_prod"]
     }
   }
 
@@ -237,13 +237,13 @@ resource "proxmox_virtual_environment_vm" "storage-qual-01" {
   }
 }
 
-resource "proxmox_virtual_environment_vm" "wazuh-qual-01" {
-  name = "wazuh.qual.jeremytomasi.fr"
+resource "proxmox_virtual_environment_vm" "wazuh-prod-01" {
+  name = "wazuh.prod.jeremytomasi.fr"
   description = "VM for Wazuh"
-  tags = ["linux","qual"]
+  tags = ["linux","prod"]
   node_name = var.node_name
   stop_on_destroy = true
-  vm_id = 204
+  vm_id = 104
 
   cpu {
     sockets = 1
@@ -262,41 +262,41 @@ resource "proxmox_virtual_environment_vm" "wazuh-qual-01" {
   network_device {
     model = "virtio"
     bridge = "vmbr2"
-    vlan_id = 20
+    vlan_id = 10
   }
 
   network_device {
     model = "virtio"
     bridge = "vmbr2"
-    vlan_id = 98
+    vlan_id = 99
   }
 
   initialization {
     datastore_id = "local"
 
     dns {
-      domain = "qual.jeremytomasi.fr"
-      servers = ["192.168.20.254"]
+      domain = "prod.jeremytomasi.fr"
+      servers = ["192.168.10.254"]
     }
 
 
     ip_config {
       ipv4 {
-        address = "192.168.20.4/24"
-        gateway = "192.168.20.254"
+        address = "192.168.10.4/24"
+        gateway = "192.168.10.254"
       }
     }
 
     ip_config {
       ipv4 {
-        address = "192.168.98.4/24"
-        gateway = "192.168.98.254"
+        address = "192.168.99.4/24"
+        gateway = "192.168.99.254"
       }
     }
 
     user_account {
       username = var.vm_ssh_user
-      keys = ["ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAILJ+ljCYdh+ZVslOdfiCu8mwhItJU8FicGVr/N3njn7u ansible_config_qual"]
+      keys = ["ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIKxo2h1vfU1YHjZaS9DQ+Liob0I5zCI3E2bj0NHs0uWL ansible_config_prod"]
     }
   }
 
@@ -305,4 +305,3 @@ resource "proxmox_virtual_environment_vm" "wazuh-qual-01" {
     full = true
   }
 }
-
