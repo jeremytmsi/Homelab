@@ -118,6 +118,21 @@ services:
     networks:
       - front
 
+  musicseerr:
+    image: ghcr.io/habirabbu/musicseerr:latest
+    container_name: musicseerr
+    environment:
+      - PUID=1000
+      - PGID=1000
+      - PORT=8688
+      - TZ=Etc/UTC
+    ports:
+      - "8688:8688"
+    volumes:
+      - musicseerr_config:/app/config
+    restart: unless-stopped
+    networks:
+      - front
 
 
 volumes:
@@ -130,6 +145,7 @@ volumes:
   lidarr_config:
   tdarr_config:
   tdarr_server:
+  musicseerr_config:
 
 networks:
   front:
