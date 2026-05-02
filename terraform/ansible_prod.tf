@@ -41,3 +41,14 @@ resource "ansible_host" "wazuh-prod-01" {
     ansible_ssh_common_args = "-o StrictHostKeyChecking=no"
   }
 }
+
+resource "ansible_host" "monitoring-prod-01" {
+  name = "monitoring.prod.jeremytomasi.fr"
+  groups = ["prod","docker", "vps"]
+  variables = {
+    ansible_user = "ansible"
+    ansible_host = "51.254.129.11"
+    ansible_ssh_private_key_file = "~/.ssh/ansible_config_prod"
+    ansible_ssh_common_args = "-o StrictHostKeyChecking=no"
+  }
+}
