@@ -3,20 +3,41 @@
   hosts: all
   become: true
 
-  roles:
-    - prometheus.prometheus.node_exporter
-
   tasks:
     - name: Install base packages
       ansible.builtin.dnf:
         name:
           - htop
           - vim
-          - nfs-utils
-          - rsync
           - wget
           - fastfetch
           - iperf3
+
+- name: Base config for VMs
+  hosts: all:!vps
+  become: true
+
+  roles:
+    - prometheus.prometheus.node_exporter
+
+  tasks:
+    - name: Authorize port 9100 in firewall
+      ansible.builtin.firewalld:
+        port: 9100/tcp
+        permanent: true
+        state: enabled
+
+- name: NFS specific packages
+  hosts: docker:storage:!vps
+  become: true
+
+  tasks:
+
+    - name: Install NFS specific packages
+      ansible.builtin.dnf:
+        name:
+          - nfs-utils
+          - rsync
 
     - name: Start nfs-utils service
       ansible.builtin.service:
@@ -32,9 +53,3 @@
       ansible.builtin.service:
         name: nfs-mountd
         state: started
-
-    - name: Authorize port 9100 in firewall
-      ansible.builtin.firewalld:
-        port: 9100/tcp
-        permanent: true
-        state: enabled
