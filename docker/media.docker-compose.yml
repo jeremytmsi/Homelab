@@ -8,7 +8,6 @@ services:
       - /mnt/Multimedia/Series:/media/Series
       - /mnt/Multimedia/Films:/media/Films
       - /mnt/Multimedia/Animes:/media/Animes
-      - /mnt/Multimedia/Music:/media/Music
       - /mnt/Multimedia/Sports:/media/Sports
     ports:
       - 8096:8096
@@ -134,6 +133,17 @@ services:
     networks:
       - front
 
+  navidrome:
+    image: deluan/navidrome
+    container_name: navidrome
+    ports:
+      - 4533:4533
+    restart: unless-stopped
+    volumes:
+      - navidrome_data:/data
+      - /mnt/Multimedia/Music:/music:ro
+    networks:
+      - front
 
 volumes:
   jellyfin_config:
@@ -143,9 +153,8 @@ volumes:
   prowlarr_config:
   jellyseerr_config:
   lidarr_config:
-  tdarr_config:
-  tdarr_server:
   musicseerr_config:
+  navidrome_data:
 
 networks:
   front:
