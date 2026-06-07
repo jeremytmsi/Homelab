@@ -72,7 +72,7 @@ services:
       - DISABLE_IPV6=true
 
   vault:
-    image: vaultwarden/server:1.35.4
+    image: vaultwarden/server:1.36.0
     container_name: vault
     restart: unless-stopped
     volumes:
