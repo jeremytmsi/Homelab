@@ -104,9 +104,9 @@ services:
     networks:
       - front
 
-  seerr:
-    image: ghcr.io/seerr-team/seerr@sha256:a14a9c326881fdce70b00df3fc095f5b5b128f5552677f677cd3788e757fb4e6
-    container_name: seerr
+  jellyseerr:
+    image: fallenbagel/jellyseerr:preview-OIDC
+    container_name: jellyseerr
     restart: unless-stopped
     ports:
       - 5055:5055
