@@ -8,15 +8,15 @@ packer {
 }
 
 source "proxmox-iso" "almalinux" {
-  proxmox_url = "http://135.125.180.48:8006/api2/json"
+  proxmox_url = "https://135.125.180.48:8006/api2/json"
   node = "Suzuka"
-  username = "packer@pve!packer"
-  token = var.proxmox_token
+  username = "root@pam"
+  password = var.password
   insecure_skip_tls_verify = true
 
-  template_name = "ALMALINUX-10-TPL"
-  vm_name = "ALMALINUX-10-TPL"
-  template_description = "Almalinux 10 template"
+  template_name = "ALMALINUX-10.2-TPL"
+  vm_name = "ALMALINUX-10.2-TPL"
+  template_description = "Almalinux 10.2 template"
   tags = "template;linux"
   vm_id = 301
   pool = "TEMPLATE"
@@ -25,7 +25,7 @@ source "proxmox-iso" "almalinux" {
 
   boot_iso {
     type = "scsi"
-    iso_file = "local:iso/AlmaLinux-10.1-x86_64-minimal.iso"
+    iso_file = "local:iso/AlmaLinux-10.2-x86_64-minimal.iso"
     unmount = true
     iso_checksum = "none"
   }
@@ -47,13 +47,13 @@ source "proxmox-iso" "almalinux" {
   ]
   boot_wait = "10s"
   http_directory = "packer/http"
-  http_interface = "utun4"
+  http_interface = var.tailscale_int
 
   disks {
     type = "scsi"
     storage_pool = "local"
     disk_size = "120G"
-    format = "raw"
+    format = "qcow2"
     ssd = true
   }
 
@@ -63,7 +63,15 @@ source "proxmox-iso" "almalinux" {
     vlan_tag = "30"
   }
 
-  bios = "seabios"
+  bios = "ovmf"
+
+  efi_config {
+    efi_storage_pool = "local"
+    efi_format = "qcow2"
+    pre_enrolled_keys = true
+    efi_type = "4m"
+  }
+
   qemu_agent = true
   scsi_controller = "virtio-scsi-pci"
   cpu_type = "host"
@@ -86,7 +94,7 @@ build {
   sources = ["proxmox-iso.almalinux"]
 }
 
-variable "proxmox_token" {
+variable "password" {
   type = string
   sensitive = true
 }
@@ -94,4 +102,8 @@ variable "proxmox_token" {
 variable "ssh_password" {
   type = string
   sensitive = true
+}
+
+variable "tailscale_int" {
+  type = string
 }
