@@ -87,20 +87,6 @@ services:
       - DOMAIN=https://vault.${BASE_HOST}
       - ADMIN_TOKEN=${VAULT_ADMIN_TOKEN}
 
-  homarr:
-    container_name: homarr
-    image: ghcr.io/homarr-labs/homarr:latest
-    restart: unless-stopped
-    volumes:
-      - /var/run/docker.sock:/var/run/docker.sock
-      - homarr_config:/appdata
-    environment:
-      - SECRET_ENCRYPTION_KEY=${HOMARR_KEY}
-    ports:
-      - '7575:7575'
-    networks:
-      - front
-
 volumes:
   authentik_db_data:
   authentik_data:
@@ -108,7 +94,6 @@ volumes:
   authentik_certs:
   actual_data:
   vault_data:
-  homarr_config:
 
 networks:
   front:
