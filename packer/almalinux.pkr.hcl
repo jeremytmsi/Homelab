@@ -8,7 +8,7 @@ packer {
 }
 
 source "proxmox-iso" "almalinux" {
-  proxmox_url = "https://135.125.180.48:8006/api2/json"
+  proxmox_url = "https://10.0.0.1:8006/api2/json"
   node = "Suzuka"
   username = "root@pam"
   password = var.password
@@ -83,8 +83,8 @@ source "proxmox-iso" "almalinux" {
   ssh_handshake_attempts = 5
   ssh_pty = true
   ssh_timeout = "20m"
-  ssh_username = "packer"
-  ssh_private_key_file = "~/.ssh/packer"
+  ssh_username = "jeremy"
+  ssh_private_key_file = "~/.ssh/id_ed25519"
 
   cloud_init = "true"
   cloud_init_storage_pool = "local"
