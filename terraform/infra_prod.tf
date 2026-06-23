@@ -58,14 +58,9 @@ resource "proxmox_virtual_environment_vm" "docker-prod-01" {
     ip_config {
       ipv4 {
         address = "192.168.99.1/24"
-        gateway = "192.168.99.254"
       }
     }
 
-    user_account {
-      username = var.vm_ssh_user
-      keys = ["ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIKxo2h1vfU1YHjZaS9DQ+Liob0I5zCI3E2bj0NHs0uWL ansible_config_prod"]
-    }
   }
 
   clone {
@@ -126,14 +121,9 @@ resource "proxmox_virtual_environment_vm" "mail-prod-01" {
     ip_config {
       ipv4 {
         address = "192.168.99.2/24"
-        gateway = "192.168.99.254"
       }
     }
 
-    user_account {
-      username = var.vm_ssh_user
-      keys = ["ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIKxo2h1vfU1YHjZaS9DQ+Liob0I5zCI3E2bj0NHs0uWL ansible_config_prod"]
-    }
   }
 
   clone {
@@ -221,14 +211,9 @@ resource "proxmox_virtual_environment_vm" "storage-prod-01" {
     ip_config {
       ipv4 {
         address = "192.168.99.3/24"
-        gateway = "192.168.99.254"
       }
     }
 
-    user_account {
-      username = var.vm_ssh_user
-      keys = ["ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIKxo2h1vfU1YHjZaS9DQ+Liob0I5zCI3E2bj0NHs0uWL ansible_config_prod"]
-    }
   }
 
   clone {
@@ -290,14 +275,9 @@ resource "proxmox_virtual_environment_vm" "wazuh-prod-01" {
     ip_config {
       ipv4 {
         address = "192.168.99.4/24"
-        gateway = "192.168.99.254"
       }
     }
 
-    user_account {
-      username = var.vm_ssh_user
-      keys = ["ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIKxo2h1vfU1YHjZaS9DQ+Liob0I5zCI3E2bj0NHs0uWL ansible_config_prod"]
-    }
   }
 
   clone {

@@ -1,23 +1,23 @@
-resource "proxmox_virtual_environment_pool" "QUAL" {
+resource "proxmox_virtual_environment_pool" "qual" {
   pool_id = "QUAL"
 }
 
-resource "proxmox_virtual_environment_pool_membership" "docker-qual-01" {
-  pool_id = proxmox_virtual_environment_pool.QUAL.id
+resource "proxmox_pool_membership" "docker-qual-01" {
+  pool_id = proxmox_virtual_environment_pool.qual.id
   vm_id = proxmox_virtual_environment_vm.docker-qual-01.vm_id
 }
 
-resource "proxmox_virtual_environment_pool_membership" "mail-qual-01" {
-  pool_id = proxmox_virtual_environment_pool.QUAL.id
+resource "proxmox_pool_membership" "mail-qual-01" {
+  pool_id = proxmox_virtual_environment_pool.qual.id
   vm_id = proxmox_virtual_environment_vm.mail-qual-01.vm_id
 }
 
-resource "proxmox_virtual_environment_pool_membership" "storage-qual-01" {
-  pool_id = proxmox_virtual_environment_pool.QUAL.id
+resource "proxmox_pool_membership" "storage-qual-01" {
+  pool_id = proxmox_virtual_environment_pool.qual.id
   vm_id = proxmox_virtual_environment_vm.storage-qual-01.vm_id
 }
 
-resource "proxmox_virtual_environment_pool_membership" "wazuh-qual-01" {
-  pool_id = proxmox_virtual_environment_pool.QUAL.id
+resource "proxmox_pool_membership" "wazuh-qual-01" {
+  pool_id = proxmox_virtual_environment_pool.qual.id
   vm_id = proxmox_virtual_environment_vm.wazuh-qual-01.vm_id
 }

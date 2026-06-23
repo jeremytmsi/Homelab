@@ -10,7 +10,3 @@ variable "proxmox_token" {
 variable "node_name" {
   type = string
 }
-
-variable "vm_ssh_user" {
-  type = string
-}

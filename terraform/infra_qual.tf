@@ -58,14 +58,9 @@ resource "proxmox_virtual_environment_vm" "docker-qual-01" {
     ip_config {
       ipv4 {
         address = "192.168.98.1/24"
-        gateway = "192.168.98.254"
       }
     }
 
-    user_account {
-      username = var.vm_ssh_user
-      keys = ["ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAILJ+ljCYdh+ZVslOdfiCu8mwhItJU8FicGVr/N3njn7u ansible_config_qual"]
-    }
   }
 
   clone {
@@ -126,14 +121,9 @@ resource "proxmox_virtual_environment_vm" "mail-qual-01" {
     ip_config {
       ipv4 {
         address = "192.168.98.2/24"
-        gateway = "192.168.98.254"
       }
     }
 
-    user_account {
-      username = var.vm_ssh_user
-      keys = ["ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAILJ+ljCYdh+ZVslOdfiCu8mwhItJU8FicGVr/N3njn7u ansible_config_qual"]
-    }
   }
 
   clone {
@@ -221,14 +211,9 @@ resource "proxmox_virtual_environment_vm" "storage-qual-01" {
     ip_config {
       ipv4 {
         address = "192.168.98.3/24"
-        gateway = "192.168.98.254"
       }
     }
 
-    user_account {
-      username = var.vm_ssh_user
-      keys = ["ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAILJ+ljCYdh+ZVslOdfiCu8mwhItJU8FicGVr/N3njn7u ansible_config_qual"]
-    }
   }
 
   clone {
@@ -290,14 +275,9 @@ resource "proxmox_virtual_environment_vm" "wazuh-qual-01" {
     ip_config {
       ipv4 {
         address = "192.168.98.4/24"
-        gateway = "192.168.98.254"
       }
     }
 
-    user_account {
-      username = var.vm_ssh_user
-      keys = ["ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAILJ+ljCYdh+ZVslOdfiCu8mwhItJU8FicGVr/N3njn7u ansible_config_qual"]
-    }
   }
 
   clone {
@@ -305,4 +285,3 @@ resource "proxmox_virtual_environment_vm" "wazuh-qual-01" {
     full = true
   }
 }
-
