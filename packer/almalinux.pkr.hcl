@@ -52,8 +52,8 @@ source "proxmox-iso" "almalinux" {
   disks {
     type = "scsi"
     storage_pool = "local"
-    disk_size = "120G"
-    format = "qcow2"
+    disk_size = "80G"
+    format = "raw"
     ssd = true
   }
 
