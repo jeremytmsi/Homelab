@@ -83,8 +83,8 @@ source "proxmox-iso" "almalinux" {
   ssh_handshake_attempts = 5
   ssh_pty = true
   ssh_timeout = "20m"
-  ssh_username = "root"
-  ssh_password = var.ssh_password
+  ssh_username = "packer"
+  ssh_private_key_file = "~/.ssh/packer"
 
   cloud_init = "true"
   cloud_init_storage_pool = "local"
