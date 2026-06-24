@@ -40,13 +40,25 @@
         state: enabled
         permanent: true
         immediate: true
+
+    - name: Format RAID
+      ansible.builtin.filesystem:
+        fstype: ext4
+        dev: /dev/md0
+
+    - name: Mount RAID
+      ansible.posix.mount:
+        path: /mnt/Data
+        src: /dev/md0
+        state: mounted
+        fstype: ext4
     
     - name: Create multimedia folder
       ansible.builtin.file:
         path: /mnt/Data/Multimedia
         state: directory
 
-    - name: Create multimedia folder
+    - name: Create drive folder
       ansible.builtin.file:
         path: /mnt/Data/Drive
         state: directory
@@ -60,3 +72,23 @@
     - name: Expose exports file
       ansible.builtin.command:
         cmd: "exportfs -ra"
+
+- name: Mount shares
+  hosts: docker:!vps
+  become: true
+  become_method: su
+
+  tasks:
+    - name: Mount Multimedia share
+      ansible.posix.mount:
+        src: "{{ ansible_facts['default_ipv4']['network'].split('.')[:-1] | join('.') ~ '.3' }}:/mnt/Data/Multimedia"
+        path: /mnt/Multimedia
+        state: mounted
+        fstype: nfs
+
+    - name: Mount Drive share
+      ansible.posix.mount:
+        src: "{{ ansible_facts['default_ipv4']['network'].split('.')[:-1] | join('.') ~ '.3' }}:/mnt/Data/Drive"
+        path: /mnt/Drive
+        state: mounted
+        fstype: nfs

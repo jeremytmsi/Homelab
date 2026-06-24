@@ -1,8 +1,11 @@
 ---
-- name: Base tasks
-  hosts: all
+- name: Base tasks + Prometheus config
+  hosts: all:!vps
   become: true
   become_method: su
+
+  roles:
+    - prometheus.prometheus.node_exporter
 
   tasks:
     - name: Install base packages
@@ -12,8 +15,14 @@
           - vim
           - wget
           - fastfetch
-          - iperf3
           - rsync
+          - nfs-utils
+
+    - name: Authorize port 9100 in firewall
+      ansible.builtin.firewalld:
+        port: 9100/tcp
+        permanent: true
+        state: enabled
 
 - name: Install specific packages for storage VMs
   hosts: storage
@@ -21,23 +30,7 @@
   become_method: su
 
   tasks:
-    - name: Install NFS specific packages
+    - name: Install specific packages
       ansible.builtin.dnf:
         name:
-          - nfs-utils
           - mdadm
-
-- name: Prometheus config for VMs
-  hosts: all:!vps
-  become: true
-  become_method: su
-
-  roles:
-    - prometheus.prometheus.node_exporter
-
-  tasks:
-    - name: Authorize port 9100 in firewall
-      ansible.builtin.firewalld:
-        port: 9100/tcp
-        permanent: true
-        state: enabled
