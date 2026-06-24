@@ -2,6 +2,7 @@
 - name: Install Docker
   hosts: docker
   become: true
+  become_method: su
 
   tasks:
     - name: Add Docker repository
@@ -46,6 +47,7 @@
 - name: Launch main portainer container
   hosts: docker:!vps
   become: true
+  become_method: su
 
   tasks:
     - name: Create portainer data volume
@@ -71,13 +73,14 @@
 - name: Launch portainer agent container
   hosts: docker:&vps
   become: true
+  become_method: su
 
   tasks:
 
     - name: Launch portainer agent container
       community.docker.docker_container:
         name: portainer_agent
-        image: portainer/agent:2.39.1
+        image: portainer/agent:2.39.3
         restart_policy: always
         ports:
           - 9001:9001

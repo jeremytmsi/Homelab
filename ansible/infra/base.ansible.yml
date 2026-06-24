@@ -2,6 +2,7 @@
 - name: Base tasks
   hosts: all
   become: true
+  become_method: su
 
   tasks:
     - name: Install base packages
@@ -12,10 +13,24 @@
           - wget
           - fastfetch
           - iperf3
+          - rsync
 
-- name: Base config for VMs
+- name: Install specific packages for storage VMs
+  hosts: storage
+  become: true
+  become_method: su
+
+  tasks:
+    - name: Install NFS specific packages
+      ansible.builtin.dnf:
+        name:
+          - nfs-utils
+          - mdadm
+
+- name: Prometheus config for VMs
   hosts: all:!vps
   become: true
+  become_method: su
 
   roles:
     - prometheus.prometheus.node_exporter
@@ -26,30 +41,3 @@
         port: 9100/tcp
         permanent: true
         state: enabled
-
-- name: NFS specific packages
-  hosts: docker:storage:!vps
-  become: true
-
-  tasks:
-
-    - name: Install NFS specific packages
-      ansible.builtin.dnf:
-        name:
-          - nfs-utils
-          - rsync
-
-    - name: Start nfs-utils service
-      ansible.builtin.service:
-        name: nfs-utils
-        state: started
-
-    - name: Start rpcbind service
-      ansible.builtin.service:
-        name: rpcbind
-        state: started
-
-    - name: Start nfs-mountd service
-      ansible.builtin.service:
-        name: nfs-mountd
-        state: started

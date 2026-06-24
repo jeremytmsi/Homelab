@@ -1,3 +1,4 @@
 ---
 plugin: cloud.terraform.terraform_provider
 project_path: terraform
+binary_path: /opt/homebrew/bin/terraform
