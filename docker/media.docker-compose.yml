@@ -5,10 +5,9 @@ services:
     restart: unless-stopped
     volumes:
       - jellyfin_config:/config
-      - /mnt/Multimedia/Series:/media/Series
-      - /mnt/Multimedia/Films:/media/Films
-      - /mnt/Multimedia/Animes:/media/Animes
-      - /mnt/Multimedia/Sports:/media/Sports
+      #- /mnt/Multimedia/Series:/media/Series
+      #- /mnt/Multimedia/Films:/media/Films
+      #- /mnt/Multimedia/Animes:/media/Animes
     ports:
       - 8096:8096
     networks:
@@ -48,10 +47,8 @@ services:
       - sonarr_config:/config
       - /mnt/Downloads/Series:/downloads/Series
       - /mnt/Downloads/Animes:/downloads/Animes
-      - /mnt/Downloads/Sports:/downloads/Sports
       - /mnt/Multimedia/Series:/mnt/Series
       - /mnt/Multimedia/Animes:/mnt/Animes
-      - /mnt/Multimedia/Sports:/mnt/Sports
     networks:
       - front
 
