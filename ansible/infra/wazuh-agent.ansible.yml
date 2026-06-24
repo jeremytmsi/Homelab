@@ -1,0 +1,40 @@
+- name: Install Wazuh agents
+  hosts: all:!wazuh
+  become: true
+  become_method: su
+
+  tasks:
+    - name: Import Wazuh GPG key
+      ansible.builtin.rpm_key:
+        state: present
+        key: https://packages.wazuh.com/key/GPG-KEY-WAZUH
+
+    - name: Add Wazuh repository
+      ansible.builtin.yum_repository:
+        name: wazuh
+        description: Wazuh repository
+        baseurl: https://packages.wazuh.com/4.x/yum/
+        gpgcheck: true
+        gpgkey: https://packages.wazuh.com/key/GPG-KEY-WAZUH
+        priority: 1
+        enabled: true
+
+    - name: Install Wazuh agent
+      ansible.builtin.dnf:
+        name: wazuh-agent
+        state: present
+
+    - name: Debug
+      ansible.builtin.debug:
+        var: ansible_facts['default_ipv4']['network']
+
+    - name: Replace Wazuh Manager IP
+      ansible.builtin.replace:
+        path: /var/ossec/etc/ossec.conf
+        regexp: "MANAGER_IP"
+        replace: "{{ ansible_facts['default_ipv4']['network'].split('.')[:-1] | join('.') ~ '.4' }}"
+
+    - name: Restart wazuh agent service
+      ansible.builtin.service:
+        name: wazuh-agent
+        state: restarted
