@@ -8,10 +8,10 @@ packer {
 }
 
 source "proxmox-iso" "almalinux" {
-  proxmox_url = "https://10.0.0.1:8006/api2/json"
-  node = "Suzuka"
-  username = "root@pam"
-  password = var.password
+  proxmox_url = var.proxmox_url
+  node = var.node
+  username = var.username
+  token = var.token
   insecure_skip_tls_verify = true
 
   template_name = "ALMALINUX-10.2-TPL"
@@ -63,14 +63,7 @@ source "proxmox-iso" "almalinux" {
     vlan_tag = "30"
   }
 
-  bios = "ovmf"
-
-  efi_config {
-    efi_storage_pool = "local"
-    efi_format = "qcow2"
-    pre_enrolled_keys = true
-    efi_type = "4m"
-  }
+  bios = "seabios"
 
   qemu_agent = true
   scsi_controller = "virtio-scsi-pci"
@@ -83,8 +76,8 @@ source "proxmox-iso" "almalinux" {
   ssh_handshake_attempts = 5
   ssh_pty = true
   ssh_timeout = "20m"
-  ssh_username = "jeremy"
-  ssh_private_key_file = "~/.ssh/id_ed25519"
+  ssh_username = var.ssh_username
+  ssh_private_key_file = var.ssh_private_key
 
   cloud_init = "true"
   cloud_init_storage_pool = "local"
@@ -94,16 +87,32 @@ build {
   sources = ["proxmox-iso.almalinux"]
 }
 
-variable "password" {
+variable "token" {
   type = string
   sensitive = true
 }
 
-variable "ssh_password" {
+variable "proxmox_url" {
   type = string
-  sensitive = true
+}
+
+variable "username" {
+  type = string
+}
+
+variable "node" {
+  type = string
 }
 
 variable "tailscale_int" {
   type = string
+}
+
+variable "ssh_username" {
+  type = string
+}
+
+variable "ssh_private_key" {
+  type = string
+  sensitive = true
 }
