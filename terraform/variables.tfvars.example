@@ -1,5 +1,5 @@
 proxmox_url = ""
 proxmox_token = ""
 node_name = ""
-vm_ssh_keys = []
-vm_ssh_user = ""
+ansible_user = ""
+ansible_ssh_key = ""

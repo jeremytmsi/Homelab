@@ -1,4 +1,4 @@
-resource "proxmox_virtual_environment_vm" "docker-prod-01" {
+resource "proxmox_virtual_environment_vm" "vm-docker-prod" {
   name = "docker.prod.jeremytomasi.fr"
   description = "VM for hosting Docker services"
   tags = ["linux","prod"]
@@ -70,7 +70,7 @@ resource "proxmox_virtual_environment_vm" "docker-prod-01" {
 }
 
 
-resource "proxmox_virtual_environment_vm" "mail-prod-01" {
+resource "proxmox_virtual_environment_vm" "vm-mail-prod" {
   name = "mail.prod.jeremytomasi.fr"
   description = "VM for mails"
   tags = ["linux","prod"]
@@ -132,7 +132,7 @@ resource "proxmox_virtual_environment_vm" "mail-prod-01" {
   }
 }
 
-resource "proxmox_virtual_environment_vm" "storage-prod-01" {
+resource "proxmox_virtual_environment_vm" "vm-storage-prod" {
   name = "storage.prod.jeremytomasi.fr"
   description = "VM for storage"
   tags = ["linux","prod"]
@@ -222,7 +222,7 @@ resource "proxmox_virtual_environment_vm" "storage-prod-01" {
   }
 }
 
-resource "proxmox_virtual_environment_vm" "wazuh-prod-01" {
+resource "proxmox_virtual_environment_vm" "vm-wazuh-prod" {
   name = "wazuh.prod.jeremytomasi.fr"
   description = "VM for Wazuh"
   tags = ["linux","prod"]

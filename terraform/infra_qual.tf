@@ -1,4 +1,4 @@
-resource "proxmox_virtual_environment_vm" "docker-qual-01" {
+resource "proxmox_virtual_environment_vm" "vm-docker-qual" {
   name = "docker.qual.jeremytomasi.fr"
   description = "VM for hosting Docker services"
   tags = ["linux","qual"]
@@ -70,7 +70,7 @@ resource "proxmox_virtual_environment_vm" "docker-qual-01" {
 }
 
 
-resource "proxmox_virtual_environment_vm" "mail-qual-01" {
+resource "proxmox_virtual_environment_vm" "vm-mail-qual" {
   name = "mail.qual.jeremytomasi.fr"
   description = "VM for mails"
   tags = ["linux","qual"]
@@ -132,7 +132,7 @@ resource "proxmox_virtual_environment_vm" "mail-qual-01" {
   }
 }
 
-resource "proxmox_virtual_environment_vm" "storage-qual-01" {
+resource "proxmox_virtual_environment_vm" "vm-storage-qual" {
   name = "storage.qual.jeremytomasi.fr"
   description = "VM for storage"
   tags = ["linux","qual"]
@@ -222,7 +222,7 @@ resource "proxmox_virtual_environment_vm" "storage-qual-01" {
   }
 }
 
-resource "proxmox_virtual_environment_vm" "wazuh-qual-01" {
+resource "proxmox_virtual_environment_vm" "vm-wazuh-qual" {
   name = "wazuh.qual.jeremytomasi.fr"
   description = "VM for Wazuh"
   tags = ["linux","qual"]

@@ -10,3 +10,11 @@ variable "proxmox_token" {
 variable "node_name" {
   type = string
 }
+
+variable "ansible_user" {
+  type = string
+}
+
+variable "ansible_ssh_key" {
+  type = string
+}

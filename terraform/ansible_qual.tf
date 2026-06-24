@@ -1,43 +1,43 @@
-resource "ansible_host" "docker-qual-01" {
-  name = proxmox_virtual_environment_vm.docker-qual-01.name
-  groups = ["docker"]
+resource "ansible_host" "vm-docker-qual" {
+  name = proxmox_virtual_environment_vm.vm-docker-qual.name
+  groups = ["qual","docker"]
   variables = {
-    ansible_user = "jeremy"
-    ansible_host = join("",proxmox_virtual_environment_vm.docker-qual-01.ipv4_addresses[2])
-    ansible_private_key_file = "~/.ssh/id_ed25519"
+    ansible_user = var.ansible_user
+    ansible_host = join("",proxmox_virtual_environment_vm.vm-docker-qual.ipv4_addresses[2])
+    ansible_private_key_file = var.ansible_ssh_key
     ansible_ssh_common_args = "-o StrictHostKeyChecking=no"
   }
 }
 
-resource "ansible_host" "mail-qual-01" {
-  name = proxmox_virtual_environment_vm.mail-qual-01.name
-  groups = ["mail"]
+resource "ansible_host" "vm-mail-qual" {
+  name = proxmox_virtual_environment_vm.vm-mail-qual.name
+  groups = ["qual","mail"]
   variables = {
-    ansible_user = "jeremy"
-    ansible_host = join("",proxmox_virtual_environment_vm.mail-qual-01.ipv4_addresses[2])
-    ansible_private_key_file = "~/.ssh/id_ed25519"
+    ansible_user = var.ansible_user
+    ansible_host = join("",proxmox_virtual_environment_vm.vm-mail-qual.ipv4_addresses[2])
+    ansible_private_key_file = var.ansible_ssh_key
     ansible_ssh_common_args = "-o StrictHostKeyChecking=no"
   }
 }
 
-resource "ansible_host" "storage-qual-01" {
-  name = proxmox_virtual_environment_vm.storage-qual-01.name
-  groups = ["storage"]
+resource "ansible_host" "vm-storage-qual" {
+  name = proxmox_virtual_environment_vm.vm-storage-qual.name
+  groups = ["qual","storage"]
   variables = {
-    ansible_user = "jeremy"
-    ansible_host = join("",proxmox_virtual_environment_vm.storage-qual-01.ipv4_addresses[2])
-    ansible_private_key_file = "~/.ssh/id_ed25519"
+    ansible_user = var.ansible_user
+    ansible_host = join("",proxmox_virtual_environment_vm.vm-storage-qual.ipv4_addresses[2])
+    ansible_private_key_file = var.ansible_ssh_key
     ansible_ssh_common_args = "-o StrictHostKeyChecking=no"
   }
 }
 
-resource "ansible_host" "wazuh-qual-01" {
-  name = proxmox_virtual_environment_vm.wazuh-qual-01.name
-  groups = ["wazuh"]
+resource "ansible_host" "vm-wazuh-qual" {
+  name = proxmox_virtual_environment_vm.vm-wazuh-qual.name
+  groups = ["qual","wazuh"]
   variables = {
-    ansible_user = "jeremy"
-    ansible_host = join("",proxmox_virtual_environment_vm.wazuh-qual-01.ipv4_addresses[2])
-    ansible_private_key_file = "~/.ssh/id_ed25519"
+    ansible_user = var.ansible_user
+    ansible_host = join("",proxmox_virtual_environment_vm.vm-wazuh-qual.ipv4_addresses[2])
+    ansible_private_key_file = var.ansible_ssh_key
     ansible_ssh_common_args = "-o StrictHostKeyChecking=no"
   }
 }
