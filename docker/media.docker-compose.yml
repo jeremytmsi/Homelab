@@ -5,9 +5,9 @@ services:
     restart: unless-stopped
     volumes:
       - jellyfin_config:/config
-      #- /mnt/Multimedia/Series:/media/Series
-      #- /mnt/Multimedia/Films:/media/Films
-      #- /mnt/Multimedia/Animes:/media/Animes
+      - /mnt/Multimedia/Series:/media/Series
+      - /mnt/Multimedia/Films:/media/Films
+      - /mnt/Multimedia/Animes:/media/Animes
     ports:
       - 8096:8096
     networks:
