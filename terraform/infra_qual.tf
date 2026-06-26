@@ -25,12 +25,6 @@ resource "proxmox_virtual_environment_vm" "vm-docker-qual" {
     vlan_id = 20
   }
 
-  network_device {
-    model = "virtio"
-    bridge = "vmbr2"
-    vlan_id = 98
-  }
-
   disk {
     datastore_id = "local"
     interface = "scsi1"
@@ -52,12 +46,6 @@ resource "proxmox_virtual_environment_vm" "vm-docker-qual" {
       ipv4 {
         address = "192.168.20.1/24"
         gateway = "192.168.20.254"
-      }
-    }
-
-    ip_config {
-      ipv4 {
-        address = "192.168.98.1/24"
       }
     }
 
@@ -88,12 +76,6 @@ resource "proxmox_virtual_environment_vm" "vm-mail-qual" {
     vlan_id = 20
   }
 
-  network_device {
-    model = "virtio"
-    bridge = "vmbr2"
-    vlan_id = 98
-  }
-
   disk {
     interface = "scsi1"
     size = 500
@@ -115,12 +97,6 @@ resource "proxmox_virtual_environment_vm" "vm-mail-qual" {
       ipv4 {
         address = "192.168.20.2/24"
         gateway = "192.168.20.254"
-      }
-    }
-
-    ip_config {
-      ipv4 {
-        address = "192.168.98.2/24"
       }
     }
 
@@ -148,12 +124,6 @@ resource "proxmox_virtual_environment_vm" "vm-storage-qual" {
     model = "virtio"
     bridge = "vmbr2"
     vlan_id = 20
-  }
-
-  network_device {
-    model = "virtio"
-    bridge = "vmbr2"
-    vlan_id = 98
   }
 
   disk {
@@ -208,12 +178,6 @@ resource "proxmox_virtual_environment_vm" "vm-storage-qual" {
       }
     }
 
-    ip_config {
-      ipv4 {
-        address = "192.168.98.3/24"
-      }
-    }
-
   }
 
   clone {
@@ -250,12 +214,6 @@ resource "proxmox_virtual_environment_vm" "vm-wazuh-qual" {
     vlan_id = 20
   }
 
-  network_device {
-    model = "virtio"
-    bridge = "vmbr2"
-    vlan_id = 98
-  }
-
   initialization {
     datastore_id = "local"
 
@@ -269,12 +227,6 @@ resource "proxmox_virtual_environment_vm" "vm-wazuh-qual" {
       ipv4 {
         address = "192.168.20.4/24"
         gateway = "192.168.20.254"
-      }
-    }
-
-    ip_config {
-      ipv4 {
-        address = "192.168.98.4/24"
       }
     }
 
