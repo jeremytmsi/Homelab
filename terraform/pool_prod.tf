@@ -2,6 +2,11 @@ resource "proxmox_virtual_environment_pool" "prod" {
   pool_id = "PROD"
 }
 
+resource "proxmox_pool_membership" "vm-firewall-prod" {
+  pool_id = proxmox_virtual_environment_pool.prod.id
+  vm_id = 100
+}
+
 resource "proxmox_pool_membership" "vm-docker-prod" {
   pool_id = proxmox_virtual_environment_pool.prod.id
   vm_id = proxmox_virtual_environment_vm.vm-docker-prod.vm_id
