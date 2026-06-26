@@ -237,3 +237,55 @@ resource "proxmox_virtual_environment_vm" "vm-wazuh-qual" {
     full = true
   }
 }
+
+resource "proxmox_virtual_environment_vm" "vm-unifi-qual" {
+  name = "unifi.qual.jeremytomasi.fr"
+  description = "VM for Unifi OS"
+  tags = ["linux","qual"]
+  node_name = var.node_name
+  stop_on_destroy = true
+  vm_id = 205
+
+  agent {
+    enabled = true
+  }
+
+  network_device {
+    model = "virtio"
+    bridge = "vmbr2"
+    vlan_id = 20
+  }
+
+  disk {
+    interface = "scsi1"
+    size = 500
+    file_format = "raw"
+    datastore_id = "local"
+    ssd = true
+  }
+
+  initialization {
+    datastore_id = "local"
+
+    dns {
+      domain = "qual.jeremytomasi.fr"
+      servers = ["192.168.20.254"]
+    }
+
+
+    ip_config {
+      ipv4 {
+        address = "192.168.20.5/24"
+        gateway = "192.168.20.254"
+      }
+    }
+
+  }
+
+  clone {
+    vm_id = 301
+    full = true
+  }
+}
+
+

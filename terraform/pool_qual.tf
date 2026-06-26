@@ -21,3 +21,10 @@ resource "proxmox_pool_membership" "vm-wazuh-qual" {
   pool_id = proxmox_virtual_environment_pool.qual.id
   vm_id = proxmox_virtual_environment_vm.vm-wazuh-qual.vm_id
 }
+
+resource "proxmox_pool_membership" "vm-unifi-qual" {
+  pool_id = proxmox_virtual_environment_pool.qual.id
+  vm_id = proxmox_virtual_environment_vm.vm-unifi-qual.vm_id
+}
+
+
