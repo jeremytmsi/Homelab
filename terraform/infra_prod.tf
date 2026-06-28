@@ -237,3 +237,47 @@ resource "proxmox_virtual_environment_vm" "vm-wazuh-prod" {
     full = true
   }
 }
+
+resource "proxmox_virtual_environment_vm" "vm-unifi-prod" {
+  name = "unifi.prod.jeremytomasi.fr"
+  description = "VM for Unifi OS"
+  tags = ["linux","prod"]
+  node_name = var.node_name
+  stop_on_destroy = true
+  vm_id = 105
+
+  agent {
+    enabled = true
+  }
+
+  network_device {
+    model = "virtio"
+    bridge = "vmbr2"
+    vlan_id = 10
+  }
+
+  initialization {
+    datastore_id = "local"
+
+    dns {
+      domain = "prod.jeremytomasi.fr"
+      servers = ["192.168.10.254"]
+    }
+
+
+    ip_config {
+      ipv4 {
+        address = "192.168.10.5/24"
+        gateway = "192.168.10.254"
+      }
+    }
+
+  }
+
+  clone {
+    vm_id = 301
+    full = true
+  }
+}
+
+

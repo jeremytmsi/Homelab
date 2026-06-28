@@ -41,3 +41,14 @@ resource "ansible_host" "vm-wazuh-prod" {
     ansible_ssh_common_args = "-o StrictHostKeyChecking=no"
   }
 }
+
+resource "ansible_host" "vm-unifi-prod" {
+  name = proxmox_virtual_environment_vm.vm-unifi-prod.name
+  groups = ["prod","unifi"]
+  variables = {
+    ansible_user = var.ansible_user
+    ansible_host = join("",proxmox_virtual_environment_vm.vm-unifi-prod.ipv4_addresses[1])
+    ansible_private_key_file = var.ansible_ssh_key
+    ansible_ssh_common_args = "-o StrictHostKeyChecking=no"
+  }
+}
