@@ -280,4 +280,45 @@ resource "proxmox_virtual_environment_vm" "vm-unifi-prod" {
   }
 }
 
+resource "proxmox_virtual_environment_vm" "vm-imapsync-prod" {
+  name = "imapsync.jeremytomasi.fr"
+  description = "VM for Imapsync"
+  tags = ["linux"]
+  node_name = var.node_name
+  stop_on_destroy = true
+  vm_id = 106
+
+  agent {
+    enabled = true
+  }
+
+  network_device {
+    model = "virtio"
+    bridge = "vmbr2"
+    vlan_id = 10
+  }
+
+  initialization {
+    datastore_id = "local"
+
+    dns {
+      domain = "prod.jeremytomasi.fr"
+      servers = ["192.168.10.254"]
+    }
+
+
+    ip_config {
+      ipv4 {
+        address = "192.168.10.6/24"
+        gateway = "192.168.10.254"
+      }
+    }
+
+  }
+
+  clone {
+    vm_id = 301
+    full = true
+  }
+}
 

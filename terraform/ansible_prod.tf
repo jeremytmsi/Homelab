@@ -53,6 +53,17 @@ resource "ansible_host" "vm-unifi-prod" {
   }
 }
 
+resource "ansible_host" "vm-imapsync-prod" {
+  name = proxmox_virtual_environment_vm.vm-imapsync-prod.name
+  groups = ["imapsync"]
+  variables = {
+    ansible_user = var.ansible_user
+    ansible_host = join("",proxmox_virtual_environment_vm.vm-imapsync-prod.ipv4_addresses[1])
+    ansible_private_key_file = var.ansible_ssh_key
+    ansible_ssh_common_args = "-o StrictHostKeyChecking=no"
+  }
+}
+
 resource "ansible_host" "vps-monitoring-prod" {
   name = "monitoring.prod.jeremytomasi.fr"
   groups = ["monitoring","docker"]

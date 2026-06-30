@@ -31,3 +31,8 @@ resource "proxmox_pool_membership" "vm-unifi-prod" {
   pool_id = proxmox_virtual_environment_pool.prod.id
   vm_id = proxmox_virtual_environment_vm.vm-unifi-prod.vm_id
 }
+
+resource "proxmox_pool_membership" "vm-imapsync-prod" {
+  pool_id = proxmox_virtual_environment_pool.prod.id
+  vm_id = proxmox_virtual_environment_vm.vm-imapsync-prod.vm_id
+}
