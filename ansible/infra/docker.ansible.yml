@@ -31,7 +31,6 @@
 
     - name: Reboot
       ansible.builtin.reboot:
-        
 
     - name: Start Docker
       ansible.builtin.service:
@@ -45,7 +44,7 @@
         name: front
 
 - name: Launch main portainer container
-  hosts: docker:!vps
+  hosts: docker:!monitoring
   become: true
   become_method: su
 
@@ -71,7 +70,7 @@
         state: started
 
 - name: Launch portainer agent container
-  hosts: docker:&vps
+  hosts: docker:&monitoring
   become: true
   become_method: su
 

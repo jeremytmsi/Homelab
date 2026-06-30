@@ -1,6 +1,20 @@
 ---
-- name: Base tasks + Prometheus config
-  hosts: all:!vps
+- name: Install common packages
+  hosts: all
+  become: true
+  become_method: su
+
+  tasks:
+    - name: Install common packages
+      ansible.builtin.dnf:
+        name:
+          - htop
+          - vim
+          - wget
+          - fastfetch
+
+- name: Install base packages + Prometheus config for VMs
+  hosts: all:!monitoring
   become: true
   become_method: su
 
@@ -8,13 +22,9 @@
     - prometheus.prometheus.node_exporter
 
   tasks:
-    - name: Install base packages
+    - name: Install specific packages for VMs
       ansible.builtin.dnf:
         name:
-          - htop
-          - vim
-          - wget
-          - fastfetch
           - rsync
           - nfs-utils
 

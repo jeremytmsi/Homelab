@@ -74,7 +74,7 @@
         cmd: "exportfs -ra"
 
 - name: Mount shares
-  hosts: docker:!vps
+  hosts: docker:!monitoring
   become: true
   become_method: su
 
