@@ -1,7 +1,7 @@
 resource "proxmox_virtual_environment_vm" "vm-docker-prod" {
-  name = "docker.prod.jeremytomasi.fr"
+  name = "docker.jeremytomasi.fr"
   description = "VM for hosting Docker services"
-  tags = ["linux","prod"]
+  tags = ["linux"]
   node_name = var.node_name
   stop_on_destroy = true
   vm_id = 101
@@ -59,9 +59,9 @@ resource "proxmox_virtual_environment_vm" "vm-docker-prod" {
 
 
 resource "proxmox_virtual_environment_vm" "vm-mail-prod" {
-  name = "mail.prod.jeremytomasi.fr"
+  name = "mail.jeremytomasi.fr"
   description = "VM for mails"
-  tags = ["linux","prod"]
+  tags = ["linux"]
   node_name = var.node_name
   stop_on_destroy = true
   vm_id = 102
@@ -109,9 +109,9 @@ resource "proxmox_virtual_environment_vm" "vm-mail-prod" {
 }
 
 resource "proxmox_virtual_environment_vm" "vm-storage-prod" {
-  name = "storage.prod.jeremytomasi.fr"
+  name = "storage.jeremytomasi.fr"
   description = "VM for storage"
-  tags = ["linux","prod"]
+  tags = ["linux"]
   node_name = var.node_name
   stop_on_destroy = true
   vm_id = 103
@@ -187,9 +187,9 @@ resource "proxmox_virtual_environment_vm" "vm-storage-prod" {
 }
 
 resource "proxmox_virtual_environment_vm" "vm-wazuh-prod" {
-  name = "wazuh.prod.jeremytomasi.fr"
+  name = "wazuh.jeremytomasi.fr"
   description = "VM for Wazuh"
-  tags = ["linux","prod"]
+  tags = ["linux"]
   node_name = var.node_name
   stop_on_destroy = true
   vm_id = 104
@@ -239,9 +239,9 @@ resource "proxmox_virtual_environment_vm" "vm-wazuh-prod" {
 }
 
 resource "proxmox_virtual_environment_vm" "vm-unifi-prod" {
-  name = "unifi.prod.jeremytomasi.fr"
+  name = "unifi.jeremytomasi.fr"
   description = "VM for Unifi OS"
-  tags = ["linux","prod"]
+  tags = ["linux"]
   node_name = var.node_name
   stop_on_destroy = true
   vm_id = 105
