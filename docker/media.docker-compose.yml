@@ -8,6 +8,7 @@ services:
       - /mnt/Multimedia/Series:/media/Series
       - /mnt/Multimedia/Films:/media/Films
       - /mnt/Multimedia/Animes:/media/Animes
+      - /mnt/Multimedia/Music:/media/Music
     ports:
       - 8096:8096
     networks:
@@ -130,18 +131,6 @@ services:
     networks:
       - front
 
-  navidrome:
-    image: deluan/navidrome
-    container_name: navidrome
-    ports:
-      - 4533:4533
-    restart: unless-stopped
-    volumes:
-      - navidrome_data:/data
-      - /mnt/Multimedia/Music:/music:ro
-    networks:
-      - front
-
 volumes:
   jellyfin_config:
   qbittorrent_config:
@@ -151,7 +140,6 @@ volumes:
   jellyseerr_config:
   lidarr_config:
   musicseerr_config:
-  navidrome_data:
 
 networks:
   front:
