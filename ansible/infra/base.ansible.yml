@@ -13,6 +13,16 @@
           - wget
           - fastfetch
 
+    - name: Create user jeremy
+      ansible.builtin.user:
+        name: jeremy
+
+    - name: Copy SSH key to profile
+      ansible.builtin.authorized_key:
+        user: jeremy
+        state: present
+        key: "{{ lookup('file', '/Users/jeremy/.ssh/id_ed25519_sk.pub') }}"
+
 - name: Install base packages + Prometheus config for VMs
   hosts: all:!monitoring
   become: true
