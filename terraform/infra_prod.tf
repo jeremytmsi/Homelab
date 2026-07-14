@@ -39,13 +39,13 @@ resource "proxmox_virtual_environment_vm" "vm-docker-prod" {
 
     dns {
       domain = "prod.jeremytomasi.fr"
-      servers = ["192.168.10.254"]
+      servers = ["10.0.10.254"]
     }
 
     ip_config {
       ipv4 {
-        address = "192.168.10.1/24"
-        gateway = "192.168.10.254"
+        address = "10.0.10.1/24"
+        gateway = "10.0.10.254"
       }
     }
 
@@ -89,14 +89,14 @@ resource "proxmox_virtual_environment_vm" "vm-mail-prod" {
 
     dns {
       domain = "prod.jeremytomasi.fr"
-      servers = ["192.168.10.254"]
+      servers = ["10.0.10.254"]
     }
 
 
     ip_config {
       ipv4 {
-        address = "192.168.10.2/24"
-        gateway = "192.168.10.254"
+        address = "10.0.10.2/24"
+        gateway = "10.0.10.254"
       }
     }
 
@@ -167,14 +167,14 @@ resource "proxmox_virtual_environment_vm" "vm-storage-prod" {
 
     dns {
       domain = "prod.jeremytomasi.fr"
-      servers = ["192.168.10.254"]
+      servers = ["10.0.10.254"]
     }
 
 
     ip_config {
       ipv4 {
-        address = "192.168.10.3/24"
-        gateway = "192.168.10.254"
+        address = "10.0.10.3/24"
+        gateway = "10.0.10.254"
       }
     }
 
@@ -219,14 +219,14 @@ resource "proxmox_virtual_environment_vm" "vm-wazuh-prod" {
 
     dns {
       domain = "prod.jeremytomasi.fr"
-      servers = ["192.168.10.254"]
+      servers = ["10.0.10.254"]
     }
 
 
     ip_config {
       ipv4 {
-        address = "192.168.10.4/24"
-        gateway = "192.168.10.254"
+        address = "10.0.10.4/24"
+        gateway = "10.0.10.254"
       }
     }
 
@@ -238,9 +238,9 @@ resource "proxmox_virtual_environment_vm" "vm-wazuh-prod" {
   }
 }
 
-resource "proxmox_virtual_environment_vm" "vm-unifi-prod" {
-  name = "unifi.jeremytomasi.fr"
-  description = "VM for Unifi OS"
+resource "proxmox_virtual_environment_vm" "vm-imapsync-prod" {
+  name = "imapsync.jeremytomasi.fr"
+  description = "VM for Imapsync"
   tags = ["linux"]
   node_name = var.node_name
   stop_on_destroy = true
@@ -261,14 +261,14 @@ resource "proxmox_virtual_environment_vm" "vm-unifi-prod" {
 
     dns {
       domain = "prod.jeremytomasi.fr"
-      servers = ["192.168.10.254"]
+      servers = ["10.0.10.254"]
     }
 
 
     ip_config {
       ipv4 {
-        address = "192.168.10.5/24"
-        gateway = "192.168.10.254"
+        address = "10.0.10.5/24"
+        gateway = "10.0.10.254"
       }
     }
 
@@ -279,46 +279,3 @@ resource "proxmox_virtual_environment_vm" "vm-unifi-prod" {
     full = true
   }
 }
-
-resource "proxmox_virtual_environment_vm" "vm-imapsync-prod" {
-  name = "imapsync.jeremytomasi.fr"
-  description = "VM for Imapsync"
-  tags = ["linux"]
-  node_name = var.node_name
-  stop_on_destroy = true
-  vm_id = 106
-
-  agent {
-    enabled = true
-  }
-
-  network_device {
-    model = "virtio"
-    bridge = "vmbr2"
-    vlan_id = 10
-  }
-
-  initialization {
-    datastore_id = "local"
-
-    dns {
-      domain = "prod.jeremytomasi.fr"
-      servers = ["192.168.10.254"]
-    }
-
-
-    ip_config {
-      ipv4 {
-        address = "192.168.10.6/24"
-        gateway = "192.168.10.254"
-      }
-    }
-
-  }
-
-  clone {
-    vm_id = 301
-    full = true
-  }
-}
-
