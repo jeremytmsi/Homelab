@@ -1,5 +1,5 @@
 - name: Install Wazuh agents
-  hosts: all:!wazuh
+  hosts: all:!wazuh:!monitoring
   become: true
   become_method: su
 
