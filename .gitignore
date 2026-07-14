@@ -1,4 +1,5 @@
-nftables_proxmox.sh
+firewall/nftables_proxmox.sh
+firewall/nftables_vps.sh
 packer/variables.pkr.hcl
 terraform/variables.tfvars
 terraform/terraform.tfstate*
