@@ -16,7 +16,7 @@ resource "proxmox_virtual_environment_vm" "vm-docker-prod" {
   }
 
   memory {
-    dedicated = 16384
+    dedicated = 8192
   }
 
   network_device {
@@ -201,7 +201,7 @@ resource "proxmox_virtual_environment_vm" "vm-wazuh-prod" {
   }
 
   memory {
-    dedicated = 16384
+    dedicated = 8192
   }
 
   agent {
