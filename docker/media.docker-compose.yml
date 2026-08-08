@@ -131,6 +131,15 @@ services:
     networks:
       - front
 
+  navidrome:
+    image: deluan/navidrome:latest
+    ports:
+      - "4533:4533"
+    restart: unless-stopped
+    volumes:
+      - navidrome_data:/data
+      - /mnt/Multimedia/Music:/music:ro
+
 volumes:
   jellyfin_config:
   qbittorrent_config:
@@ -140,6 +149,7 @@ volumes:
   jellyseerr_config:
   lidarr_config:
   musicseerr_config:
+  navidrome_data:
 
 networks:
   front:
