@@ -5,10 +5,9 @@ services:
     restart: unless-stopped
     volumes:
       - jellyfin_config:/config
-      - /mnt/Multimedia/Series:/media/Series
-      - /mnt/Multimedia/Films:/media/Films
-      - /mnt/Multimedia/Animes:/media/Animes
-      - /mnt/Multimedia/Music:/media/Music
+      - /mnt/Data/Multimedia/Series:/media/Series
+      - /mnt/Data/Multimedia/Films:/media/Films
+      - /mnt/Data/Multimedia/Animes:/media/Animes
     ports:
       - 8096:8096
     networks:
@@ -48,8 +47,8 @@ services:
       - sonarr_config:/config
       - /mnt/Downloads/Series:/downloads/Series
       - /mnt/Downloads/Animes:/downloads/Animes
-      - /mnt/Multimedia/Series:/mnt/Series
-      - /mnt/Multimedia/Animes:/mnt/Animes
+      - /mnt/Data/Multimedia/Series:/mnt/Series
+      - /mnt/Data/Multimedia/Animes:/mnt/Animes
     networks:
       - front
 
@@ -66,7 +65,7 @@ services:
     volumes:
       - radarr_config:/config
       - /mnt/Downloads/Films:/downloads/Films
-      - /mnt/Multimedia/Films:/mnt/Films
+      - /mnt/Data/Multimedia/Films:/mnt/Films
     networks:
       - front
 
@@ -83,7 +82,7 @@ services:
     volumes:
       - lidarr_config:/config
       - /mnt/Downloads/Music:/downloads/Music
-      - /mnt/Multimedia/Music:/mnt/Music
+      - /mnt/Data/Multimedia/Music:/mnt/Music
     networks:
       - front
 
@@ -138,7 +137,7 @@ services:
     restart: unless-stopped
     volumes:
       - navidrome_data:/data
-      - /mnt/Multimedia/Music:/music:ro
+      - /mnt/Data/Multimedia/Music:/music:ro
 
 volumes:
   jellyfin_config:
