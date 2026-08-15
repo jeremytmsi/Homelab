@@ -4,7 +4,7 @@ services:
     image: ghcr.io/immich-app/immich-server:${IMMICH_VERSION:-release}
     volumes:
       - /etc/localtime:/etc/localtime:ro
-      - /mnt/Drive/Photos:/data
+      - /mnt/Data/Drive/Photos:/data
     ports:
       - 2283:2283
     depends_on:
@@ -55,7 +55,7 @@ services:
       - nextcloud:/var/www/html
       - nextcloud_apps:/var/www/html/custom_apps
       - nextcloud_config:/var/www/html/config
-      - /mnt/Drive/Nextcloud:/var/www/html/data
+      - /mnt/Data/Drive/Nextcloud:/var/www/html/data
     environment:
       - MYSQL_DATABASE=nextcloud
       - MYSQL_USER=nextcloud
