@@ -22,35 +22,3 @@
         user: jeremy
         state: present
         key: "{{ lookup('file', '/Users/jeremy/.ssh/id_ed25519_sk.pub') }}"
-
-- name: Install base packages + Prometheus config for VMs
-  hosts: all:!monitoring
-  become: true
-  become_method: su
-
-  roles:
-    - prometheus.prometheus.node_exporter
-
-  tasks:
-    - name: Install specific packages for VMs
-      ansible.builtin.dnf:
-        name:
-          - rsync
-          - nfs-utils
-
-    - name: Authorize port 9100 in firewall
-      ansible.builtin.firewalld:
-        port: 9100/tcp
-        permanent: true
-        state: enabled
-
-- name: Install specific packages for storage VMs
-  hosts: storage
-  become: true
-  become_method: su
-
-  tasks:
-    - name: Install specific packages
-      ansible.builtin.dnf:
-        name:
-          - mdadm
