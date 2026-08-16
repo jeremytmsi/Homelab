@@ -1,3 +1,14 @@
+resource "ansible_host" "vm-bunkerweb-prod" {
+  name = proxmox_virtual_environment_vm.vm-bunkerweb-prod.name
+  groups = []
+  variables = {
+    ansible_user = var.ansible_user
+    ansible_host = join("",proxmox_virtual_environment_vm.vm-bunkerweb-prod.ipv4_addresses[1])
+    ansible_private_key_file = var.ansible_ssh_key
+    ansible_ssh_common_args = "-o StrictHostKeyChecking=no"
+  }
+}
+
 resource "ansible_host" "vm-docker-prod" {
   name = proxmox_virtual_environment_vm.vm-docker-prod.name
   groups = ["docker"]
@@ -9,56 +20,12 @@ resource "ansible_host" "vm-docker-prod" {
   }
 }
 
-resource "ansible_host" "vm-mail-prod" {
-  name = proxmox_virtual_environment_vm.vm-mail-prod.name
-  groups = ["mail"]
-  variables = {
-    ansible_user = var.ansible_user
-    ansible_host = join("",proxmox_virtual_environment_vm.vm-mail-prod.ipv4_addresses[1])
-    ansible_private_key_file = var.ansible_ssh_key
-    ansible_ssh_common_args = "-o StrictHostKeyChecking=no"
-  }
-}
-
-resource "ansible_host" "vm-storage-prod" {
-  name = proxmox_virtual_environment_vm.vm-storage-prod.name
-  groups = ["storage"]
-  variables = {
-    ansible_user = var.ansible_user
-    ansible_host = join("",proxmox_virtual_environment_vm.vm-storage-prod.ipv4_addresses[1])
-    ansible_private_key_file = var.ansible_ssh_key
-    ansible_ssh_common_args = "-o StrictHostKeyChecking=no"
-  }
-}
-
 resource "ansible_host" "vm-wazuh-prod" {
   name = proxmox_virtual_environment_vm.vm-wazuh-prod.name
   groups = ["wazuh"]
   variables = {
     ansible_user = var.ansible_user
     ansible_host = join("",proxmox_virtual_environment_vm.vm-wazuh-prod.ipv4_addresses[1])
-    ansible_private_key_file = var.ansible_ssh_key
-    ansible_ssh_common_args = "-o StrictHostKeyChecking=no"
-  }
-}
-
-resource "ansible_host" "vm-imapsync-prod" {
-  name = proxmox_virtual_environment_vm.vm-imapsync-prod.name
-  groups = ["imapsync"]
-  variables = {
-    ansible_user = var.ansible_user
-    ansible_host = join("",proxmox_virtual_environment_vm.vm-imapsync-prod.ipv4_addresses[1])
-    ansible_private_key_file = var.ansible_ssh_key
-    ansible_ssh_common_args = "-o StrictHostKeyChecking=no"
-  }
-}
-
-resource "ansible_host" "vps-monitoring-prod" {
-  name = "monitoring.prod.jeremytomasi.fr"
-  groups = ["monitoring","docker"]
-  variables = {
-    ansible_user = var.ansible_user
-    ansible_host = "51.254.129.11"
     ansible_private_key_file = var.ansible_ssh_key
     ansible_ssh_common_args = "-o StrictHostKeyChecking=no"
   }

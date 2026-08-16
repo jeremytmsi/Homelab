@@ -139,6 +139,21 @@ services:
       - navidrome_data:/data
       - /mnt/Data/Multimedia/Music:/music:ro
 
+  minidlna:
+    image: vladgh/minidlna
+    container_name: minidlna
+    network_mode: "host"
+    volumes:
+      - /mnt/Data/Multimedia/Series:/media/Series:ro
+      - /mnt/Data/Multimedia/Animes:/media/Animes:ro
+      - /mnt/Data/Multimedia/Films:/media/Films:ro
+    environment:
+      - MINIDLNA_MEDIA_DIR_1=V,/media/Series
+      - MINIDLNA_MEDIA_DIR_2=V,/media/Animes
+      - MINIDLNA_MEDIA_DIR_3=V,/media/Films
+      - MINIDLNA_FRIENDLY_NAME=Serveur
+      - MINIDLNA_NOTIFY_INTERVAL=30
+
 volumes:
   jellyfin_config:
   qbittorrent_config:

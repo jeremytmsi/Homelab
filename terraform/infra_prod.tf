@@ -1,17 +1,65 @@
+resource "proxmox_virtual_environment_vm" "vm-bunkerweb-prod" {
+  name = "bunkerweb.jeremytomasi.fr"
+  description = "VM for Bunkerweb"
+  tags = ["linux"]
+  node_name = var.node_name
+  stop_on_destroy = true
+  vm_id = 250
+
+  agent {
+    enabled = true
+  }
+
+  memory {
+    dedicated = 8192
+  }
+
+  network_device {
+    model = "virtio"
+    bridge = "vmbr0"
+  }
+
+  initialization {
+    datastore_id = "VMs"
+
+    dns {
+      servers = ["192.168.1.254"]
+    }
+
+    ip_config {
+      ipv4 {
+        address = "192.168.1.250/24"
+        gateway = "192.168.1.254"
+      }
+    }
+  }
+
+  serial_device {
+    device = "socket"
+  }
+
+  clone {
+    vm_id = 301
+    full = true
+  }
+}
+
+
+
 resource "proxmox_virtual_environment_vm" "vm-docker-prod" {
   name = "docker.jeremytomasi.fr"
   description = "VM for hosting Docker services"
   tags = ["linux"]
   node_name = var.node_name
   stop_on_destroy = true
-  vm_id = 101
+  vm_id = 249
 
   agent {
     enabled = true
   }
 
   cpu {
-    cores = 16
+    cores = 8
     type = "host"
   }
 
@@ -21,163 +69,36 @@ resource "proxmox_virtual_environment_vm" "vm-docker-prod" {
 
   network_device {
     model = "virtio"
-    bridge = "vmbr2"
-    vlan_id = 10
+    bridge = "vmbr0"
   }
 
   disk {
-    datastore_id = "local"
+    datastore_id = "VMs"
     interface = "scsi1"
-    size = 1000
+    size = 200
     file_format = "raw"
     discard = "on"
     ssd = true
+    backup = false
   }
 
   initialization {
-    datastore_id = "local"
+    datastore_id = "VMs"
 
     dns {
-      domain = "prod.jeremytomasi.fr"
-      servers = ["10.0.10.254"]
+      servers = ["192.168.1.254"]
     }
 
     ip_config {
       ipv4 {
-        address = "10.0.10.1/24"
-        gateway = "10.0.10.254"
+        address = "192.168.1.249/24"
+        gateway = "192.168.1.254"
       }
     }
-
   }
 
-  clone {
-    vm_id = 301
-    full = true
-  }
-}
-
-
-resource "proxmox_virtual_environment_vm" "vm-mail-prod" {
-  name = "mail.jeremytomasi.fr"
-  description = "VM for mails"
-  tags = ["linux"]
-  node_name = var.node_name
-  stop_on_destroy = true
-  vm_id = 102
-
-  agent {
-    enabled = true
-  }
-
-  network_device {
-    model = "virtio"
-    bridge = "vmbr2"
-    vlan_id = 10
-  }
-
-  disk {
-    interface = "scsi1"
-    size = 500
-    file_format = "raw"
-    datastore_id = "local"
-    ssd = true
-  }
-
-  initialization {
-    datastore_id = "local"
-
-    dns {
-      domain = "prod.jeremytomasi.fr"
-      servers = ["10.0.10.254"]
-    }
-
-
-    ip_config {
-      ipv4 {
-        address = "10.0.10.2/24"
-        gateway = "10.0.10.254"
-      }
-    }
-
-  }
-
-  clone {
-    vm_id = 301
-    full = true
-  }
-}
-
-resource "proxmox_virtual_environment_vm" "vm-storage-prod" {
-  name = "storage.jeremytomasi.fr"
-  description = "VM for storage"
-  tags = ["linux"]
-  node_name = var.node_name
-  stop_on_destroy = true
-  vm_id = 103
-
-  agent {
-    enabled = true
-  }
-
-  network_device {
-    model = "virtio"
-    bridge = "vmbr2"
-    vlan_id = 10
-  }
-
-  disk {
-    interface = "scsi1"
-    size = 500
-    datastore_id = "local"
-    file_format = "raw"
-    discard = "on"
-    ssd = true
-  }
-
-  disk {
-    interface = "scsi2"
-    size = 500
-    datastore_id = "local"
-    file_format = "raw"
-    discard = "on"
-    ssd = true
-  }
-
-  disk {
-    interface = "scsi3"
-    size = 500
-    datastore_id = "local"
-    file_format = "raw"
-    discard = "on"
-    ssd = true
-  }
-
-  disk {
-    interface = "scsi4"
-    size = 500
-    datastore_id = "local"
-    file_format = "raw"
-    discard = "on"
-    ssd = true
-  }
-
-  initialization {
-    datastore_id = "local"
-
-    dns {
-      domain = "prod.jeremytomasi.fr"
-      servers = ["10.0.10.254"]
-    }
-
-
-    ip_config {
-      ipv4 {
-        address = "10.0.10.3/24"
-        gateway = "10.0.10.254"
-      }
-    }
-
+  serial_device {
+    device = "socket"
   }
 
   clone {
@@ -192,7 +113,7 @@ resource "proxmox_virtual_environment_vm" "vm-wazuh-prod" {
   tags = ["linux"]
   node_name = var.node_name
   stop_on_destroy = true
-  vm_id = 104
+  vm_id = 248
 
   cpu {
     sockets = 1
@@ -210,68 +131,28 @@ resource "proxmox_virtual_environment_vm" "vm-wazuh-prod" {
 
   network_device {
     model = "virtio"
-    bridge = "vmbr2"
-    vlan_id = 10
+    bridge = "vmbr0"
   }
 
   initialization {
-    datastore_id = "local"
+    datastore_id = "VMs"
 
     dns {
-      domain = "prod.jeremytomasi.fr"
-      servers = ["10.0.10.254"]
+      servers = ["192.168.1.254"]
     }
 
 
     ip_config {
       ipv4 {
-        address = "10.0.10.4/24"
-        gateway = "10.0.10.254"
+        address = "192.168.1.248/24"
+        gateway = "192.168.1.254"
       }
     }
 
   }
 
-  clone {
-    vm_id = 301
-    full = true
-  }
-}
-
-resource "proxmox_virtual_environment_vm" "vm-imapsync-prod" {
-  name = "imapsync.jeremytomasi.fr"
-  description = "VM for Imapsync"
-  tags = ["linux"]
-  node_name = var.node_name
-  stop_on_destroy = true
-  vm_id = 105
-
-  agent {
-    enabled = true
-  }
-
-  network_device {
-    model = "virtio"
-    bridge = "vmbr2"
-    vlan_id = 10
-  }
-
-  initialization {
-    datastore_id = "local"
-
-    dns {
-      domain = "prod.jeremytomasi.fr"
-      servers = ["10.0.10.254"]
-    }
-
-
-    ip_config {
-      ipv4 {
-        address = "10.0.10.5/24"
-        gateway = "10.0.10.254"
-      }
-    }
-
+  serial_device {
+    device = "socket"
   }
 
   clone {
