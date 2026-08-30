@@ -18,3 +18,8 @@ resource "proxmox_pool_membership" "vm-wazuh-prod" {
   vm_id = proxmox_virtual_environment_vm.vm-wazuh-prod.vm_id
 }
 
+resource "proxmox_pool_membership" "vm-tailscale-prod" {
+  pool_id = proxmox_virtual_environment_pool.prod.id
+  vm_id = proxmox_virtual_environment_vm.vm-tailscale-prod.vm_id
+}
+

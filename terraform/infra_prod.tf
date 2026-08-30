@@ -11,7 +11,7 @@ resource "proxmox_virtual_environment_vm" "vm-bunkerweb-prod" {
   }
 
   memory {
-    dedicated = 8192
+    dedicated = 16384
   }
 
   network_device {
@@ -145,6 +145,60 @@ resource "proxmox_virtual_environment_vm" "vm-wazuh-prod" {
     ip_config {
       ipv4 {
         address = "192.168.1.248/24"
+        gateway = "192.168.1.254"
+      }
+    }
+
+  }
+
+  serial_device {
+    device = "socket"
+  }
+
+  clone {
+    vm_id = 301
+    full = true
+  }
+}
+
+resource "proxmox_virtual_environment_vm" "vm-tailscale-prod" {
+  name = "tailscale.jeremytomasi.fr"
+  description = "VM for Wazuh"
+  tags = ["linux"]
+  node_name = var.node_name
+  stop_on_destroy = true
+  vm_id = 247
+
+  cpu {
+    sockets = 1
+    cores = 2
+    type = "host"
+  }
+
+  memory {
+    dedicated = 2048
+  }
+
+  agent {
+    enabled = true
+  }
+
+  network_device {
+    model = "virtio"
+    bridge = "vmbr0"
+  }
+
+  initialization {
+    datastore_id = "VMs"
+
+    dns {
+      servers = ["192.168.1.249"]
+    }
+
+
+    ip_config {
+      ipv4 {
+        address = "192.168.1.247/24"
         gateway = "192.168.1.254"
       }
     }
