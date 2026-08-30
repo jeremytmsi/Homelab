@@ -63,7 +63,7 @@ services:
       - front
 
   vault:
-    image: vaultwarden/server:1.36.0
+    image: vaultwarden/server:1.37.2
     container_name: vault
     restart: unless-stopped
     volumes:
