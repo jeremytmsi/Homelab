@@ -47,20 +47,19 @@ source "proxmox-iso" "almalinux" {
   ]
   boot_wait = "10s"
   http_directory = "packer/http"
-  http_interface = var.tailscale_int
+  http_interface = "en0"
 
   disks {
     type = "scsi"
-    storage_pool = "local"
+    storage_pool = "VMs"
     disk_size = "80G"
     format = "raw"
     ssd = true
   }
 
   network_adapters {
-    bridge = "vmbr2"
+    bridge = "vmbr0"
     model = "virtio"
-    vlan_tag = "30"
   }
 
   bios = "seabios"
@@ -101,10 +100,6 @@ variable "username" {
 }
 
 variable "node" {
-  type = string
-}
-
-variable "tailscale_int" {
   type = string
 }
 
