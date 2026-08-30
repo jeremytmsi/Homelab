@@ -90,6 +90,21 @@ services:
     networks:
       - front
 
+  librespeed:
+    image: lscr.io/linuxserver/librespeed
+    container_name: librespeed
+    environment:
+      - PUID=1000
+      - PGID=1000
+      - TZ=Europe/Paris
+    volumes:
+      - librespeed_config:/config
+    ports:
+      - 8084:80
+    restart: unless-stopped
+    networks:
+      - front
+
 volumes:
   authentik_db_data:
   authentik_data:
@@ -98,6 +113,7 @@ volumes:
   actual_data:
   vault_data:
   adguardhome_config:
+  librespeed_config:
 
 networks:
   front:
