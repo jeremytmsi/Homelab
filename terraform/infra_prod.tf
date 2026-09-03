@@ -11,7 +11,7 @@ resource "proxmox_virtual_environment_vm" "vm-bunkerweb-prod" {
   }
 
   memory {
-    dedicated = 16384
+    dedicated = 12288
   }
 
   network_device {
