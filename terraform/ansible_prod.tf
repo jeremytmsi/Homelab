@@ -32,7 +32,7 @@ resource "ansible_host" "vm-wazuh-prod" {
 }
 
 resource "ansible_host" "vm-tailscale-prod" {
-  name = proxmox_virtual_environment_vm.vm-wazuh-prod.name
+  name = proxmox_virtual_environment_vm.vm-tailscale-prod.name
   groups = ["tailscale"]
   variables = {
     ansible_user = var.ansible_user

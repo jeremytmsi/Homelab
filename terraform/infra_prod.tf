@@ -4,63 +4,10 @@ resource "proxmox_virtual_environment_vm" "vm-bunkerweb-prod" {
   tags = ["linux"]
   node_name = var.node_name
   stop_on_destroy = true
-  vm_id = 250
-
-  agent {
-    enabled = true
-  }
-
-  memory {
-    dedicated = 12288
-  }
-
-  network_device {
-    model = "virtio"
-    bridge = "vmbr0"
-  }
-
-  initialization {
-    datastore_id = "VMs"
-
-    dns {
-      servers = ["192.168.1.254"]
-    }
-
-    ip_config {
-      ipv4 {
-        address = "192.168.1.250/24"
-        gateway = "192.168.1.254"
-      }
-    }
-  }
-
-  serial_device {
-    device = "socket"
-  }
-
-  clone {
-    vm_id = 301
-    full = true
-  }
-}
-
-
-
-resource "proxmox_virtual_environment_vm" "vm-docker-prod" {
-  name = "docker.jeremytomasi.fr"
-  description = "VM for hosting Docker services"
-  tags = ["linux"]
-  node_name = var.node_name
-  stop_on_destroy = true
   vm_id = 249
 
   agent {
     enabled = true
-  }
-
-  cpu {
-    cores = 8
-    type = "host"
   }
 
   memory {
@@ -70,16 +17,6 @@ resource "proxmox_virtual_environment_vm" "vm-docker-prod" {
   network_device {
     model = "virtio"
     bridge = "vmbr0"
-  }
-
-  disk {
-    datastore_id = "VMs"
-    interface = "scsi1"
-    size = 200
-    file_format = "raw"
-    discard = "on"
-    ssd = true
-    backup = false
   }
 
   initialization {
@@ -107,13 +44,66 @@ resource "proxmox_virtual_environment_vm" "vm-docker-prod" {
   }
 }
 
+
+
+resource "proxmox_virtual_environment_vm" "vm-docker-prod" {
+  name = "docker.jeremytomasi.fr"
+  description = "VM for hosting Docker services"
+  tags = ["linux"]
+  node_name = var.node_name
+  stop_on_destroy = true
+  vm_id = 248
+
+  agent {
+    enabled = true
+  }
+
+  cpu {
+    cores = 8
+    type = "host"
+  }
+
+  memory {
+    dedicated = 8192
+  }
+
+  network_device {
+    model = "virtio"
+    bridge = "vmbr0"
+  }
+
+  initialization {
+    datastore_id = "VMs"
+
+    dns {
+      servers = ["192.168.1.254"]
+    }
+
+    ip_config {
+      ipv4 {
+        address = "192.168.1.248/24"
+        gateway = "192.168.1.254"
+      }
+    }
+  }
+
+  serial_device {
+    device = "socket"
+  }
+
+  clone {
+    vm_id = 301
+    full = true
+  }
+}
+
 resource "proxmox_virtual_environment_vm" "vm-wazuh-prod" {
   name = "wazuh.jeremytomasi.fr"
   description = "VM for Wazuh"
   tags = ["linux"]
   node_name = var.node_name
   stop_on_destroy = true
-  vm_id = 248
+  vm_id = 247
 
   cpu {
     sockets = 1
@@ -144,7 +134,7 @@ resource "proxmox_virtual_environment_vm" "vm-wazuh-prod" {
 
     ip_config {
       ipv4 {
-        address = "192.168.1.248/24"
+        address = "192.168.1.247/24"
         gateway = "192.168.1.254"
       }
     }
@@ -167,7 +157,7 @@ resource "proxmox_virtual_environment_vm" "vm-tailscale-prod" {
   tags = ["linux"]
   node_name = var.node_name
   stop_on_destroy = true
-  vm_id = 247
+  vm_id = 246
 
   cpu {
     sockets = 1
@@ -192,13 +182,58 @@ resource "proxmox_virtual_environment_vm" "vm-tailscale-prod" {
     datastore_id = "VMs"
 
     dns {
-      servers = ["192.168.1.249"]
+      servers = ["192.168.1.254"]
     }
 
 
     ip_config {
       ipv4 {
-        address = "192.168.1.247/24"
+        address = "192.168.1.246/24"
+        gateway = "192.168.1.254"
+      }
+    }
+
+  }
+
+  serial_device {
+    device = "socket"
+  }
+
+  clone {
+    vm_id = 301
+    full = true
+  }
+}
+
+
+resource "proxmox_virtual_environment_vm" "vm-unifi-prod" {
+  name = "unifi.jeremytomasi.fr"
+  description = "VM for Unifi OS"
+  tags = ["linux"]
+  node_name = var.node_name
+  stop_on_destroy = true
+  vm_id = 245
+
+  agent {
+    enabled = true
+  }
+
+  network_device {
+    model = "virtio"
+    bridge = "vmbr0"
+  }
+
+  initialization {
+    datastore_id = "VMs"
+
+    dns {
+      servers = ["192.168.1.254"]
+    }
+
+
+    ip_config {
+      ipv4 {
+        address = "192.168.1.245/24"
         gateway = "192.168.1.254"
       }
     }
