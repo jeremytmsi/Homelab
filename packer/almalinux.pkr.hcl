@@ -9,7 +9,7 @@ packer {
 
 source "proxmox-iso" "almalinux" {
   proxmox_url = var.proxmox_url
-  node = var.node
+  node = "pve"
   username = var.username
   token = var.token
   insecure_skip_tls_verify = true
@@ -62,7 +62,13 @@ source "proxmox-iso" "almalinux" {
     model = "virtio"
   }
 
-  bios = "seabios"
+  bios = "ovmf"
+
+  efi_config {
+    efi_storage_pool = "VMs"
+    efi_format = "raw"
+  }
+
 
   qemu_agent = true
   scsi_controller = "virtio-scsi-pci"
@@ -79,7 +85,7 @@ source "proxmox-iso" "almalinux" {
   ssh_private_key_file = var.ssh_private_key
 
   cloud_init = "true"
-  cloud_init_storage_pool = "local"
+  cloud_init_storage_pool = "VMs"
 }
 
 build {
@@ -96,10 +102,6 @@ variable "proxmox_url" {
 }
 
 variable "username" {
-  type = string
-}
-
-variable "node" {
   type = string
 }
 

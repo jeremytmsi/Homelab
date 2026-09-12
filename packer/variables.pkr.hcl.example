@@ -1,2 +1,5 @@
-proxmox_token = ""
-ssh_password = ""
+proxmox_url = ""
+username = ""
+token = ""
+ssh_username = ""
+ssh_private_key = ""
