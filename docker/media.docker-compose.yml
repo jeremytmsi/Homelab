@@ -101,8 +101,8 @@ services:
     networks:
       - front
 
-  jellyseerr:
-    image: seerr-team/seerr:preview-new-oidc
+  seerr:
+    image: seerr/seerr:preview-new-oidc
     container_name: seerr
     restart: unless-stopped
     ports:
@@ -132,12 +132,15 @@ services:
 
   navidrome:
     image: deluan/navidrome:latest
+    container_name: navidrome
     ports:
       - "4533:4533"
     restart: unless-stopped
     volumes:
       - navidrome_data:/data
       - /mnt/Data/Multimedia/Music:/music:ro
+    networks:
+      - front
 
 volumes:
   jellyfin_config:
