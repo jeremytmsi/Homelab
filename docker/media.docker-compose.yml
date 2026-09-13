@@ -102,15 +102,15 @@ services:
       - front
 
   jellyseerr:
-    image: fallenbagel/jellyseerr:preview-OIDC
-    container_name: jellyseerr
+    image: seerr-team/seerr:preview-new-oidc
+    container_name: seerr
     restart: unless-stopped
     ports:
       - 5055:5055
     environment:
       - TZ=Europe/Paris
     volumes:
-      - jellyseerr_config:/app/config
+      - seerr_config:/app/config
     networks:
       - front
 
@@ -145,7 +145,7 @@ volumes:
   sonarr_config:
   radarr_config:
   prowlarr_config:
-  jellyseerr_config:
+  seerr_config:
   lidarr_config:
   musicseerr_config:
   navidrome_data:
