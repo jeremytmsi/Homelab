@@ -1,0 +1,120 @@
+services:
+  authentik_db:
+    image: postgres:16-alpine
+    container_name: authentik_db
+    restart: unless-stopped
+    volumes:
+      - authentik_db_data:/var/lib/postgresql/data
+    environment:
+      - POSTGRES_DB=authentik
+      - POSTGRES_PASSWORD=${PG_PASS:?database password required}
+      - POSTGRES_USER=authentik
+    networks:
+      - front
+
+  authentik_server:
+    image: ${AUTHENTIK_IMAGE:-ghcr.io/goauthentik/server}:${AUTHENTIK_TAG:-2025.12.1}
+    container_name: authentik_server
+    ports:
+      - 9001:9000
+    restart: unless-stopped
+    volumes:
+      - authentik_data:/data
+      - authentik_templates:/templates
+    environment:
+      - AUTHENTIK_POSTGRESQL__HOST=authentik_db
+      - AUTHENTIK_POSTGRESQL__NAME=authentik
+      - AUTHENTIK_POSTGRESQL__PASSWORD=${PG_PASS}
+      - AUTHENTIK_POSTGRESQL__USER=authentik
+      - AUTHENTIK_SECRET_KEY=${AUTHENTIK_SECRET_KEY:?secret key required}
+    command: server
+    networks:
+      - front
+
+  authentik_worker:
+    image: ${AUTHENTIK_IMAGE:-ghcr.io/goauthentik/server}:${AUTHENTIK_TAG:-2025.12.1}
+    container_name: authentik_worker
+    restart: unless-stopped
+    environment:
+      - AUTHENTIK_POSTGRESQL__HOST=authentik_db
+      - AUTHENTIK_POSTGRESQL__NAME=authentik
+      - AUTHENTIK_POSTGRESQL__PASSWORD=${PG_PASS}
+      - AUTHENTIK_POSTGRESQL__USER=authentik
+      - AUTHENTIK_SECRET_KEY=${AUTHENTIK_SECRET_KEY:?secret key required}
+    user: root
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+      - authentik_data:/data
+      - authentik_certs:/certs
+      - authentik_templates:/templates
+    command: worker
+    networks:
+      - front
+
+  bentopdf:
+    image: bentopdfteam/bentopdf-simple:latest
+    container_name: bentopdf
+    restart: unless-stopped
+    ports:
+      - 8083:8080
+    environment:
+      - DISABLE_IPV6=true
+    networks:
+      - front
+
+  vault:
+    image: vaultwarden/server:1.37.2
+    container_name: vault
+    restart: unless-stopped
+    volumes:
+      - vault_data:/data
+    ports:
+      - 8082:80
+    networks:
+      - front
+    environment:
+      - DOMAIN=https://vault.${BASE_HOST}
+      - ADMIN_TOKEN=${VAULT_ADMIN_TOKEN}
+
+  adguardhome:
+    image: adguard/adguardhome
+    container_name: adguardhome
+    restart: unless-stopped
+    ports:
+      - 8081:80
+      - 53:53/tcp
+      - 53:53/udp
+      - 3000:3000/tcp
+    volumes:
+      - adguardhome_config:/opt/adguardhome/conf
+    networks:
+      - front
+
+  librespeed:
+    image: lscr.io/linuxserver/librespeed
+    container_name: librespeed
+    environment:
+      - PUID=1000
+      - PGID=1000
+      - TZ=Europe/Paris
+    volumes:
+      - librespeed_config:/config
+    ports:
+      - 8084:80
+    restart: unless-stopped
+    networks:
+      - front
+
+volumes:
+  authentik_db_data:
+  authentik_data:
+  authentik_templates:
+  authentik_certs:
+  actual_data:
+  vault_data:
+  adguardhome_config:
+  librespeed_config:
+
+networks:
+  front:
+    external: true
