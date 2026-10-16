@@ -1,0 +1,22 @@
+---
+- name: Launch portainer agent container
+  hosts: docker
+  become: true
+  become_method: su
+
+  tasks:
+    - name: Launch portainer agent container
+      community.docker.docker_container:
+        name: portainer_agent
+        image: portainer/agent:2.45.0
+        ports:
+          - 9001:9001
+        restart: yes
+        restart_policy: always
+        volumes:
+          - /var/lib/docker/volumes:/var/lib/docker/volumes
+          - /var/run/docker.sock:/var/run/docker.sock
+          - /:/host
+        networks:
+          - name: front
+        state: started

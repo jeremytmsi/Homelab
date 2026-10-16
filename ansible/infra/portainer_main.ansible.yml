@@ -1,0 +1,26 @@
+---
+- name: Launch main portainer container
+  hosts: docker
+  become: true
+  become_method: su
+
+  tasks:
+    - name: Create portainer data volume
+      community.docker.docker_volume:
+        name: portainer_data
+
+    - name: Launch portainer container
+      community.docker.docker_container:
+        name: portainer
+        image: portainer/portainer-ce:lts
+        ports:
+          - 8000:8000
+          - 9000:9000
+        restart: yes
+        restart_policy: always
+        volumes:
+          - portainer_data:/data
+          - /var/run/docker.sock:/var/run/docker.sock
+        networks:
+          - name: front
+        state: started
