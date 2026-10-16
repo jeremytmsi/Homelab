@@ -1,0 +1,5 @@
+proxmox_url = ""
+username = ""
+token = ""
+ssh_username = ""
+ssh_private_key = ""

@@ -1,0 +1,115 @@
+packer {
+  required_plugins {
+    name = {
+      version = ">= 1.2.2"
+      source = "github.com/hashicorp/proxmox"
+    }
+  }
+}
+
+source "proxmox-iso" "almalinux" {
+  proxmox_url = var.proxmox_url
+  node = "pve"
+  username = var.username
+  token = var.token
+  insecure_skip_tls_verify = true
+
+  template_name = "ALMALINUX-10.2-TPL"
+  vm_name = "ALMALINUX-10.2-TPL"
+  template_description = "Almalinux 10.2 template"
+  tags = "template;linux"
+  vm_id = 301
+  pool = "TEMPLATE"
+  os = "l26"
+  machine = "q35"
+
+  boot_iso {
+    type = "scsi"
+    iso_file = "local:iso/AlmaLinux-10.2-x86_64-minimal.iso"
+    unmount = true
+    iso_checksum = "none"
+  }
+  boot_command = [
+    "<up>",
+    "e",
+    "<wait>",
+    "<down><down>",
+    "<leftCtrlOn>e<leftCtrlOff>",
+    "<spacebar>",
+    "biosdevname=0",
+    "<spacebar>",
+    "ip=dhcp",
+    "<spacebar>",
+    "net.ifnames=0",
+    "<spacebar>",
+    "inst.ks=http://{{ .HTTPIP }}:{{ .HTTPPort }}/almalinux-kickstart.cfg",
+    "<leftCtrlOn>x<leftCtrlOff>"
+  ]
+  boot_wait = "10s"
+  http_directory = "packer/http"
+  http_interface = "en0"
+
+  disks {
+    type = "scsi"
+    storage_pool = "VMs"
+    disk_size = "80G"
+    format = "raw"
+    ssd = true
+  }
+
+  network_adapters {
+    bridge = "vmbr0"
+    model = "virtio"
+  }
+
+  bios = "ovmf"
+
+  efi_config {
+    efi_storage_pool = "VMs"
+    efi_format = "raw"
+  }
+
+
+  qemu_agent = true
+  scsi_controller = "virtio-scsi-pci"
+  cpu_type = "host"
+  sockets = 1
+  cores = 4
+  memory = 4096
+
+  communicator = "ssh"
+  ssh_handshake_attempts = 5
+  ssh_pty = true
+  ssh_timeout = "20m"
+  ssh_username = var.ssh_username
+  ssh_private_key_file = var.ssh_private_key
+
+  cloud_init = "true"
+  cloud_init_storage_pool = "VMs"
+}
+
+build {
+  sources = ["proxmox-iso.almalinux"]
+}
+
+variable "token" {
+  type = string
+  sensitive = true
+}
+
+variable "proxmox_url" {
+  type = string
+}
+
+variable "username" {
+  type = string
+}
+
+variable "ssh_username" {
+  type = string
+}
+
+variable "ssh_private_key" {
+  type = string
+  sensitive = true
+}
