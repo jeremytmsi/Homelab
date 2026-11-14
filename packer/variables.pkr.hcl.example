@@ -1,0 +1,5 @@
+xcp_host=""
+xcp_username=""
+xcp_password=""
+ssh_key_path=""
+ssh_username=""
