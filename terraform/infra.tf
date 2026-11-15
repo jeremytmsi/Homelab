@@ -11,11 +11,11 @@ data "xenorchestra_sr" "VMs" {
 }
 
 data "xenorchestra_network" "vlan_servers" {
-  name_label = "Servers"
+  name_label = "Pool-wide network 0"
 }
 
 data "xenorchestra_network" "vlan_mgmt" {
-  name_label = "Pool-wide network 0"
+  name_label = "MGMT"
 }
 
 data "xenorchestra_network" "vlan_iscsi" {
@@ -33,7 +33,7 @@ resource "xenorchestra_vm" "VM_DOCKER" {
   disk {
     sr_id = data.xenorchestra_sr.VMs.id
     name_label = "DOCKER_VM_OS"
-    size = 80 * 1024 * 1024 * 1024
+    size = 40 * 1024 * 1024 * 1024
   }
 
   disk {

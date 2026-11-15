@@ -1,5 +1,6 @@
 resource "ansible_host" "DOCKER-VM" {
   name = "DOCKER-VM"
+  groups = ["docker"]
   variables = {
     ansible_user = var.ansible_user
     ansible_host = "10.0.99.1"
