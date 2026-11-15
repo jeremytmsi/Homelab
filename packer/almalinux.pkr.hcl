@@ -47,7 +47,7 @@ source "xenserver-iso" "almalinux" {
   clone_template = "AlmaLinux 10"
 
   disk_name = "HDD_OS"
-  disk_size = 81920
+  disk_size = 40 * 1024
 
   firmware = "uefi"
 
