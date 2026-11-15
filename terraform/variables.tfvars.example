@@ -1,2 +1,4 @@
 xo_host = ""
 xo_token = ""
+ansible_user = ""
+ansible_ssh_key = ""

@@ -4,6 +4,10 @@ terraform {
       source = "vatesfr/xenorchestra"
       version = ">= 0.35.0, < 1.0.0"
     }
+    ansible = {
+      source = "ansible/ansible"
+      version = ">= 1.4.0"
+    }
   }
 }
 
