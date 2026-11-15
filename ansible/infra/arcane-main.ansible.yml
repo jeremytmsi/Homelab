@@ -1,0 +1,33 @@
+---
+- name: Launch main portainer container
+  hosts: docker:!monitoring
+
+  tasks:
+    - name: Create arcane data volume
+      community.docker.docker_volume:
+        name: arcane_data
+
+    - name: Launch arcane container
+      community.docker.docker_container:
+        name: arcane
+        image: ghcr.io/getarcaneapp/manager:v2
+        restart_policy: unless-stopped
+        ports:
+          - 3552:3552
+        env:
+          APP_URL: http://10.0.10.1:3552
+          ENCRYPTION_KEY: ${ENCRYPTION_KEY}
+          PROJECTS_DIRECTORY: /opt/docker-compose
+          PUID: "1000"
+          PGID: "1000"
+          TZ: Europe/Paris
+        volumes:
+          - /var/run/docker.sock:/var/run/docker.sock
+          - arcane_data:/app/data
+          - /opt/docker-compose:/opt/docker-compose
+        healthcheck:
+          test: ["CMD","/app/arcane","health","--timeout","2s"]
+          interval: 30s
+          timeout: 5s
+          retries: 3
+          start_period: 15s
