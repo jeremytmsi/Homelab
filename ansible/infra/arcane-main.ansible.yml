@@ -10,14 +10,14 @@
     - name: Launch arcane container
       community.docker.docker_container:
         name: arcane
-        image: ghcr.io/getarcaneapp/manager:v2
+        image: ghcr.io/getarcaneapp/manager:v3.0.1
         restart_policy: unless-stopped
         ports:
           - 3552:3552
         env:
-          APP_URL: http://10.0.10.1:3552
-          ENCRYPTION_KEY: ${ENCRYPTION_KEY}
-          PROJECTS_DIRECTORY: /opt/docker-compose
+          ARCANE_APP_URL: http://10.0.10.1:3552
+          ARCANE_ENCRYPTION_KEY: ${ENCRYPTION_KEY}
+          ARCANE_PROJECTS_DIRECTORY: /opt/docker-compose
           PUID: "1000"
           PGID: "1000"
           TZ: Europe/Paris
