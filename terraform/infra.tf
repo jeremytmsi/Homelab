@@ -2,10 +2,6 @@ data "xenorchestra_template" "almalinux-tpl" {
   name_label = "ALMALINUX-10.2-TPL"
 }
 
-data "xenorchestra_pool" "F1" {
-  name_label = "F1"
-}
-
 data "xenorchestra_sr" "VMs" {
   name_label = "VMs"
 }
@@ -28,7 +24,7 @@ resource "xenorchestra_vm" "VM_DOCKER" {
   auto_poweron = true
 
   cpus = 4
-  memory_max = 8192 * 1024 * 1024
+  memory_max = 4096 * 1024 * 1024
 
   disk {
     sr_id = data.xenorchestra_sr.VMs.id
