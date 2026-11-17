@@ -115,3 +115,50 @@ resource "xenorchestra_vm" "VM_UNIFI" {
   clone_type = "fast"
   hvm_boot_firmware = "uefi"
 }
+
+resource "xenorchestra_vm" "VM_GITLAB" {
+  name_label = "VM_GITLAB"
+  name_description = "VM for Gitlab created from OpenTofu"
+  auto_poweron = true
+
+  cpus = 4
+  memory_max = 4096 * 1024 * 1024
+
+  disk {
+    sr_id = data.xenorchestra_sr.VMs.id
+    name_label = "GITLAB_VM_OS"
+    size = 40 * 1024 * 1024 * 1024
+  }
+
+  disk {
+    sr_id = data.xenorchestra_sr.VMs.id
+    name_label = "GITLAB_VM_DATA"
+    size = 150 * 1024 * 1024 * 1024
+  }
+
+  network {
+    network_id = data.xenorchestra_network.vlan_servers.id
+    expected_ip_cidr = "10.0.10.0/24"
+  }
+
+  network {
+    network_id = data.xenorchestra_network.vlan_mgmt.id
+    expected_ip_cidr = "10.0.99.0/24"
+  }
+
+  cloud_config = templatefile("cloud_config.tftpl",{
+    hostname = "GITLAB-VM"
+  })
+
+  cloud_network_config = templatefile("cloud_network_config.tftpl",{
+    ip_address = "10.0.10.3/24",
+    gateway = "10.0.10.254",
+    dns = "10.0.10.254",
+    ip_address_mgmt = "10.0.99.3/24",
+    gateway_mgmt = "10.0.99.254"
+  })
+
+  template = data.xenorchestra_template.almalinux-tpl.id
+  clone_type = "fast"
+  hvm_boot_firmware = "uefi"
+}

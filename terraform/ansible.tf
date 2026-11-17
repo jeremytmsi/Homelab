@@ -18,3 +18,13 @@ resource "ansible_host" "UNIFI-VM" {
     ansible_ssh_common_args = "-o StrictHostKeyChecking=no"
   }
 }
+
+resource "ansible_host" "GITLAB-VM" {
+  name = "GITLAB-VM"
+  variables = {
+    ansible_user = var.ansible_user
+    ansible_host = "10.0.99.3"
+    ansible_private_key_file = var.ansible_ssh_key
+    ansible_ssh_common_args = "-o StrictHostKeyChecking=no"
+  }
+}
