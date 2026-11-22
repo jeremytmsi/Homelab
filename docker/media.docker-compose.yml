@@ -1,15 +1,14 @@
 services:
   media:
-    image: jellyfin/jellyfin:12.2
+    image: jellyfin/jellyfin:12.4
     container_name: jellyfin
     restart: unless-stopped
     volumes:
       - jellyfin_config:/config
-      - /mnt/Data/Multimedia/Series:/media/Series
-      - /mnt/Data/Multimedia/Films:/media/Films
-      - /mnt/Data/Multimedia/Animes:/media/Animes
-      - /mnt/Data/Multimedia/Music:/media/Music
-      - /mnt/Data/Multimedia/X:/media/X
+      - /mnt/Multimedia/Series:/media/Series
+      - /mnt/Multimedia/Films:/media/Films
+      - /mnt/Multimedia/Animes:/media/Animes
+      - /mnt/Multimedia/Music:/media/Music
     ports:
       - 8096:8096
     networks:
@@ -49,8 +48,8 @@ services:
       - sonarr_config:/config
       - /mnt/Downloads/Series:/downloads/Series
       - /mnt/Downloads/Animes:/downloads/Animes
-      - /mnt/Data/Multimedia/Series:/mnt/Series
-      - /mnt/Data/Multimedia/Animes:/mnt/Animes
+      - /mnt/Multimedia/Series:/mnt/Series
+      - /mnt/Multimedia/Animes:/mnt/Animes
     networks:
       - front
 
@@ -67,7 +66,7 @@ services:
     volumes:
       - radarr_config:/config
       - /mnt/Downloads/Films:/downloads/Films
-      - /mnt/Data/Multimedia/Films:/mnt/Films
+      - /mnt/Multimedia/Films:/mnt/Films
     networks:
       - front
 
@@ -84,7 +83,7 @@ services:
     volumes:
       - lidarr_config:/config
       - /mnt/Downloads/Music:/downloads/Music
-      - /mnt/Data/Multimedia/Music:/mnt/Music
+      - /mnt/Multimedia/Music:/mnt/Music
     networks:
       - front
 
