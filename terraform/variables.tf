@@ -11,6 +11,7 @@ variable "ansible_user" {
   type = string
 }
 
-variable "ansible_ssh_key" {
+variable "ansible_password" {
   type = string
+  sensitive = true
 }
