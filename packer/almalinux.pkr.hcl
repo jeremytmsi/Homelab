@@ -9,7 +9,7 @@ packer {
 
 source "xenserver-iso" "almalinux" {
 
-  vm_name = "ALMALINUX-10.2-TPL"
+  vm_name = "ALMALINUX-10.3-TPL"
 
   vcpus_max = 8
   vm_memory = 1024
@@ -17,13 +17,13 @@ source "xenserver-iso" "almalinux" {
   vm_tags = ["linux","template"]
 
   iso_checksum = "none"
-  iso_url = "https://repo.almalinux.org/almalinux/10/isos/x86_64/AlmaLinux-10.2-x86_64-minimal.iso"
+  iso_url = "https://repo.almalinux.org/almalinux/10/isos/x86_64/AlmaLinux-10.3-x86_64-minimal.iso"
   remote_host = var.xcp_host
   remote_username = var.xcp_username
   remote_password = var.xcp_password
 
   ssh_username = var.ssh_username
-  ssh_key_path = var.ssh_key_path
+  ssh_password = var.ssh_password
 
   boot_command = [
     "<up>",
@@ -82,6 +82,7 @@ variable "ssh_username" {
   type = string
 }
 
-variable "ssh_key_path" {
+variable "ssh_password" {
   type = string
+  sensitive = true
 }
